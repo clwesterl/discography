@@ -25,5 +25,14 @@
     "tags": ["alt-country", "indie folk", "singer-songwriter", "Americana"],
     "albums": "23 studio + 2 live albums",
     "description": "Will Oldham's three-decade catalog — from the raw Palace Brothers recordings through the Bonnie 'Prince' Billy years — is one of American music's most singular and restless bodies of work."
+  },
+  {
+    "name": "Veronica Falls",
+    "file": "veronica-falls.html",
+    "years": "2009–2014",
+    "genre": "Indie",
+    "tags": ["indie pop", "jangle pop", "noise pop", "C86"],
+    "albums": "2 studio albums",
+    "description": "London-Glasgow quartet whose jangly, reverb-drenched guitar pop threaded C86 sweetness with gothic undertones across two near-perfect albums before quietly disbanding."
   }
 ]

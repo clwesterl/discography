@@ -396,6 +396,24 @@
 
   .to-buy-close:hover { color: var(--cream); }
 
+  .to-buy-export {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--amber-dim);
+    border-radius: 2px;
+    background: rgba(212, 160, 74, 0.08);
+    color: var(--amber);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .to-buy-export:hover {
+    background: rgba(212, 160, 74, 0.15);
+    border-color: var(--amber);
+  }
+
   .to-buy-artist-group {
     margin-bottom: 1.5rem;
   }
@@ -545,7 +563,10 @@
 <div class="to-buy-panel" id="to-buy-panel">
   <div class="to-buy-panel-header">
     <div class="to-buy-panel-title">To Buy</div>
-    <button class="to-buy-close" onclick="toggleToBuyPanel()">&times;</button>
+    <div style="display:flex;gap:0.5rem;align-items:center;">
+      <button class="to-buy-export" id="to-buy-export" onclick="exportToBuy()">Export JSON</button>
+      <button class="to-buy-close" onclick="toggleToBuyPanel()">&times;</button>
+    </div>
   </div>
   <div id="to-buy-list"></div>
 </div>
@@ -730,6 +751,18 @@ function removeFromToBuy(artist, album) {
   saveToBuyList(list);
 }
 
+function exportToBuy() {
+  const list = getToBuyList();
+  if (!list.length) return;
+  const blob = new Blob([JSON.stringify(list, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'to-buy.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 function toggleToBuyPanel() {
   document.getElementById('to-buy-panel').classList.toggle('open');
   document.getElementById('to-buy-overlay').classList.toggle('open');
@@ -741,9 +774,10 @@ function updateToBuyUI() {
   const countEl = document.getElementById('to-buy-count');
   const listEl = document.getElementById('to-buy-list');
 
-  // Show/hide floating button
+  // Show/hide floating button + export
   toggle.style.display = list.length > 0 ? 'block' : 'none';
   countEl.textContent = list.length;
+  document.getElementById('to-buy-export').style.display = list.length > 0 ? 'inline-block' : 'none';
 
   // Group by artist
   const grouped = {};

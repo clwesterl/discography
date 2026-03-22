@@ -101,6 +101,7 @@ Before building the HTML, check `collection.json` in the project root for albums
 - On page load, check localStorage and pre-check any albums already on the list
 - Style the checkbox label in JetBrains Mono at 0.68rem, using `var(--text-secondary)` — when checked, the label text changes to "Want ✓" and uses `var(--amber)`
 - The index page reads this same localStorage key to display a consolidated "To Buy" list across all artists
+- The index page's To Buy slide-out panel includes an **Export JSON** button that downloads the full list as `to-buy.json`
 
 **Badge styling:**
 - Small pill-shaped badge in the album card's metadata row (next to year/label)
@@ -164,7 +165,12 @@ Add this element near the top of every artist page, before the header:
 Style it as a small, fixed-position or top-of-page link using JetBrains Mono at 0.75rem.
 
 ### Index page and artist registry
-The index page (`index.html`) loads artist data from `artists.json` — do NOT edit `index.html` directly. When adding a new artist, append an entry to `artists.json` with this shape:
+The index page (`index.html`) loads artist data from `artists.json` — do NOT edit `index.html` directly. The index includes:
+- **Genre filter buttons** (All / Folk / Jazz / Rock) built dynamically from `artists.json`
+- **Search bar** that filters existing artist cards live; if the typed name doesn't match any existing or pending artist, a "+ Add [name]" button appears to create a **pending tile** (dashed border, "PENDING" badge, stored in localStorage under `discography-pending`)
+- **To Buy panel** — a slide-out drawer showing all "Want" selections across artist pages, with an Export JSON button to download the list as `to-buy.json`
+
+When adding a new artist, append an entry to `artists.json` with this shape:
 
 ```json
 {
