@@ -34,5 +34,14 @@
     "tags": ["indie pop", "jangle pop", "noise pop", "C86"],
     "albums": "2 studio albums",
     "description": "London-Glasgow quartet whose jangly, reverb-drenched guitar pop threaded C86 sweetness with gothic undertones across two near-perfect albums before quietly disbanding."
+  },
+  {
+    "name": "Miles Davis",
+    "file": "miles-davis.html",
+    "years": "1926–1991",
+    "genre": "Jazz",
+    "tags": ["cool jazz", "hard bop", "modal jazz", "fusion", "post-bop"],
+    "albums": "60+ total (27 essential studio + 7 key live highlighted)",
+    "description": "The most restlessly innovative figure in jazz history, whose unbroken arc of reinvention — from bebop through cool jazz, modal jazz, post-bop, and fusion — redefined the music at every turn."
   }
 ]

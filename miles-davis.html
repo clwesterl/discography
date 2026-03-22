@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miles Davis — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --blue-note: #2a5c8a;
+    --impulse: #c45b28;
+    --atlantic: #3a7a5c;
+    --prestige: #7a5a8a;
+    --columbia: #2a6a8a;
+    --warner: #6a5a2a;
+    --capitol: #8a3a3a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* --- HEADER --- */
+  header {
+    padding: 5rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--amber);
+  }
+
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--amber);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .stat-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-top: 1.5rem;
+    letter-spacing: 0.04em;
+    max-width: 700px;
+  }
+
+  /* --- NAVIGATION --- */
+  .era-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15, 14, 12, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 0;
+    margin-bottom: 2.5rem;
+  }
+
+  .era-nav .container {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: wrap;
+  }
+
+  .era-nav::-webkit-scrollbar { display: none; }
+
+  .era-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+  }
+
+  .era-btn:hover, .era-btn.active {
+    color: var(--cream);
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.08);
+  }
+
+  /* --- SECTIONS --- */
+  .section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 4rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  /* --- ALBUM CARDS --- */
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--amber-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+  .album-card:nth-child(6) { animation-delay: 0.3s; }
+
+  .album-header {
+    padding: 1.25rem 1.25rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .album-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--cream);
+    line-height: 1.3;
+  }
+
+  .album-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.8rem;
+    color: var(--amber);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+
+  .album-meta {
+    padding: 0.5rem 1.25rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+
+  .label-prestige { background: rgba(122, 90, 138, 0.2); color: #b89ac8; border: 1px solid rgba(122, 90, 138, 0.3); }
+  .label-blue-note { background: rgba(42, 92, 138, 0.2); color: #7abadf; border: 1px solid rgba(42, 92, 138, 0.3); }
+  .label-columbia { background: rgba(42, 106, 138, 0.2); color: #7ab8df; border: 1px solid rgba(42, 106, 138, 0.3); }
+  .label-capitol { background: rgba(138, 58, 58, 0.2); color: #d88a8a; border: 1px solid rgba(138, 58, 58, 0.3); }
+  .label-warner { background: rgba(138, 116, 42, 0.2); color: #d4b86a; border: 1px solid rgba(138, 116, 42, 0.3); }
+  .label-other { background: rgba(100, 100, 100, 0.2); color: #aaa; border: 1px solid rgba(100, 100, 100, 0.3); }
+
+  .recording-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+  }
+
+  .album-summary {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.92rem;
+    color: var(--cream-muted);
+    line-height: 1.65;
+  }
+
+  .album-personnel {
+    padding: 0 1.25rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .personnel-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber-dim);
+    margin-bottom: 0.2rem;
+  }
+
+  .tags {
+    padding: 0 1.25rem 1.25rem;
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  /* --- TRACK LISTING --- */
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--amber-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .tracklist-toggle:hover { color: var(--amber); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+
+  .tracklist {
+    display: none;
+    padding: 0 1.25rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .tracklist.open { display: block; }
+
+  .track {
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+
+  .track-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--amber-dim);
+    min-width: 1.4rem;
+    text-align: right;
+  }
+
+  .track-name {
+    color: var(--cream-muted);
+  }
+
+  /* --- FOOTER --- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0 3rem;
+    margin-top: 2rem;
+  }
+
+  footer p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+  }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 3rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+
+<div class="container">
+  <a href="index.html" class="back-link" style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#9a8e7a;text-decoration:none;letter-spacing:0.06em;padding:1.5rem 0 0;transition:color 0.2s;">← Collection</a>
+</div>
+<header>
+  <div class="container">
+    <div class="artist-dates">Trumpet · Composer · Bandleader &nbsp;·&nbsp; 1926–1991</div>
+    <h1 class="artist-name">Miles Davis</h1>
+    <p class="artist-bio">
+      The most restlessly innovative figure in jazz history, whose career traced an unbroken arc of reinvention
+      from bebop through cool jazz, hard bop, modal jazz, post-bop, jazz-rock fusion, and funk — each phase
+      redefining what the music could be and who could listen to it.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">~27</span>
+        <span class="stat-label">Essential Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">7</span>
+        <span class="stat-label">Key Live Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">6</span>
+        <span class="stat-label">Labels</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1944–91</span>
+        <span class="stat-label">Active Years</span>
+      </div>
+      <div class="stat" id="collection-stat"></div>
+    </div>
+    <p class="stat-note">Davis's full catalog runs to 60+ albums. This page highlights the essential studio and live recordings across six career eras.</p>
+  </div>
+</header>
+
+<nav class="era-nav">
+  <div class="container">
+    <button class="era-btn active" onclick="scrollToSection('birth-cool')">Birth of the Cool</button>
+    <button class="era-btn" onclick="scrollToSection('prestige')">Prestige 1954–56</button>
+    <button class="era-btn" onclick="scrollToSection('first-quintet')">First Quintet / Columbia</button>
+    <button class="era-btn" onclick="scrollToSection('gil-evans')">Gil Evans Collaborations</button>
+    <button class="era-btn" onclick="scrollToSection('second-quintet')">Second Great Quintet</button>
+    <button class="era-btn" onclick="scrollToSection('electric')">Electric / Fusion</button>
+    <button class="era-btn" onclick="scrollToSection('comeback')">Comeback 1981–91</button>
+    <button class="era-btn" onclick="scrollToSection('live')">Live Albums</button>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- BIRTH OF THE COOL -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="birth-cool">
+  <h2 class="section-title">Birth of the Cool</h2>
+  <p class="section-subtitle">1949–1950 · The Nonet Sessions</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Birth of the Cool</h3>
+        <span class="album-year">1957</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-capitol">Capitol</span>
+        <span class="recording-date">Rec. Jan & Apr 1949, Mar 1950</span>
+      </div>
+      <div class="album-summary">
+        Compiled from three nonet sessions that rewrote the rules of jazz arranging. Gil Evans, Gerry Mulligan, and John Lewis wrote charts for an unconventional instrumentation — French horn, tuba, and only six horns total — producing a chamber-jazz cool that countered bebop's heat. The 24-year-old Davis's understated trumpet became the voice of a new aesthetic.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel (varies by session)</div>
+        Miles Davis (tp), Lee Konitz (as), Gerry Mulligan (bs), Kai Winding / J.J. Johnson (tb), Junior Collins / Sandy Siegelstein / Gunther Schuller (frh), John Barber (tuba), Al Haig / John Lewis (p), Joe Shulman / Nelson Boyd / Al McKibbon (b), Max Roach / Kenny Clarke (d), Kenny Hagood (vcl on one track). Arr: Gil Evans, Gerry Mulligan, John Lewis, John Carisi, Johnny Mandel
+      </div>
+      <div class="tags">
+        <span class="tag">cool jazz</span>
+        <span class="tag">third stream</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Move</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Jeru</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Moon Dreams</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Venus de Milo</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Budo</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Deception</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Godchild</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Boplicity</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Rocker</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Israel</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Rouge</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Darn That Dream</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PRESTIGE RECORDS -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="prestige">
+  <h2 class="section-title">Prestige Records</h2>
+  <p class="section-subtitle">1954–1956 · Hard Bop Foundations & the Marathon Sessions</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Walkin'</h3>
+        <span class="album-year">1957</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Walkin'" onchange="toggleWant(this, 'Miles Davis', 'Walkin\'', '1957', 'Prestige')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-prestige">Prestige</span>
+        <span class="recording-date">Rec. Apr 3 & 29, 1954 · Van Gelder Studio</span>
+      </div>
+      <div class="album-summary">
+        A compilation of two 1954 sessions that marked Davis's emergence from his early-50s struggles. The title track is a 13-minute blues masterclass that essentially launched hard bop as a movement. With J.J. Johnson and Lucky Thompson on the A-side, and a leaner quintet with David Schildkraut on the B-side, Davis sounds reborn — confident, lyrical, and swinging.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        <strong>Side A:</strong> Miles Davis (tp), J.J. Johnson (tb), Lucky Thompson (ts), Horace Silver (p), Percy Heath (b), Kenny Clarke (d)<br>
+        <strong>Side B:</strong> Miles Davis (tp), David Schildkraut (as), Horace Silver (p), Percy Heath (b), Kenny Clarke (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">blues</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Walkin'</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Blue 'n' Boogie</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Solar</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">You Don't Know What Love Is</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Love Me or Leave Me</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Bags' Groove</h3>
+        <span class="album-year">1957</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Bags' Groove" onchange="toggleWant(this, 'Miles Davis', 'Bags\' Groove', '1957', 'Prestige')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-prestige">Prestige</span>
+        <span class="recording-date">Rec. Jun 29 & Dec 24, 1954 · Van Gelder Studio</span>
+      </div>
+      <div class="album-summary">
+        Features the legendary Christmas Eve 1954 session with Thelonious Monk on piano — the source of the famous dispute over whether Monk should comp behind Davis's solos (he didn't). The music itself is relaxed and authoritative, with Milt Jackson's vibes adding warmth. The June session with Sonny Rollins is equally superb.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        <strong>Dec session:</strong> Miles Davis (tp), Milt Jackson (vib), Thelonious Monk (p), Percy Heath (b), Kenny Clarke (d)<br>
+        <strong>Jun session:</strong> Miles Davis (tp), Sonny Rollins (ts), Horace Silver (p), Percy Heath (b), Kenny Clarke (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">cool jazz</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Bags' Groove (Take 1)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Bags' Groove (Take 2)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Airegin</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Oleo</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">But Not for Me (Take 2)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Doxy</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">But Not for Me (Take 1)</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Cookin' with the Miles Davis Quintet</h3>
+        <span class="album-year">1957</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Cookin' with the Miles Davis Quintet" onchange="toggleWant(this, 'Miles Davis', 'Cookin\' with the Miles Davis Quintet', '1957', 'Prestige')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-prestige">Prestige</span>
+        <span class="recording-date">Rec. Oct 26, 1956 · Van Gelder Studio</span>
+      </div>
+      <div class="album-summary">
+        The first released of the four legendary marathon-session albums, featuring the First Great Quintet. Opens with a definitive "My Funny Valentine" and includes a blistering "Blues by Five." The quintet's telepathic interplay set the standard for small-group jazz — Red Garland's block chords, Chambers's singing bass, Philly Joe's crisp drive.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), John Coltrane (ts), Red Garland (p), Paul Chambers (b), Philly Joe Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">My Funny Valentine</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Blues by Five</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Airegin</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Tune Up / When Lights Are Low</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Relaxin' with the Miles Davis Quintet</h3>
+        <span class="album-year">1958</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Relaxin' with the Miles Davis Quintet" onchange="toggleWant(this, 'Miles Davis', 'Relaxin\' with the Miles Davis Quintet', '1958', 'Prestige')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-prestige">Prestige</span>
+        <span class="recording-date">Rec. May 11 & Oct 26, 1956 · Van Gelder Studio</span>
+      </div>
+      <div class="album-summary">
+        Perhaps the most beloved of the marathon session albums. "If I Were a Bell" swings with effortless joy, and Coltrane's solo on "Oleo" already hints at the torrential style to come. The informal, first-take atmosphere captures a working band at the peak of its powers — loose, confident, and supremely musical.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), John Coltrane (ts), Red Garland (p), Paul Chambers (b), Philly Joe Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">If I Were a Bell</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">You're My Everything</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">I Could Write a Book</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Oleo</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">It Could Happen to You</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Woody'n You</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Workin' with the Miles Davis Quintet</h3>
+        <span class="album-year">1959</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Workin' with the Miles Davis Quintet" onchange="toggleWant(this, 'Miles Davis', 'Workin\' with the Miles Davis Quintet', '1959', 'Prestige')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-prestige">Prestige</span>
+        <span class="recording-date">Rec. May 11 & Oct 26, 1956 · Van Gelder Studio</span>
+      </div>
+      <div class="album-summary">
+        The third marathon album showcases the quintet's range — from the wistful ballad "It Never Entered My Mind" (one of Davis's most achingly beautiful performances) to the propulsive "Four." Coltrane's harmonic adventurousness is increasingly evident, and the contrast with Davis's cool restraint is endlessly productive.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), John Coltrane (ts), Red Garland (p), Paul Chambers (b), Philly Joe Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">It Never Entered My Mind</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Four</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">In Your Own Sweet Way</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Theme (Take 1)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Trane's Blues</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Ahmad's Blues</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Half Nelson</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">The Theme (Take 2)</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Steamin' with the Miles Davis Quintet</h3>
+        <span class="album-year">1961</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Steamin' with the Miles Davis Quintet" onchange="toggleWant(this, 'Miles Davis', 'Steamin\' with the Miles Davis Quintet', '1961', 'Prestige')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-prestige">Prestige</span>
+        <span class="recording-date">Rec. May 11 & Oct 26, 1956 · Van Gelder Studio</span>
+      </div>
+      <div class="album-summary">
+        The last of the marathon albums to be released, and arguably the most freewheeling. The quintet tears through Monk's "Well, You Needn't" and the Rodgers and Hammerstein showtune "Surrey with the Fringe on Top" with irreverent joy. A near-perfect document of a great band playing standards with personality and fire.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), John Coltrane (ts), Red Garland (p), Paul Chambers (b), Philly Joe Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Surrey with the Fringe on Top</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Salt Peanuts</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Something I Dreamed Last Night</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Diane</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Well, You Needn't</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">When I Fall in Love</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- FIRST GREAT QUINTET / COLUMBIA -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="first-quintet">
+  <h2 class="section-title">First Great Quintet & Sextet — Columbia</h2>
+  <p class="section-subtitle">1955–1961 · The Classic Small-Group Records</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">'Round About Midnight</h3>
+        <span class="album-year">1957</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="'Round About Midnight" onchange="toggleWant(this, 'Miles Davis', '\'Round About Midnight', '1957', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Oct 1955–Sep 1956 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        Davis's Columbia debut and the first document of the First Great Quintet on that label. The Harmon-muted reading of Monk's title tune became one of jazz's most iconic sounds. Coltrane was still finding his voice as a soloist, but the rhythm section — Garland, Chambers, Jones — is already a machine of swing and sensitivity.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), John Coltrane (ts), Red Garland (p), Paul Chambers (b), Philly Joe Jones (d). Produced by George Avakian.
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">'Round Midnight</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Ah-Leu-Cha</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">All of You</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Bye Bye Blackbird</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Tadd's Delight</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Dear Old Stockholm</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Milestones</h3>
+        <span class="album-year">1958</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Milestones" onchange="toggleWant(this, 'Miles Davis', 'Milestones', '1958', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Feb & Mar 1958 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        The bridge between hard bop and modal jazz. The title track — built on two scales rather than chord changes — pointed directly toward Kind of Blue. With Cannonball Adderley expanding the quintet to a sextet, the frontline has unusual depth. "Straight, No Chaser" burns with the authority of a band that has been playing these tunes every night.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), John Coltrane (ts), Cannonball Adderley (as), Red Garland (p), Paul Chambers (b), Philly Joe Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">modal jazz</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Dr. Jackle</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Sid's Ahead</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Two Bass Hit</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Milestones</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Billy Boy</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Straight, No Chaser</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Kind of Blue</h3>
+        <span class="album-year">1959</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Mar 2 & Apr 22, 1959 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        The best-selling jazz album of all time and a watershed in American music. Davis gave the sextet modal sketches — scales and brief melodic ideas rather than chord sequences — and captured almost everything in single takes. Bill Evans's impressionistic piano replaced Garland's, transforming the group's harmonic palette. Every track is a standard.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), John Coltrane (ts), Cannonball Adderley (as), Bill Evans (p; all tracks except "Freddie Freeloader"), Wynton Kelly (p; "Freddie Freeloader"), Paul Chambers (b), Jimmy Cobb (d). Produced by Irving Townsend.
+      </div>
+      <div class="tags">
+        <span class="tag">modal jazz</span>
+        <span class="tag">cool jazz</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">So What</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Freddie Freeloader</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Blue in Green</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">All Blues</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Flamenco Sketches</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Someday My Prince Will Come</h3>
+        <span class="album-year">1961</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Someday My Prince Will Come" onchange="toggleWant(this, 'Miles Davis', 'Someday My Prince Will Come', '1961', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Mar 1961 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        A transitional album between the First and Second Quintets, with Hank Mobley on most tracks and Coltrane guesting on two (their final studio encounter). The waltz-time title track became a Davis staple. Wynton Kelly, Chambers, and Cobb provide a buoyant rhythmic foundation. The cover, featuring Davis's then-wife Frances Taylor, was Columbia's first to depict a Black woman.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Hank Mobley (ts; most tracks), John Coltrane (ts; title track & "Teo"), Wynton Kelly (p), Paul Chambers (b), Jimmy Cobb (d), Philly Joe Jones (d; "Pfrancing")
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">post-bop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Someday My Prince Will Come</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Old Folks</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Pfrancing (No Blues)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Drad-Dog</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Teo</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">I Thought About You</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- GIL EVANS COLLABORATIONS -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="gil-evans">
+  <h2 class="section-title">Gil Evans Orchestral Collaborations</h2>
+  <p class="section-subtitle">1957–1960 · The Great Columbia Orchestra Records</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Miles Ahead</h3>
+        <span class="album-year">1957</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. May 1957 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        The first Davis-Evans orchestra collaboration, and a landmark in jazz orchestration. Davis plays flugelhorn exclusively, floating over Evans's luminous, seamlessly connected arrangements for a 19-piece ensemble. The suite-like structure — ten pieces flowing into one another — anticipated the concept album by a decade. Evans's voicings remain unlike anything else in jazz.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (flh), Bernie Glow (lead tp), Ernie Royal, Louis Mucci, Taft Jordan, John Carisi (tp), Joe Bennett, Jimmy Cleveland, Frank Rehak (tb), Tom Mitchell (btb), Jim Buffington, Tony Miranda, Willie Ruff (frh), Bill Barber (tuba), Lee Konitz (as), Danny Bank (bcl), Sid Cooper, Romeo Penque (fl, cl), Paul Chambers (b), Art Taylor (d). Gil Evans (arr, cond).
+      </div>
+      <div class="tags">
+        <span class="tag">orchestral jazz</span>
+        <span class="tag">third stream</span>
+        <span class="tag">cool jazz</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Springsville</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Maids of Cadiz</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">The Duke</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">My Ship</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Miles Ahead</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Blues for Pablo</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">New Rhumba</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">The Meaning of the Blues</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Lament</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">I Don't Wanna Be Kissed</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Porgy and Bess</h3>
+        <span class="album-year">1959</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Porgy and Bess" onchange="toggleWant(this, 'Miles Davis', 'Porgy and Bess', '1959', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Jul–Aug 1958 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        Davis and Evans's reimagining of Gershwin's opera is arguably their most emotionally direct collaboration. Davis's trumpet — by turns mournful, ecstatic, and aching — carries the weight of the drama while Evans wraps it in orchestral colors of astonishing richness. "Summertime" and "Prayer" are devastating. Cannonball Adderley guests on alto.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp, flh), Cannonball Adderley (as), Johnny Coles, Bernie Glow, Ernie Royal, Louis Mucci (tp), Jimmy Cleveland, Joe Bennett, Frank Rehak (tb), Dick Hixon (btb), Willie Ruff, Gunther Schuller, Julius Watkins (frh), Bill Barber (tuba), Phil Bodner, Romeo Penque (fl), Danny Bank (bcl), Paul Chambers (b), Philly Joe Jones (d). Gil Evans (arr, cond).
+      </div>
+      <div class="tags">
+        <span class="tag">orchestral jazz</span>
+        <span class="tag">third stream</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Sketches of Spain</h3>
+        <span class="album-year">1960</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Nov 1959–Mar 1960 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        The most ambitious Davis-Evans collaboration, built around Joaquin Rodrigo's Concierto de Aranjuez for guitar and orchestra, rearranged for trumpet and jazz ensemble. Davis plays with austere, aching beauty over Evans's Spanish-inflected orchestrations. A polarizing album on release — jazz purists objected — but now recognized as one of the great fusions of jazz and classical sensibility.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp, flh), Bernie Glow, Ernie Royal, Louis Mucci, Taft Jordan, Johnny Coles (tp), Dick Hixon, Frank Rehak (tb), Earl Chapin, Jimmy Buffington, John Barrows, Joe Singer, Tony Miranda (frh), Bill Barber (tuba), Albert Block, Eddie Caine, Harold Feldman, Romeo Penque, Danny Bank (woodwinds), Paul Chambers (b), Jimmy Cobb (d), Elvin Jones (perc), Jose Mangual (perc). Gil Evans (arr, cond). Produced by Teo Macero.
+      </div>
+      <div class="tags">
+        <span class="tag">orchestral jazz</span>
+        <span class="tag">Spanish tinge</span>
+        <span class="tag">third stream</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Concierto de Aranjuez (Adagio)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Will O' the Wisp</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">The Pan Piper</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Saeta</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Solea</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECOND GREAT QUINTET -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="second-quintet">
+  <h2 class="section-title">The Second Great Quintet</h2>
+  <p class="section-subtitle">1965–1968 · Shorter, Hancock, Carter, Williams</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">E.S.P.</h3>
+        <span class="album-year">1965</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="E.S.P." onchange="toggleWant(this, 'Miles Davis', 'E.S.P.', '1965', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Jan 20–22, 1965</span>
+      </div>
+      <div class="album-summary">
+        The debut recording of the Second Great Quintet — the youngest, most adventurous rhythm section in jazz. No standards, no ballads: entirely original compositions (five by Shorter) that opened new harmonic and rhythmic territory. The telepathic interplay between these five musicians redefined the possibilities of the jazz quintet format.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Wayne Shorter (ts), Herbie Hancock (p), Ron Carter (b), Tony Williams (d)
+      </div>
+      <div class="tags">
+        <span class="tag">post-bop</span>
+        <span class="tag">modal jazz</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">E.S.P.</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">R.J.</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Eighty-One</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Little One</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Iris</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Agitation</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Mood</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Miles Smiles</h3>
+        <span class="album-year">1967</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Miles Smiles" onchange="toggleWant(this, 'Miles Davis', 'Miles Smiles', '1967', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Oct 24–25, 1966 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        The quintet's most advanced acoustic statement. Forms are loosened, meter becomes fluid, and the rhythm section operates with an independence bordering on free jazz while maintaining an underlying pulse. Wayne Shorter's "Footprints" became a jazz standard; Eddie Harris's "Freedom Jazz Dance" became a Davis staple. Tony Williams's drumming is revolutionary throughout.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Wayne Shorter (ts), Herbie Hancock (p), Ron Carter (b), Tony Williams (d)
+      </div>
+      <div class="tags">
+        <span class="tag">post-bop</span>
+        <span class="tag">avant-garde</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Orbits</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Circle</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Footprints</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Dolores</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Freedom Jazz Dance</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Ginger Bread Boy</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Sorcerer</h3>
+        <span class="album-year">1967</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Sorcerer" onchange="toggleWant(this, 'Miles Davis', 'Sorcerer', '1967', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. May 16–24, 1967 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        The most introspective of the Second Quintet records. Shorter contributes five of the seven compositions, each a miniature of oblique beauty. The quintet plays with such restraint and mutual listening that the spaces between notes carry as much meaning as the notes themselves. "Masqualero" became a touchstone of the period.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Wayne Shorter (ts), Herbie Hancock (p), Ron Carter (b), Tony Williams (d)
+      </div>
+      <div class="tags">
+        <span class="tag">post-bop</span>
+        <span class="tag">modal jazz</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Prince of Darkness</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Pee Wee</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Masqualero</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Sorcerer</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Limbo</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Vonetta</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Nothing Like You</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Nefertiti</h3>
+        <span class="album-year">1968</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Jun–Jul 1967 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        Davis's last fully acoustic album and the quintet's most radical. The title track inverts jazz convention entirely: the horns repeat the melody in a hypnotic loop while the rhythm section improvises beneath them. It was the final, logical step of the group's exploration of form, and one of the most quietly revolutionary gestures in jazz history.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Wayne Shorter (ts), Herbie Hancock (p), Ron Carter (b), Tony Williams (d). Produced by Teo Macero.
+      </div>
+      <div class="tags">
+        <span class="tag">post-bop</span>
+        <span class="tag">avant-garde</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Nefertiti</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Fall</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Hand Jive</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Madness</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Riot</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Pinocchio</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Filles de Kilimanjaro</h3>
+        <span class="album-year">1969</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Filles de Kilimanjaro" onchange="toggleWant(this, 'Miles Davis', 'Filles de Kilimanjaro', '1969', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Jun & Sep 1968 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        The hinge album between acoustic post-bop and the electric era. Three tracks feature the last recordings of the Second Great Quintet; two introduce Chick Corea and Dave Holland as Hancock and Carter's replacements. Hancock plays electric Rhodes piano for the first time on a Davis record. The music is restless, dense, and already reaching toward something new.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Wayne Shorter (ts), Herbie Hancock (el p; Jun session), Chick Corea (el p; Sep session), Ron Carter (b; Jun session), Dave Holland (b; Sep session), Tony Williams (d). Produced by Teo Macero.
+      </div>
+      <div class="tags">
+        <span class="tag">post-bop</span>
+        <span class="tag">proto-fusion</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Frelon Brun (Brown Hornet)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Tout de Suite</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Petits Machins (Little Stuff)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Filles de Kilimanjaro</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Mademoiselle Mabry</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- ELECTRIC / FUSION -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="electric">
+  <h2 class="section-title">The Electric Period</h2>
+  <p class="section-subtitle">1969–1975 · Fusion, Funk, and the Studio as Instrument</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">In a Silent Way</h3>
+        <span class="album-year">1969</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Feb 18, 1969 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        The threshold of fusion — recorded in a single session and sculpted by producer Teo Macero into two side-long suites. Three electric keyboards shimmer and overlap; John McLaughlin's guitar adds a rock edge; the rhythm floats in a groove that seems to have no beginning or end. Beautiful, hypnotic, and revolutionary — it invented ambient jazz before the term existed.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Wayne Shorter (ss), John McLaughlin (el g), Herbie Hancock (el p), Chick Corea (el p), Joe Zawinul (org), Dave Holland (b), Tony Williams (d). Produced by Teo Macero.
+      </div>
+      <div class="tags">
+        <span class="tag">jazz fusion</span>
+        <span class="tag">ambient</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Shhh / Peaceful</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">In a Silent Way / It's About That Time</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Bitches Brew</h3>
+        <span class="album-year">1970</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Aug 19–21, 1969 · Columbia Studio B</span>
+      </div>
+      <div class="album-summary">
+        The album that shattered jazz's boundaries and sold half a million copies. Davis assembled a rotating cast of up to 14 musicians — two drummers, two bassists, three keyboards — and Teo Macero edited the sprawling session tapes into a double album of unprecedented scale and intensity. Dark, brooding, and rhythmically relentless, it created jazz-rock fusion as a commercial force.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Wayne Shorter (ss), Bennie Maupin (bcl), John McLaughlin (el g), Chick Corea (el p), Joe Zawinul (el p), Larry Young (el p), Dave Holland (b, el b), Harvey Brooks (el b), Lenny White (d), Jack DeJohnette (d), Don Alias (d, perc), Juma Santos (perc), Billy Cobham (d), Airto Moreira (perc). Produced by Teo Macero.
+      </div>
+      <div class="tags">
+        <span class="tag">jazz fusion</span>
+        <span class="tag">jazz-rock</span>
+        <span class="tag">psychedelic</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Pharaoh's Dance</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Bitches Brew</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Spanish Key</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">John McLaughlin</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Miles Runs the Voodoo Down</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Sanctuary</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">A Tribute to Jack Johnson</h3>
+        <span class="album-year">1971</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="A Tribute to Jack Johnson" onchange="toggleWant(this, 'Miles Davis', 'A Tribute to Jack Johnson', '1971', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Feb & Apr 1970 · Columbia 30th Street Studio</span>
+      </div>
+      <div class="album-summary">
+        The hardest-rocking album Davis ever made — a documentary soundtrack built from ferocious studio jams. "Right Off" opens with McLaughlin's blazing guitar riff over Michael Henderson's locked-in funk bass, and Davis enters with one of his most electrifying solos. Two side-long tracks of raw, guitar-driven fusion that anticipated punk's energy and hip-hop's sampling aesthetic.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Steve Grossman (ss), John McLaughlin (el g), Sonny Sharrock (el g), Herbie Hancock (org), Chick Corea (el p), Bennie Maupin (bcl), Michael Henderson (el b), Jack DeJohnette (d), Billy Cobham (d). Produced by Teo Macero.
+      </div>
+      <div class="tags">
+        <span class="tag">jazz-rock</span>
+        <span class="tag">funk</span>
+        <span class="tag">fusion</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Right Off</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Yesternow</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">On the Corner</h3>
+        <span class="album-year">1972</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Jun–Jul 1972 · Columbia Studio E</span>
+      </div>
+      <div class="album-summary">
+        Davis's most radical studio album — inspired by Sly Stone, James Brown, and Stockhausen in equal measure. Wah-wah trumpet, electric sitar, tablas, and multiple percussion layers create a dense, polyrhythmic funk that alienated both jazz and rock audiences on release. Now widely regarded as visionary: a direct ancestor of hip-hop, go-go, and electronic dance music.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp, wah-wah), Michael Henderson (el b), John McLaughlin, Dave Creamer (el g), Herbie Hancock, Chick Corea, Harold I. Williams (keys, synth), Carlos Garnett, Dave Liebman (ss, ts), Badal Roy (tabla), Collin Walcott, Khalil Balakrishna (el sitar), Jack DeJohnette, Al Foster, Billy Hart (d). Produced by Teo Macero.
+      </div>
+      <div class="tags">
+        <span class="tag">funk</span>
+        <span class="tag">fusion</span>
+        <span class="tag">avant-garde</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">On the Corner / New York Girl / Thinkin' One Thing and Doin' Another / Vote for Miles</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Black Satin</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">One and One</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Helen Butte / Mr. Freedom X</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Get Up with It</h3>
+        <span class="album-year">1974</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. 1970–1974 · Various sessions</span>
+      </div>
+      <div class="album-summary">
+        A double album compiled from sessions spanning four years, and Davis's last studio release before his six-year retirement. The 32-minute "He Loved Him Madly" — a tribute to Duke Ellington — is a sustained ambient drone that Brian Eno cited as a direct influence. "Calypso Frelimo" and "Rated X" are punishing, relentless funk. An underrated masterpiece of range and extremity.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel (varies by session)</div>
+        Miles Davis (tp, org, el p), Pete Cosey, Reggie Lucas, Cornell Dupree, John McLaughlin (el g), Michael Henderson (el b), Al Foster, Billy Cobham, Bernard Purdie (d), James Mtume (perc, cga), Carlos Garnett, Dave Liebman, John Stubblefield, Steve Grossman (reeds), Herbie Hancock, Cedric Lawson (keys), and others. Produced by Teo Macero.
+      </div>
+      <div class="tags">
+        <span class="tag">funk</span>
+        <span class="tag">fusion</span>
+        <span class="tag">ambient</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">He Loved Him Madly</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Maiysha</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Honky Tonk</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Rated X</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Calypso Frelimo</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Red China Blues</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Mtume</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Billy Preston</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- COMEBACK -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="comeback">
+  <h2 class="section-title">The Comeback</h2>
+  <p class="section-subtitle">1981–1991 · Pop Fusion, Synths, and the Warner Bros. Years</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Man with the Horn</h3>
+        <span class="album-year">1981</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="The Man with the Horn" onchange="toggleWant(this, 'Miles Davis', 'The Man with the Horn', '1981', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. May 1980–May 1981</span>
+      </div>
+      <div class="album-summary">
+        Davis's return after six years of silence — a period of health crises, addiction, and isolation. The music fuses pop, R&B, and fusion in a style that divided critics but announced his presence to a new generation. "Back Seat Betty" and "Fat Time" have genuine funk power; the playing is leaner and more fragile than the 70s work, but unmistakably Miles.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Bill Evans (ss), Mike Stern (el g), Barry Finnerty (el g), Marcus Miller (el b), Al Foster (d), Sammy Figueroa (perc), Robert Irving III (el p, synth), Randy Hall (synth, el g, vcl), Felton Crews (el b), Vince Wilburn Jr. (d). Produced by Teo Macero.
+      </div>
+      <div class="tags">
+        <span class="tag">pop fusion</span>
+        <span class="tag">funk</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Fat Time</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Back Seat Betty</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Shout</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Aida</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">The Man with the Horn</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Ursula</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Star People</h3>
+        <span class="album-year">1983</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Star People" onchange="toggleWant(this, 'Miles Davis', 'Star People', '1983', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. 1982–1983</span>
+      </div>
+      <div class="album-summary">
+        The first album to feature guitarist John Scofield, whose wiry, blues-drenched tone became the cornerstone of Davis's 80s band. The last album produced by Teo Macero. The extended blues jams ("Star People," "Star on Cicely") show Davis reconnecting with his blues roots through an 80s electric lens. Gil Evans contributes an arrangement.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Bill Evans (ss, ts, fl), John Scofield (el g), Mike Stern (el g), Marcus Miller (el b), Tom Barney (el b), Al Foster (d), Mino Cinelu (perc). Gil Evans (arr). Produced by Teo Macero.
+      </div>
+      <div class="tags">
+        <span class="tag">pop fusion</span>
+        <span class="tag">blues</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Decoy</h3>
+        <span class="album-year">1984</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Decoy" onchange="toggleWant(this, 'Miles Davis', 'Decoy', '1984', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Jun–Sep 1983</span>
+      </div>
+      <div class="album-summary">
+        Davis's first album without Teo Macero as producer, and a sharper, more modern-sounding record than its predecessors. Branford Marsalis guests on soprano saxophone, adding a youthful energy. Scofield's guitar is prominently featured on the longer jams. A transitional record that points toward the sleeker Warner Bros. sound to come.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), John Scofield (el g), Robert Irving III (synth), Branford Marsalis (ss; 3 tracks), Bill Evans (ss, ts), Darryl Jones (el b), Al Foster (d), Mino Cinelu (perc)
+      </div>
+      <div class="tags">
+        <span class="tag">pop fusion</span>
+        <span class="tag">synth</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Decoy</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Robot 415</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Code M.D.</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Freaky Deaky</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">What It Is</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">That's Right</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">That's What Happened</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">You're Under Arrest</h3>
+        <span class="album-year">1985</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="You're Under Arrest" onchange="toggleWant(this, 'Miles Davis', 'You\'re Under Arrest', '1985', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. 1984–1985</span>
+      </div>
+      <div class="album-summary">
+        Davis's final Columbia album after a 30-year association. The pop covers — Cyndi Lauper's "Time After Time" and Michael Jackson's "Human Nature" — became concert staples, proving Davis could transform any material into his own. Sting narrates a spoken-word interlude. The album marked the end of an era; Davis moved to Warner Bros. seeking creative freedom.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp, synth), John Scofield (el g), John McLaughlin (el g; 1 track), Bob Berg (ss, ts), Robert Irving III (synth), Darryl Jones (el b), Al Foster, Vince Wilburn Jr. (d), Steve Thornton (perc), Sting (narration)
+      </div>
+      <div class="tags">
+        <span class="tag">pop fusion</span>
+        <span class="tag">synth-pop</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Tutu</h3>
+        <span class="album-year">1986</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Tutu" onchange="toggleWant(this, 'Miles Davis', 'Tutu', '1986', 'Warner Bros.')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-warner">Warner Bros.</span>
+        <span class="recording-date">Rec. 1986</span>
+      </div>
+      <div class="album-summary">
+        A reinvention for the digital age. Marcus Miller composed, arranged, and played nearly every instrument, building sleek, synth-driven backdrops over which Davis's trumpet floats with regal authority. Named for Archbishop Desmond Tutu, the title track has a cinematic grandeur. The album won a Grammy and introduced Davis to an MTV-era audience while dividing jazz purists.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Marcus Miller (b, bcl, synths, g, d — most instruments), George Duke (keys; 1 track), Adam Holzman (synth), Bernard Wright (synth), Omar Hakim (d), Paulinho Da Costa (perc), Steve Reid (perc), Michael Urbaniak (el vln). Produced by Tommy LiPuma & Marcus Miller.
+      </div>
+      <div class="tags">
+        <span class="tag">synth-pop</span>
+        <span class="tag">pop fusion</span>
+        <span class="tag">contemporary jazz</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Tutu</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Tomaas</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Portia</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Splatch</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Backyard Ritual</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Perfect Way</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Don't Lose Your Mind</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Full Nelson</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Amandla</h3>
+        <span class="album-year">1989</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Amandla" onchange="toggleWant(this, 'Miles Davis', 'Amandla', '1989', 'Warner Bros.')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-warner">Warner Bros.</span>
+        <span class="recording-date">Rec. 1988–1989</span>
+      </div>
+      <div class="album-summary">
+        The most accomplished of the late Warner Bros. studio albums. Again built primarily by Marcus Miller, but with a wider cast of collaborators including George Duke and Joe Sample. Kenny Garrett's alto saxophone brings a new voice to the band. The title is a Zulu word meaning "power" or "freedom." Davis's trumpet playing is luminous and assured throughout.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Kenny Garrett (as, ss), Marcus Miller (b, bcl, g, arr), George Duke (keys, Synclavier), Joe Sample (p), Jean-Paul Bourelly, Foley, Michael Landau (el g), Omar Hakim, Al Foster, Ricky Wellman (d), Don Alias, Mino Cinelu, Paulinho Da Costa (perc), Rick Margitza (ts). Produced by Marcus Miller & Tommy LiPuma.
+      </div>
+      <div class="tags">
+        <span class="tag">contemporary jazz</span>
+        <span class="tag">pop fusion</span>
+        <span class="tag">jazz-funk</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Tracks</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Catembe</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Cobra</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Big Time</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Hannibal</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Jo-Jo</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Amandla</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Jilli</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Mr. Pastorius</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Doo-Bop</h3>
+        <span class="album-year">1992</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Doo-Bop" onchange="toggleWant(this, 'Miles Davis', 'Doo-Bop', '1992', 'Warner Bros.')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-warner">Warner Bros.</span>
+        <span class="recording-date">Rec. 1991 · Released posthumously Jun 1992</span>
+      </div>
+      <div class="album-summary">
+        Davis's final album, released eight months after his death. A collaboration with hip-hop producer Easy Mo Bee that fuses Davis's trumpet over programmed beats and samples. Only partially completed before his passing — two tracks were assembled posthumously. Won a Grammy for Best R&B Instrumental. A fitting coda from an artist who never stopped reaching toward the next sound.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Easy Mo Bee (production, beats, programming), J.R. (rap; select tracks), A.B. Money (rap; select tracks). Completed posthumously by Easy Mo Bee.
+      </div>
+      <div class="tags">
+        <span class="tag">hip-hop jazz</span>
+        <span class="tag">acid jazz</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- LIVE ALBUMS -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="live">
+  <h2 class="section-title">Key Live Albums</h2>
+  <p class="section-subtitle">1964–1982 · The Essential Concert Recordings</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">My Funny Valentine: Miles Davis in Concert</h3>
+        <span class="album-year">1965</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="My Funny Valentine" onchange="toggleWant(this, 'Miles Davis', 'My Funny Valentine', '1965', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Feb 12, 1964 · Philharmonic Hall, Lincoln Center</span>
+      </div>
+      <div class="album-summary">
+        The ballad half of the legendary 1964 Lincoln Center concert. Davis's reading of the title tune is one of the most emotionally devastating trumpet performances ever recorded — fragile, searching, and utterly exposed. With the young Herbie Hancock and Tony Williams already pushing the rhythmic boundaries, this is the transitional quintet at its most intimate.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), George Coleman (ts), Herbie Hancock (p), Ron Carter (b), Tony Williams (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">ballads</span>
+        <span class="tag">live</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">'Four' & More: Recorded Live in Concert</h3>
+        <span class="album-year">1966</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="Four & More" onchange="toggleWant(this, 'Miles Davis', 'Four & More', '1966', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Feb 12, 1964 · Philharmonic Hall, Lincoln Center</span>
+      </div>
+      <div class="album-summary">
+        The up-tempo counterpart to My Funny Valentine, from the same concert. The tempos are blistering — "So What" and "Walkin'" are taken at speeds that seem physically impossible. Tony Williams, at 18, drives the band with a ferocity that redefines what jazz drumming can be. One of the great live jazz documents, period.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), George Coleman (ts), Herbie Hancock (p), Ron Carter (b), Tony Williams (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">post-bop</span>
+        <span class="tag">live</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Miles Davis at Fillmore</h3>
+        <span class="album-year">1970</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Jun 17–20, 1970 · Fillmore East, NYC</span>
+      </div>
+      <div class="album-summary">
+        Four nights at Bill Graham's rock palace, each edited into one LP side. Davis brought his electric band into rock's home turf, opening for Laura Nyro and the Steve Miller Band. With two keyboards (Corea and Jarrett), the sound is dense and hallucinatory. The music draws from In a Silent Way and Bitches Brew but takes on a rawer, more confrontational live energy.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Steve Grossman (ss, ts), Chick Corea (el p), Keith Jarrett (org), Dave Holland (b, el b), Jack DeJohnette (d), Airto Moreira (perc)
+      </div>
+      <div class="tags">
+        <span class="tag">jazz-rock</span>
+        <span class="tag">fusion</span>
+        <span class="tag">live</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Live-Evil</h3>
+        <span class="album-year">1971</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">Owned</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Dec 1970 (live, Cellar Door) & studio sessions</span>
+      </div>
+      <div class="album-summary">
+        A hybrid of scorching live recordings from the Cellar Door in Washington D.C. and studio tracks featuring Hermeto Pascoal's compositions. The Cellar Door material — with Gary Bartz, Keith Jarrett, and Michael Henderson's funk bass — captures the electric band at its most ferocious. Teo Macero's editing weaves the live and studio elements into a dark, exhilarating whole.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        <strong>Live (Cellar Door):</strong> Miles Davis (tp), Gary Bartz (as, ss), Keith Jarrett (org, el p), Michael Henderson (el b), Jack DeJohnette (d), Airto Moreira (perc)<br>
+        <strong>Studio:</strong> adds John McLaughlin (el g), Herbie Hancock (el p), Wayne Shorter (ss), Hermeto Pascoal (d, vcl), and others. Produced by Teo Macero.
+      </div>
+      <div class="tags">
+        <span class="tag">jazz-rock</span>
+        <span class="tag">funk</span>
+        <span class="tag">live + studio</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Agharta</h3>
+        <span class="album-year">1975</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Feb 1, 1975 (afternoon) · Festival Hall, Osaka</span>
+      </div>
+      <div class="album-summary">
+        The afternoon concert from Davis's final day of live performance before his retirement. A searing, dense wall of electric sound — Pete Cosey's distorted guitar, wah-wah trumpet, three-percussion rhythm — that anticipates industrial music and noise rock by a decade. Davis was in terrible physical pain during this period, and the music has a desperate, apocalyptic intensity.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp, org), Sonny Fortune (as, ss, fl), Pete Cosey (el g, synth, perc), Reggie Lucas (el g), Michael Henderson (el b), Al Foster (d), James Mtume (perc, cga)
+      </div>
+      <div class="tags">
+        <span class="tag">dark fusion</span>
+        <span class="tag">funk</span>
+        <span class="tag">live</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Pangaea</h3>
+        <span class="album-year">1976</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Feb 1, 1975 (evening) · Festival Hall, Osaka</span>
+      </div>
+      <div class="album-summary">
+        The evening concert from the same day as Agharta — Davis's final live performance before his six-year retirement. Even more intense and extreme than the afternoon set, with longer, more abstract passages and heavier distortion. Originally released only in Japan, it has become a cult classic and a touchstone for avant-garde rock musicians. The last word of Miles's electric period.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp, org), Sonny Fortune (as, ss, fl), Pete Cosey (el g, synth, perc), Reggie Lucas (el g), Michael Henderson (el b), Al Foster (d), James Mtume (perc, cga)
+      </div>
+      <div class="tags">
+        <span class="tag">dark fusion</span>
+        <span class="tag">funk</span>
+        <span class="tag">live</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">We Want Miles</h3>
+        <span class="album-year">1982</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Miles Davis" data-album="We Want Miles" onchange="toggleWant(this, 'Miles Davis', 'We Want Miles', '1982', 'Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-columbia">Columbia</span>
+        <span class="recording-date">Rec. Jun–Oct 1981 · Boston, NYC, Tokyo</span>
+      </div>
+      <div class="album-summary">
+        The live document of Davis's triumphant 1981 comeback tour, compiled from three concerts. Won the Grammy for Best Jazz Instrumental Performance. Mike Stern's aggressive guitar and Marcus Miller's snapping electric bass give the band a contemporary edge. "Jean Pierre" — a simple, haunting melody — became Davis's signature encore piece for the rest of his life.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Miles Davis (tp), Bill Evans (ss, ts, fl), Mike Stern (el g), Marcus Miller (el b), Al Foster (d), Mino Cinelu (perc)
+      </div>
+      <div class="tags">
+        <span class="tag">pop fusion</span>
+        <span class="tag">funk</span>
+        <span class="tag">live</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>Discography compiled from web sources. Highlights ~27 essential studio albums and 7 key live recordings from a catalog of 60+ releases. Excludes compilations, reissues, box sets, and posthumous archival releases (except Doo-Bop). For a complete sessionography, see Jan Lohmann's The Sound of Miles Davis (JazzMedia, 2007).</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    document.querySelectorAll('.era-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // Update active nav on scroll
+  const sections = document.querySelectorAll('.section');
+  const navBtns = document.querySelectorAll('.era-btn');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('onclick').includes(id));
+        });
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '-80px 0px 0px 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

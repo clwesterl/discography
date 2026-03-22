@@ -695,8 +695,11 @@ function renderAll() {
     grid.appendChild(card);
   });
 
-  // Render pending tiles
-  let pending = getPending();
+  // Render pending tiles (exclude any that now have a real entry)
+  let pending = getPending().filter(p => !artists.some(a => a.name.toLowerCase() === p.name.toLowerCase()));
+  // Clean up localStorage if any were promoted
+  const rawPending = getPending();
+  if (pending.length < rawPending.length) savePending(pending);
   if (searchQuery) {
     pending = pending.filter(p => p.name.toLowerCase().includes(searchQuery));
   }
