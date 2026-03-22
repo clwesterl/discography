@@ -108,6 +108,102 @@
     margin-top: 0.3rem;
   }
 
+  /* Search bar */
+  .search-bar {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+  }
+
+  .search-input {
+    flex: 1;
+    max-width: 400px;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1rem;
+    font-weight: 300;
+    padding: 0.6rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input::placeholder {
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .search-input:focus {
+    border-color: var(--amber-dim);
+  }
+
+  .search-add-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--amber-dim);
+    border-radius: var(--radius);
+    background: rgba(212, 160, 74, 0.08);
+    color: var(--amber);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: none;
+    white-space: nowrap;
+  }
+
+  .search-add-btn:hover {
+    background: rgba(212, 160, 74, 0.15);
+    border-color: var(--amber);
+  }
+
+  /* Pending artist card */
+  .artist-card.pending {
+    border-style: dashed;
+    border-color: var(--amber-dim);
+    opacity: 0.7;
+  }
+
+  .artist-card.pending:hover {
+    opacity: 0.9;
+    border-color: var(--amber);
+  }
+
+  .pending-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(212, 160, 74, 0.12);
+    color: var(--amber-dim);
+    border: 1px solid rgba(212, 160, 74, 0.15);
+  }
+
+  .pending-remove {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: auto;
+    align-self: flex-start;
+  }
+
+  .pending-remove:hover {
+    border-color: #8a3a2f;
+    color: #c45b28;
+  }
+
   /* Filter bar */
   .filter-bar {
     display: flex;
@@ -427,6 +523,11 @@
 
 <main>
   <div class="container">
+    <div class="search-bar">
+      <input type="text" class="search-input" id="search-input" placeholder="Search or add an artist..." autocomplete="off">
+      <button class="search-add-btn" id="search-add-btn">+ Add tile</button>
+    </div>
+
     <div class="filter-bar" id="filter-bar">
       <button class="filter-btn active" onclick="filterArtists('all')">All</button>
     </div>
@@ -457,6 +558,36 @@
 
 <script>
 let artists = [];
+let currentFilter = 'all';
+let searchQuery = '';
+const PENDING_KEY = 'discography-pending';
+
+function getPending() {
+  try { return JSON.parse(localStorage.getItem(PENDING_KEY)) || []; }
+  catch { return []; }
+}
+
+function savePending(list) {
+  localStorage.setItem(PENDING_KEY, JSON.stringify(list));
+}
+
+function addPending(name) {
+  const list = getPending();
+  if (!list.some(p => p.name.toLowerCase() === name.toLowerCase()) &&
+      !artists.some(a => a.name.toLowerCase() === name.toLowerCase())) {
+    list.push({ name: name, addedAt: new Date().toISOString() });
+    savePending(list);
+  }
+  document.getElementById('search-input').value = '';
+  searchQuery = '';
+  renderAll();
+}
+
+function removePending(name) {
+  const list = getPending().filter(p => p.name !== name);
+  savePending(list);
+  renderAll();
+}
 
 async function init() {
   try {
@@ -477,16 +608,55 @@ async function init() {
     filterBar.appendChild(btn);
   });
 
-  renderArtists('all');
+  // Search input
+  const searchInput = document.getElementById('search-input');
+  const addBtn = document.getElementById('search-add-btn');
+
+  searchInput.addEventListener('input', function() {
+    searchQuery = this.value.trim().toLowerCase();
+    const hasMatch = artists.some(a => a.name.toLowerCase().includes(searchQuery)) ||
+                     getPending().some(p => p.name.toLowerCase().includes(searchQuery));
+    const alreadyExists = artists.some(a => a.name.toLowerCase() === searchQuery) ||
+                          getPending().some(p => p.name.toLowerCase() === searchQuery);
+
+    if (searchQuery.length > 1 && !alreadyExists && !hasMatch) {
+      addBtn.style.display = 'block';
+      addBtn.textContent = '+ Add ' + this.value.trim();
+    } else {
+      addBtn.style.display = 'none';
+    }
+    renderAll();
+  });
+
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && addBtn.style.display === 'block') {
+      addPending(this.value.trim());
+    }
+  });
+
+  addBtn.addEventListener('click', function() {
+    const name = searchInput.value.trim();
+    if (name) addPending(name);
+  });
+
+  renderAll();
 }
 
-function renderArtists(filter) {
+function renderAll() {
   const grid = document.getElementById('artist-grid');
   grid.innerHTML = '';
 
-  const filtered = filter === 'all' ? artists : artists.filter(a => a.genre === filter);
+  // Combine real artists + pending
+  let filtered = currentFilter === 'all' ? [...artists] : artists.filter(a => a.genre === currentFilter);
+
+  // Apply search filter
+  if (searchQuery) {
+    filtered = filtered.filter(a => a.name.toLowerCase().includes(searchQuery));
+  }
+
   filtered.sort((a, b) => a.name.localeCompare(b.name));
 
+  // Render real artist cards
   filtered.forEach(artist => {
     const card = document.createElement('a');
     card.href = artist.file;
@@ -504,13 +674,38 @@ function renderArtists(filter) {
     grid.appendChild(card);
   });
 
-  document.getElementById('artist-count').textContent = filtered.length;
+  // Render pending tiles
+  let pending = getPending();
+  if (searchQuery) {
+    pending = pending.filter(p => p.name.toLowerCase().includes(searchQuery));
+  }
+  if (currentFilter !== 'all') {
+    pending = []; // don't show pending in genre filters since they have no genre
+  }
+
+  pending.sort((a, b) => a.name.localeCompare(b.name));
+
+  pending.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'artist-card pending';
+    const esc = p.name.replace(/'/g, "\\'");
+    card.innerHTML = `
+      <div class="artist-card-name">${p.name}</div>
+      <div class="artist-card-meta"><span class="pending-badge">Pending</span></div>
+      <div class="artist-card-desc">Discography not yet generated. Ask Claude Code to build this page.</div>
+      <button class="pending-remove" onclick="event.stopPropagation(); removePending('${esc}')">remove</button>
+    `;
+    grid.appendChild(card);
+  });
+
+  document.getElementById('artist-count').textContent = filtered.length + pending.length;
 }
 
 function filterArtists(genre, e) {
+  currentFilter = genre;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   if (e) e.target.classList.add('active');
-  renderArtists(genre);
+  renderAll();
 }
 
 init();
