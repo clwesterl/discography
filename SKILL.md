@@ -91,7 +91,16 @@ Before building the HTML, check `collection.json` in the project root for albums
 - 🔈 vinyl icon + "In collection" badge for `source: ["discogs"]` — physical only
 - 💻 digital icon + "In library" badge for `source: ["local"]` — digital only
 - 🔈💻 both icons + "Owned" badge for `source: ["discogs", "local"]` or `["local", "discogs"]` — both formats
-- No indicator for albums not in the collection
+- No indicator for albums not in the collection — instead, show a "Want" checkbox (see below)
+
+**"To Buy" checkboxes on unowned albums:**
+- Albums *not* found in `collection.json` should display a small checkbox with the label "Want" in the metadata row
+- Clicking the checkbox saves the album to a shared `toBuy` list in `localStorage` under the key `discography-to-buy`
+- The stored format is a JSON array of objects: `{artist, album, year, label, addedFrom}` where `addedFrom` is the artist page filename
+- If the checkbox is unchecked, remove that entry from localStorage
+- On page load, check localStorage and pre-check any albums already on the list
+- Style the checkbox label in JetBrains Mono at 0.68rem, using `var(--text-secondary)` — when checked, the label text changes to "Want ✓" and uses `var(--amber)`
+- The index page reads this same localStorage key to display a consolidated "To Buy" list across all artists
 
 **Badge styling:**
 - Small pill-shaped badge in the album card's metadata row (next to year/label)

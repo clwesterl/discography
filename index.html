@@ -213,6 +213,171 @@
     letter-spacing: 0.06em;
   }
 
+  /* To Buy floating button */
+  .to-buy-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 500;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    padding: 0.7rem 1.2rem;
+    border: 1px solid var(--amber-dim);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    color: var(--amber);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: none;
+  }
+
+  .to-buy-toggle:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--amber);
+  }
+
+  .to-buy-toggle .count {
+    display: inline-block;
+    background: var(--amber);
+    color: var(--bg);
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 1.2rem;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    text-align: center;
+    border-radius: 50%;
+    margin-left: 0.5rem;
+  }
+
+  /* To Buy panel */
+  .to-buy-panel {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    max-width: 90vw;
+    height: 100vh;
+    z-index: 600;
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+  }
+
+  .to-buy-panel.open {
+    right: 0;
+  }
+
+  .to-buy-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .to-buy-panel-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--cream);
+  }
+
+  .to-buy-close {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.25rem;
+  }
+
+  .to-buy-close:hover { color: var(--cream); }
+
+  .to-buy-artist-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .to-buy-artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .to-buy-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(42, 38, 32, 0.5);
+  }
+
+  .to-buy-item-info {
+    flex: 1;
+  }
+
+  .to-buy-item-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .to-buy-item-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.06em;
+  }
+
+  .to-buy-remove {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+    margin-left: 0.75rem;
+    transition: all 0.2s;
+  }
+
+  .to-buy-remove:hover {
+    border-color: #8a3a2f;
+    color: #c45b28;
+  }
+
+  .to-buy-empty {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    padding: 2rem 0;
+  }
+
+  .to-buy-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 550;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .to-buy-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   footer {
     border-top: 1px solid var(--border);
     padding: 2rem 0 3rem;
@@ -232,6 +397,11 @@
     }
     .container {
       padding: 0 1.25rem;
+    }
+    .to-buy-panel {
+      width: 100vw;
+      max-width: 100vw;
+      right: -100vw;
     }
   }
 </style>
@@ -265,6 +435,19 @@
     </div>
   </div>
 </main>
+
+<!-- To Buy panel -->
+<button class="to-buy-toggle" id="to-buy-toggle" onclick="toggleToBuyPanel()">
+  To Buy <span class="count" id="to-buy-count">0</span>
+</button>
+<div class="to-buy-overlay" id="to-buy-overlay" onclick="toggleToBuyPanel()"></div>
+<div class="to-buy-panel" id="to-buy-panel">
+  <div class="to-buy-panel-header">
+    <div class="to-buy-panel-title">To Buy</div>
+    <button class="to-buy-close" onclick="toggleToBuyPanel()">&times;</button>
+  </div>
+  <div id="to-buy-list"></div>
+</div>
 
 <footer>
   <div class="container">
@@ -342,6 +525,76 @@ function filterArtists(genre) {
 
 // Initial render
 renderArtists('all');
+
+// ─── TO BUY LIST ───
+const TO_BUY_KEY = 'discography-to-buy';
+
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; }
+  catch { return []; }
+}
+
+function saveToBuyList(list) {
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  updateToBuyUI();
+}
+
+function removeFromToBuy(artist, album) {
+  const list = getToBuyList().filter(
+    item => !(item.artist === artist && item.album === album)
+  );
+  saveToBuyList(list);
+}
+
+function toggleToBuyPanel() {
+  document.getElementById('to-buy-panel').classList.toggle('open');
+  document.getElementById('to-buy-overlay').classList.toggle('open');
+}
+
+function updateToBuyUI() {
+  const list = getToBuyList();
+  const toggle = document.getElementById('to-buy-toggle');
+  const countEl = document.getElementById('to-buy-count');
+  const listEl = document.getElementById('to-buy-list');
+
+  // Show/hide floating button
+  toggle.style.display = list.length > 0 ? 'block' : 'none';
+  countEl.textContent = list.length;
+
+  // Group by artist
+  const grouped = {};
+  list.forEach(item => {
+    if (!grouped[item.artist]) grouped[item.artist] = [];
+    grouped[item.artist].push(item);
+  });
+
+  if (list.length === 0) {
+    listEl.innerHTML = '<p class="to-buy-empty">No albums on your list yet. Browse an artist\'s discography and check "Want" on albums you\'d like to buy.</p>';
+    return;
+  }
+
+  let html = '';
+  Object.keys(grouped).sort().forEach(artist => {
+    const albums = grouped[artist].sort((a, b) => (a.year || 0) - (b.year || 0));
+    html += `<div class="to-buy-artist-group">
+      <div class="to-buy-artist-name">${artist}</div>`;
+    albums.forEach(item => {
+      const meta = [item.year, item.label].filter(Boolean).join(' · ');
+      html += `<div class="to-buy-item">
+        <div class="to-buy-item-info">
+          <div class="to-buy-item-title">${item.album}</div>
+          ${meta ? `<div class="to-buy-item-meta">${meta}</div>` : ''}
+        </div>
+        <button class="to-buy-remove" onclick="removeFromToBuy('${item.artist.replace(/'/g, "\\'")}', '${item.album.replace(/'/g, "\\'")}')">remove</button>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  listEl.innerHTML = html;
+}
+
+// Init
+updateToBuyUI();
 </script>
 
 </body>
