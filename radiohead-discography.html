@@ -265,6 +265,49 @@
     .album-grid { grid-template-columns: 1fr; }
     .stats { gap: 1.5rem; }
   }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
 </style>
 </head>
 <body>
@@ -295,6 +338,8 @@
         <span class="stat-number">1993–2016</span>
         <span class="stat-label">Studio Discography</span>
       </div>
+    
+      <div class="stat"><span class="stat-number">8/11</span><span class="stat-label">In Your Collection</span></div>
     </div>
   </div>
 </header>
@@ -322,6 +367,7 @@
         <span class="album-year">1993</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Radiohead" data-album="Pablo Honey" onchange="toggleWant(this, 'Radiohead', 'Pablo Honey', '1993', 'Parlophone / Capitol')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-parlophone">Parlophone / Capitol</span>
         <span class="chart-info">UK #22 · US #32</span>
       </div>
@@ -345,6 +391,7 @@
         <span class="album-year">1995</span>
       </div>
       <div class="album-meta">
+        <span class="collection-badge">Owned</span>
         <span class="label-badge label-parlophone">Parlophone / Capitol</span>
         <span class="chart-info">UK #4 · Triple Platinum UK</span>
       </div>
@@ -376,6 +423,7 @@
         <span class="album-year">1997</span>
       </div>
       <div class="album-meta">
+        <span class="collection-badge">Owned</span>
         <span class="label-badge label-parlophone">Parlophone / Capitol</span>
         <span class="chart-info">UK #1 · US #21 · Triple Platinum</span>
       </div>
@@ -425,6 +473,7 @@
         <span class="album-year">2000</span>
       </div>
       <div class="album-meta">
+        <span class="collection-badge">Owned</span>
         <span class="label-badge label-parlophone">Parlophone / Capitol</span>
         <span class="chart-info">UK #1 · US #1</span>
       </div>
@@ -449,6 +498,7 @@
         <span class="album-year">2001</span>
       </div>
       <div class="album-meta">
+        <span class="collection-badge">In library</span>
         <span class="label-badge label-parlophone">Parlophone / Capitol</span>
         <span class="chart-info">UK #1 · US #2</span>
       </div>
@@ -472,6 +522,7 @@
         <span class="album-year">2003</span>
       </div>
       <div class="album-meta">
+        <span class="collection-badge">In collection</span>
         <span class="label-badge label-parlophone">Parlophone / Capitol</span>
         <span class="chart-info">UK #1 · US #3 · Platinum</span>
       </div>
@@ -503,6 +554,7 @@
         <span class="album-year">2007</span>
       </div>
       <div class="album-meta">
+        <span class="collection-badge">Owned</span>
         <span class="label-badge label-self">Self-released / XL</span>
         <span class="chart-info">UK #1 · US #1 · 3M+ copies</span>
       </div>
@@ -541,6 +593,7 @@
         <span class="album-year">2011</span>
       </div>
       <div class="album-meta">
+        <span class="collection-badge">Owned</span>
         <span class="label-badge label-self">Self-released / XL</span>
         <span class="chart-info">UK #7 · US #3</span>
       </div>
@@ -564,6 +617,7 @@
         <span class="album-year">2016</span>
       </div>
       <div class="album-meta">
+        <span class="collection-badge">Owned</span>
         <span class="label-badge label-xl">XL Recordings</span>
         <span class="chart-info">UK #1 · US #3</span>
       </div>
@@ -595,6 +649,7 @@
         <span class="album-year">2001</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Radiohead" data-album="I Might Be Wrong: Live Recordings" onchange="toggleWant(this, 'Radiohead', 'I Might Be Wrong: Live Recordings', '2001', 'Parlophone / Capitol')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-parlophone">Parlophone / Capitol</span>
       </div>
       <div class="album-summary">
@@ -612,6 +667,7 @@
         <span class="album-year">2008</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Radiohead" data-album="In Rainbows – From the Basement" onchange="toggleWant(this, 'Radiohead', 'In Rainbows – From the Basement', '2008', 'Self-released')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-self">Self-released</span>
       </div>
       <div class="album-summary">
@@ -664,5 +720,34 @@
   sections.forEach(s => observer.observe(s));
 </script>
 
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
 </body>
 </html>

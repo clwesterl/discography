@@ -405,10 +405,57 @@
     .album-grid { grid-template-columns: 1fr; }
     .stats { gap: 1.5rem; }
   }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
 </style>
 </head>
 <body>
 
+
+<div class="container">
+  <a href="index.html" class="back-link" style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#9a8e7a;text-decoration:none;letter-spacing:0.06em;padding:1.5rem 0 0;transition:color 0.2s;">← Collection</a>
+</div>
 <header>
   <div class="container">
     <div class="artist-dates">Saxophone · Composer · Bandleader &nbsp;·&nbsp; 1926–1967</div>
@@ -435,6 +482,8 @@
         <span class="stat-number">1957–67</span>
         <span class="stat-label">Active as Leader</span>
       </div>
+    
+      <div class="stat"><span class="stat-number">3/33</span><span class="stat-label">In Your Collection</span></div>
     </div>
   </div>
 </header>
@@ -466,6 +515,7 @@
         <span class="album-year">1957</span>
       </div>
       <div class="album-meta">
+        <span class="collection-badge">In library</span>
         <span class="label-badge label-prestige">Prestige</span>
         <span class="recording-date">Rec. May 31, 1957</span>
       </div>
@@ -488,6 +538,7 @@
         <span class="album-year">1958</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="John Coltrane with the Red Garland Trio" onchange="toggleWant(this, 'John Coltrane', 'John Coltrane with the Red Garland Trio', '1958', 'Prestige')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-prestige">Prestige</span>
         <span class="recording-date">Rec. Aug 23, 1957</span>
       </div>
@@ -510,6 +561,7 @@
         <span class="album-year">1958</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Soultrane" onchange="toggleWant(this, 'John Coltrane', 'Soultrane', '1958', 'Prestige')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-prestige">Prestige</span>
         <span class="recording-date">Rec. Feb 7, 1958</span>
       </div>
@@ -544,6 +596,7 @@
         <span class="album-year">1958</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Blue Train" onchange="toggleWant(this, 'John Coltrane', 'Blue Train', '1958', 'Blue Note')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-blue-note">Blue Note</span>
         <span class="recording-date">Rec. Sep 15, 1957</span>
       </div>
@@ -587,6 +640,7 @@
         <span class="album-year">1960</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Giant Steps" onchange="toggleWant(this, 'John Coltrane', 'Giant Steps', '1960', 'Atlantic')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-atlantic">Atlantic</span>
         <span class="recording-date">Rec. May 1959 & Dec 1959</span>
       </div>
@@ -622,6 +676,7 @@
         <span class="album-year">1961</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Coltrane Jazz" onchange="toggleWant(this, 'John Coltrane', 'Coltrane Jazz', '1961', 'Atlantic')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-atlantic">Atlantic</span>
         <span class="recording-date">Rec. 1959–1960</span>
       </div>
@@ -644,6 +699,7 @@
         <span class="album-year">1961</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="My Favorite Things" onchange="toggleWant(this, 'John Coltrane', 'My Favorite Things', '1961', 'Atlantic')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-atlantic">Atlantic</span>
         <span class="recording-date">Rec. Oct 1960</span>
       </div>
@@ -667,6 +723,7 @@
         <span class="album-year">1961</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Olé Coltrane" onchange="toggleWant(this, 'John Coltrane', 'Olé Coltrane', '1961', 'Atlantic')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-atlantic">Atlantic</span>
         <span class="recording-date">Rec. May 25, 1961</span>
       </div>
@@ -701,6 +758,7 @@
         <span class="album-year">1961</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Africa/Brass" onchange="toggleWant(this, 'John Coltrane', 'Africa/Brass', '1961', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. May–Jun 1961</span>
       </div>
@@ -724,6 +782,7 @@
         <span class="album-year">1962</span>
       </div>
       <div class="album-meta">
+        <span class="collection-badge">In library</span>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Apr–Jun 1962</span>
       </div>
@@ -747,6 +806,7 @@
         <span class="album-year">1963</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Duke Ellington &amp; John Coltrane" onchange="toggleWant(this, 'John Coltrane', 'Duke Ellington & John Coltrane', '1963', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Sep 26, 1962</span>
       </div>
@@ -769,6 +829,7 @@
         <span class="album-year">1963</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Ballads" onchange="toggleWant(this, 'John Coltrane', 'Ballads', '1963', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. 1961–1962</span>
       </div>
@@ -791,6 +852,7 @@
         <span class="album-year">1963</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Impressions" onchange="toggleWant(this, 'John Coltrane', 'Impressions', '1963', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. 1961–1963</span>
       </div>
@@ -813,6 +875,7 @@
         <span class="album-year">1963</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="John Coltrane and Johnny Hartman" onchange="toggleWant(this, 'John Coltrane', 'John Coltrane and Johnny Hartman', '1963', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Mar 7, 1963</span>
       </div>
@@ -836,6 +899,7 @@
         <span class="album-year">1964</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Crescent" onchange="toggleWant(this, 'John Coltrane', 'Crescent', '1964', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Apr–Jun 1964</span>
       </div>
@@ -859,6 +923,7 @@
         <span class="album-year">1965</span>
       </div>
       <div class="album-meta">
+        <span class="collection-badge">In library</span>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Dec 9, 1964</span>
       </div>
@@ -892,6 +957,7 @@
         <span class="album-year">1965</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="The John Coltrane Quartet Plays" onchange="toggleWant(this, 'John Coltrane', 'The John Coltrane Quartet Plays', '1965', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Feb–May 1965</span>
       </div>
@@ -914,6 +980,7 @@
         <span class="album-year">1966</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Ascension" onchange="toggleWant(this, 'John Coltrane', 'Ascension', '1966', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Jun 28, 1965</span>
       </div>
@@ -937,6 +1004,7 @@
         <span class="album-year">1966</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Meditations" onchange="toggleWant(this, 'John Coltrane', 'Meditations', '1966', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Nov 23, 1965</span>
       </div>
@@ -960,6 +1028,7 @@
         <span class="album-year">1967</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Kulu Sé Mama" onchange="toggleWant(this, 'John Coltrane', 'Kulu Sé Mama', '1967', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Jun–Oct 1965</span>
       </div>
@@ -983,6 +1052,7 @@
         <span class="album-year">1967</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Expression" onchange="toggleWant(this, 'John Coltrane', 'Expression', '1967', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Feb–Mar 1967</span>
       </div>
@@ -1017,6 +1087,7 @@
         <span class="album-year">1970</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Transition" onchange="toggleWant(this, 'John Coltrane', 'Transition', '1970', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. May–Jun 1965</span>
       </div>
@@ -1040,6 +1111,7 @@
         <span class="album-year">1971</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Sun Ship" onchange="toggleWant(this, 'John Coltrane', 'Sun Ship', '1971', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Aug 26, 1965</span>
       </div>
@@ -1063,6 +1135,7 @@
         <span class="album-year">1974</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Interstellar Space" onchange="toggleWant(this, 'John Coltrane', 'Interstellar Space', '1974', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Feb 22, 1967</span>
       </div>
@@ -1086,6 +1159,7 @@
         <span class="album-year">1995</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Stellar Regions" onchange="toggleWant(this, 'John Coltrane', 'Stellar Regions', '1995', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Feb 15, 1967</span>
       </div>
@@ -1108,6 +1182,7 @@
         <span class="album-year">2018</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Both Directions at Once: The Lost Album" onchange="toggleWant(this, 'John Coltrane', 'Both Directions at Once: The Lost Album', '2018', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Mar 6, 1963</span>
       </div>
@@ -1131,6 +1206,7 @@
         <span class="album-year">2019</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Blue World" onchange="toggleWant(this, 'John Coltrane', 'Blue World', '2019', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Jun 24, 1964</span>
       </div>
@@ -1165,6 +1241,7 @@
         <span class="album-year">1962</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Live! at the Village Vanguard" onchange="toggleWant(this, 'John Coltrane', 'Live! at the Village Vanguard', '1962', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Nov 2–3, 1961</span>
       </div>
@@ -1188,6 +1265,7 @@
         <span class="album-year">1964</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Live at Birdland" onchange="toggleWant(this, 'John Coltrane', 'Live at Birdland', '1964', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Oct–Nov 1963</span>
       </div>
@@ -1211,6 +1289,7 @@
         <span class="album-year">2005</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Live at the Half Note: One Down, One Up" onchange="toggleWant(this, 'John Coltrane', 'Live at the Half Note: One Down, One Up', '2005', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Mar–May 1965</span>
       </div>
@@ -1234,6 +1313,7 @@
         <span class="album-year">2021</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="A Love Supreme: Live in Seattle" onchange="toggleWant(this, 'John Coltrane', 'A Love Supreme: Live in Seattle', '2021', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Oct 2, 1965</span>
       </div>
@@ -1257,6 +1337,7 @@
         <span class="album-year">2023</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="Evenings at the Village Gate" onchange="toggleWant(this, 'John Coltrane', 'Evenings at the Village Gate', '2023', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Aug 1961</span>
       </div>
@@ -1280,6 +1361,7 @@
         <span class="album-year">2001</span>
       </div>
       <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="John Coltrane" data-album="The Olatunji Concert: The Last Live Recording" onchange="toggleWant(this, 'John Coltrane', 'The Olatunji Concert: The Last Live Recording', '2001', 'Impulse!')"><span class="want-check"></span><span class="want-text">Want</span></label>
         <span class="label-badge label-impulse">Impulse!</span>
         <span class="recording-date">Rec. Apr 23, 1967</span>
       </div>
@@ -1339,5 +1421,34 @@
   sections.forEach(s => observer.observe(s));
 </script>
 
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
 </body>
 </html>
