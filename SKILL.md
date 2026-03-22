@@ -163,14 +163,29 @@ Add this element near the top of every artist page, before the header:
 ```
 Style it as a small, fixed-position or top-of-page link using JetBrains Mono at 0.75rem.
 
-### Index page
-When the user asks for it (or after generating several artist pages), generate an `index.html` for the collection root. It should:
-- List all artist pages as cards with artist name, active years, genre, and album count
-- Use the same dark/amber design language
-- Be a simple static HTML page that links to each artist's file
-- Sort alphabetically by default, with an option to browse by genre
+### Index page and artist registry
+The index page (`index.html`) loads artist data from `artists.json` — do NOT edit `index.html` directly. When adding a new artist, append an entry to `artists.json` with this shape:
 
-The user manages the repo and pushes files — the skill just generates HTML that's ready to drop in.
+```json
+{
+  "name": "Miles Davis",
+  "file": "miles-davis.html",
+  "years": "1926–1991",
+  "genre": "Jazz",
+  "tags": ["hard bop", "modal jazz", "fusion", "cool jazz"],
+  "albums": "48 studio + 12 live albums",
+  "description": "One sentence capturing the artist's arc and significance."
+}
+```
+
+### Publish workflow
+After generating the HTML page and updating `artists.json`, automatically:
+
+1. `git add` the new HTML file and `artists.json`
+2. `git commit` with message: "Add [artist name] discography"
+3. `git push` to deploy via GitHub Pages
+
+This ensures each new artist is live on the site immediately after generation.
 
 ### Collection data
 `collection.json` lives in the project root alongside the HTML files. It is generated separately (from Discogs API + iTunes XML) and should not be modified by this skill. The skill reads it during step 5 to annotate album cards with ownership indicators.

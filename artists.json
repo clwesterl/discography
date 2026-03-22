@@ -1,0 +1,20 @@
+[
+  {
+    "name": "John Coltrane",
+    "file": "coltrane-discography.html",
+    "years": "1926–1967",
+    "genre": "Jazz",
+    "tags": ["hard bop", "modal jazz", "free jazz", "avant-garde"],
+    "albums": "28 studio + 14 live albums",
+    "description": "Saxophonist and composer whose restless evolution — from hard bop through modal jazz to free improvisation — redefined the possibilities of the tenor and soprano saxophone."
+  },
+  {
+    "name": "Radiohead",
+    "file": "radiohead-discography.html",
+    "years": "1985–present",
+    "genre": "Rock",
+    "tags": ["art rock", "electronic", "alternative", "experimental"],
+    "albums": "9 studio + 2 live albums",
+    "description": "Oxford five-piece whose arc from guitar-band anthems through electronic reinvention made them one of the most critically acclaimed acts of their generation."
+  }
+]

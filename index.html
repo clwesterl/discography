@@ -456,45 +456,35 @@
 </footer>
 
 <script>
-const artists = [
-  {
-    name: "John Coltrane",
-    file: "coltrane-discography.html",
-    years: "1926–1967",
-    genre: "Jazz",
-    tags: ["hard bop", "modal jazz", "free jazz", "avant-garde"],
-    albums: "28 studio + 14 live albums",
-    description: "Saxophonist and composer whose restless evolution — from hard bop through modal jazz to free improvisation — redefined the possibilities of the tenor and soprano saxophone."
-  },
-  {
-    name: "Radiohead",
-    file: "radiohead-discography.html",
-    years: "1985–present",
-    genre: "Rock",
-    tags: ["art rock", "electronic", "alternative", "experimental"],
-    albums: "9 studio + 2 live albums",
-    description: "Oxford five-piece whose arc from guitar-band anthems through electronic reinvention made them one of the most critically acclaimed acts of their generation."
+let artists = [];
+
+async function init() {
+  try {
+    const resp = await fetch('artists.json');
+    artists = await resp.json();
+  } catch {
+    artists = [];
   }
-];
 
-// Build genre filter buttons
-const genres = [...new Set(artists.map(a => a.genre))].sort();
-const filterBar = document.getElementById('filter-bar');
-genres.forEach(genre => {
-  const btn = document.createElement('button');
-  btn.className = 'filter-btn';
-  btn.textContent = genre;
-  btn.onclick = () => filterArtists(genre);
-  filterBar.appendChild(btn);
-});
+  // Build genre filter buttons
+  const genres = [...new Set(artists.map(a => a.genre))].sort();
+  const filterBar = document.getElementById('filter-bar');
+  genres.forEach(genre => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.textContent = genre;
+    btn.onclick = (e) => filterArtists(genre, e);
+    filterBar.appendChild(btn);
+  });
 
-// Render artist cards
+  renderArtists('all');
+}
+
 function renderArtists(filter) {
   const grid = document.getElementById('artist-grid');
   grid.innerHTML = '';
 
   const filtered = filter === 'all' ? artists : artists.filter(a => a.genre === filter);
-
   filtered.sort((a, b) => a.name.localeCompare(b.name));
 
   filtered.forEach(artist => {
@@ -517,14 +507,13 @@ function renderArtists(filter) {
   document.getElementById('artist-count').textContent = filtered.length;
 }
 
-function filterArtists(genre) {
+function filterArtists(genre, e) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  if (e) e.target.classList.add('active');
   renderArtists(genre);
 }
 
-// Initial render
-renderArtists('all');
+init();
 
 // ─── TO BUY LIST ───
 const TO_BUY_KEY = 'discography-to-buy';
