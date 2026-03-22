@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonnie "Prince" Billy — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #7a9a6a;
+    --accent-dim: #4a6a3a;
+    --drag-city: #8a7a5a;
+    --domino: #5a7a8a;
+    --palace: #7a6a5a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  /* ─── HEADER ─── */
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-subtitle {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--cream-muted);
+    margin-bottom: 0.5rem;
+    font-style: italic;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* ─── NAVIGATION ─── */
+  .era-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15, 14, 12, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 0;
+    margin-bottom: 2.5rem;
+  }
+  .era-nav .container { display: flex; gap: 0.5rem; overflow-x: auto; scrollbar-width: none; flex-wrap: wrap; }
+  .era-nav::-webkit-scrollbar { display: none; }
+  .era-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+  }
+  .era-btn:hover, .era-btn.active {
+    color: var(--cream);
+    border-color: var(--accent);
+    background: rgba(122, 154, 106, 0.08);
+  }
+
+  /* ─── SECTIONS ─── */
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  /* ─── ALBUM CARDS ─── */
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+  .album-card:nth-child(6) { animation-delay: 0.3s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-drag-city { background: rgba(138, 122, 90, 0.2); color: #c8b890; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-domino { background: rgba(90, 122, 138, 0.2); color: #90b8c8; border: 1px solid rgba(90, 122, 138, 0.3); }
+  .label-palace { background: rgba(122, 106, 90, 0.2); color: #b8a890; border: 1px solid rgba(122, 106, 90, 0.3); }
+
+  .album-credit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+    font-style: italic;
+  }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  /* ─── COLLECTION / WANT ─── */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+
+  /* ─── FOOTER ─── */
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Singer-Songwriter &middot; Alt-Country &middot; Indie Folk &nbsp;&middot;&nbsp; 1993&ndash;present &middot; Louisville, Kentucky</div>
+    <h1 class="artist-name">Bonnie &ldquo;Prince&rdquo; Billy</h1>
+    <p class="artist-subtitle">Will Oldham &middot; Singer-songwriter, actor &mdash; Louisville, Kentucky</p>
+    <p class="artist-bio">
+      Will Oldham has spent three decades building one of American music&rsquo;s most singular catalogs &mdash; a restless, shape-shifting body of work that moves between Appalachian folk, country, art-rock, and unclassifiable beauty. Recording under a shifting series of names (Palace Brothers, Palace Music, Palace, and finally Bonnie &lsquo;Prince&rsquo; Billy), Oldham has made vulnerability, mortality, and the strangeness of being alive his enduring subjects.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">25</span>
+        <span class="stat-label">Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">10/25</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">9</span>
+        <span class="stat-label">Digital</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1</span>
+        <span class="stat-label">Vinyl</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="era-nav">
+  <div class="container">
+    <button class="era-btn active" onclick="scrollToSection('palace')">Palace Years 1993&ndash;97</button>
+    <button class="era-btn" onclick="scrollToSection('early-bonnie')">Early Bonnie 1998&ndash;03</button>
+    <button class="era-btn" onclick="scrollToSection('letting-go')">The Letting Go 2005&ndash;11</button>
+    <button class="era-btn" onclick="scrollToSection('reinventions')">Reinventions 2014&ndash;19</button>
+    <button class="era-btn" onclick="scrollToSection('louisville')">Louisville Return 2023&ndash;26</button>
+    <button class="era-btn" onclick="scrollToSection('live')">Live</button>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ═══════════════════════════════════════════════ PALACE YEARS ═══════════════════════════════════════════════ -->
+
+<section class="section" id="palace">
+  <h2 class="section-title">Palace Years</h2>
+  <p class="section-subtitle">1993&ndash;1997 &middot; 4 Albums &middot; Lo-fi Origins</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">There Is No-One What Will Take Care of You</h3>
+        <span class="album-year">1993</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="There Is No-One What Will Take Care of You" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'There Is No-One What Will Take Care of You', '1993', 'Drag City')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+        <span class="album-credit">as Palace Brothers</span>
+      </div>
+      <div class="album-summary">
+        The astonishing debut. Brittle, lo-fi recordings that channel Depression-era country through a lens of post-punk alienation. Banjo-dominated and deliberately raw, it announced Oldham as a writer of startling emotional directness.
+      </div>
+      <div class="tags">
+        <span class="tag">lo-fi</span>
+        <span class="tag">alt-country</span>
+        <span class="tag">Appalachian</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Idle Hands Are the Devil's Playthings</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Long Before</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">I Tried to Stay Healthy for You</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">There Is No-One What Will Take Care of You</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">I Had a Good Mother and Father</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Merida</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">King Me</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Pulpit</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">I Am a Cinematographer</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Riding</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">O Lord Are You in Need?</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">The Lack Thereof</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Days in the Wake</h3>
+        <span class="album-year">1994</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-drag-city">Drag City</span>
+        <span class="album-credit">as Palace Brothers</span>
+      </div>
+      <div class="album-summary">
+        The second album deepens the approach &mdash; fuller arrangements, more confident singing, and songs that feel like small novels. &lsquo;You Will Miss Me When I Burn&rsquo; and &lsquo;I Send My Love to You&rsquo; are among Oldham&rsquo;s most devastating early compositions.
+      </div>
+      <div class="tags">
+        <span class="tag">alt-country</span>
+        <span class="tag">indie folk</span>
+        <span class="tag">lo-fi</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">You Will Miss Me When I Burn</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Pushkin</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Come a Little Dog</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">I Send My Love to You</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">No More Workhorse Blues</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">All Is Grace</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Whither Thou Goest</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">(Thou Without) Partner</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">I Am a Cinematographer</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Marriage</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Viva Last Blues</h3>
+        <span class="album-year">1995</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="Viva Last Blues" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'Viva Last Blues', '1995', 'Drag City')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+        <span class="album-credit">as Palace Music</span>
+      </div>
+      <div class="album-summary">
+        A dramatic leap forward. Recorded with a full band including guitarist Bryan Rich and backed by lush, sometimes electric arrangements, this is Oldham&rsquo;s first truly expansive record &mdash; the songs stretch and breathe, revealing new depths in his writing.
+      </div>
+      <div class="tags">
+        <span class="tag">alt-country</span>
+        <span class="tag">indie rock</span>
+        <span class="tag">art folk</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">More Brother Rides</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Viva Ultra</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Brute Choir</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Mountain Low</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Tonight&rsquo;s Decision (and Hereafter)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Work Hard / Play Hard</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Old Jerusalem</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">We All Us Three Will Ride</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Cat&rsquo;s Blues</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Horse</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Arise Therefore</h3>
+        <span class="album-year">1996</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-drag-city">Drag City</span>
+        <span class="album-credit">as Palace Music</span>
+      </div>
+      <div class="album-summary">
+        Stripped to the bone. Recorded by Steve Albini at Pachyderm Studio with just Oldham, David Grubbs, Ned Oldham, and a drum machine. Stark, minimal, and deeply interior &mdash; the most challenging Palace record and one of the most rewarding.
+      </div>
+      <div class="tags">
+        <span class="tag">lo-fi</span>
+        <span class="tag">minimal folk</span>
+        <span class="tag">experimental</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Stablemate</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Sucker&rsquo;s Evening</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Arise Therefore</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">You Have Cum in Your Hair and Your Dick Is Hanging Out</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Kid of Harith</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Sun Highlight</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">No Gold Digger</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Group of Women</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Lack Thereof</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Give Me Children</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">The Spider&rsquo;s Dude Is Often There</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Disorder</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ EARLY BONNIE ═══════════════════════════════════════════════ -->
+
+<section class="section" id="early-bonnie">
+  <h2 class="section-title">Early Bonnie</h2>
+  <p class="section-subtitle">1998&ndash;2003 &middot; 4 Albums &middot; The Name Takes Shape</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Joya</h3>
+        <span class="album-year">1997</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-drag-city">Drag City</span>
+        <span class="album-credit">as Will Oldham</span>
+      </div>
+      <div class="album-summary">
+        The bridge album &mdash; the first released under Oldham&rsquo;s own name rather than a Palace variant, and his most guitar-forward record to date. David Pajo&rsquo;s playing adds a warm, expansive quality. A transitional work that opened the door to Bonnie &lsquo;Prince&rsquo; Billy.
+      </div>
+      <div class="tags">
+        <span class="tag">indie folk</span>
+        <span class="tag">art rock</span>
+        <span class="tag">pastoral</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">O Let It Be</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Antagonism</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">New Gypsy</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Under What Was Oppression</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">The Aspens</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Be Kind to Them All</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Open Your Heart</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Hop Scotch</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">I Am Still What I Meant to Be</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Patience</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Apocalypse, No!</span></div>
+      </div>
+    </div>
+
+    <div class="album-card" style="border-color: var(--accent-dim); background: linear-gradient(135deg, var(--bg-card), rgba(122, 154, 106, 0.05));">
+      <div class="album-header">
+        <h3 class="album-title">I See a Darkness</h3>
+        <span class="album-year">1999</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        The masterpiece. Oldham&rsquo;s most celebrated album is a meditation on friendship, death, and the thin membrane between joy and despair. Johnny Cash&rsquo;s cover of the title track cemented its place in the American songbook. The band &mdash; featuring guitarist David Pajo and the Oldham brothers &mdash; plays with devastating restraint.
+      </div>
+      <div class="tags">
+        <span class="tag">alt-country</span>
+        <span class="tag">dark folk</span>
+        <span class="tag">Americana</span>
+        <span class="tag">landmark</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">A Minor Place</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Nomadic Revery (All Around)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">I See a Darkness</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Another Day Full of Dread</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Death to Everyone</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Knockturne</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Madeleine-Mary</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Song for the New Breed</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Today I Was an Evil One</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Black</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Raining in Darling</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Rich Wife Full of Happiness</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Ease Down the Road</h3>
+        <span class="album-year">2001</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        The morning after I See a Darkness &mdash; lighter, lusher, more playful. Catherine Irwin of Freakwater duets throughout, and the arrangements are Oldham&rsquo;s most ornate to date. Songs like &lsquo;Just to See My Holly Home&rsquo; and &lsquo;After I Made Love to You&rsquo; show a new tenderness.
+      </div>
+      <div class="tags">
+        <span class="tag">alt-country</span>
+        <span class="tag">folk</span>
+        <span class="tag">chamber pop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">May It Always Be</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">A King at Night</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Just to See My Holly Home</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">At the Back of the Pit</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">After I Made Love to You</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Ease Down the Road</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">The Signifying Wolf</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Mrs. William Settles</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Maundering</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Grand Dark Feeling of Emptiness</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">A Wee Bit More Time</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Rich Wife Full of Happiness</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">I Started Rapping</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Master and Everyone</h3>
+        <span class="album-year">2003</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        Austere and beautiful. Recorded with just a handful of players in a room, these songs are among Oldham&rsquo;s quietest and most intimate. Every note and silence feels deliberate. &lsquo;The Way&rsquo; and &lsquo;Maundering&rsquo; are masterclasses in restraint.
+      </div>
+      <div class="tags">
+        <span class="tag">folk</span>
+        <span class="tag">minimalist</span>
+        <span class="tag">chamber</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Way</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Ain&rsquo;t You Wealthy, Ain&rsquo;t You Wise?</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Master and Everyone</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Wolf Among Wolves</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Joy and Jubilee</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Maundering</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Even if Love</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Three Questions</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Hard Life</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ THE LETTING GO ERA ═══════════════════════════════════════════════ -->
+
+<section class="section" id="letting-go">
+  <h2 class="section-title">The Letting Go Era</h2>
+  <p class="section-subtitle">2005&ndash;2011 &middot; 6 Albums &middot; Peak Collaborations</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Superwolf</h3>
+        <span class="album-year">2005</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-drag-city">Drag City</span>
+        <span class="album-credit">with Matt Sweeney</span>
+      </div>
+      <div class="album-summary">
+        A collaboration with guitarist Matt Sweeney (Chavez, Zwan) that became a cult classic. Oldham&rsquo;s lyrics meet Sweeney&rsquo;s heavy, blues-inflected guitar in songs that are by turns sinister, funny, and heartbreaking. &lsquo;I Gave You&rsquo; and &lsquo;My Home Is the Sea&rsquo; are standouts.
+      </div>
+      <div class="tags">
+        <span class="tag">alt-rock</span>
+        <span class="tag">dark folk</span>
+        <span class="tag">blues</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">My Home Is the Sea</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Bed Is for Sleeping</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">What Are You?</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Only Someone Running</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Ruined Puzzle</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">I Gave You</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Lift Us Up</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Blood Embrace</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Death in the Sea</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Beast for Thee</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Birdsong</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Good-bye Beloved</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">I Am Goodbye</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">I Won&rsquo;t Ask Again</span></div>
+      </div>
+    </div>
+
+    <div class="album-card" style="border-color: var(--accent-dim); background: linear-gradient(135deg, var(--bg-card), rgba(122, 154, 106, 0.05));">
+      <div class="album-header">
+        <h3 class="album-title">The Letting Go</h3>
+        <span class="album-year">2006</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        Recorded in Reykjav&iacute;k with producer Valgeir Sigur&eth;sson and arrangements by Nico Muhly. Dawn McCarthy of Faun Fables shares vocals throughout, creating an intimate duet album of rare beauty. The Icelandic strings add a luminous quality. One of Oldham&rsquo;s very finest achievements.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Emmett Kelly (guitar, electric piano), Dawn McCarthy (vocals), Paul Oldham (bass), Jim White (drums), Nico Muhly (arrangements)
+      </div>
+      <div class="tags">
+        <span class="tag">chamber folk</span>
+        <span class="tag">art pop</span>
+        <span class="tag">orchestral</span>
+        <span class="tag">landmark</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Love Comes to Me</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Seedling</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">God&rsquo;s Small Song</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Cursed Sleep</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Then the Letting Go</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Wai</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Strange Form of Life</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Big Friday</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Cold &amp; Wet</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">I Called You Back</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">No Bad News</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Lay and Love</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Lie Down in the Light</h3>
+        <span class="album-year">2008</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In library</span>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        A warm, approachable record produced by Mark Nevers. After the Icelandic refinement of The Letting Go, this feels like coming home &mdash; recorded in Nashville with a band that includes Ashley Webber on harmonies. &lsquo;You Want That Picture&rsquo; and &lsquo;So Everyone&rsquo; are gorgeous.
+      </div>
+      <div class="tags">
+        <span class="tag">folk</span>
+        <span class="tag">country</span>
+        <span class="tag">pastoral</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Easy Does It</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">You Want That Picture</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">So Everyone</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">For Every Field There&rsquo;s a Mole</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Willow, Where</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">You Remind Me of Something (The Glory Goes)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">It Is What It Is What It Is or It Isn&rsquo;t</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Where Wind Blows</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Shutlandia</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">I&rsquo;ll Be Glad</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Missing One</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Beware</h3>
+        <span class="album-year">2009</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="Beware" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'Beware', '2009', 'Drag City')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        Oldham&rsquo;s most ambitious production &mdash; a full-band album with gospel-tinged arrangements, horns, and choral vocals. Recorded with a large ensemble including Emmett Kelly, Angel Olsen makes an early appearance. The songs wrestle with faith, doubt, and the desire to be good.
+      </div>
+      <div class="tags">
+        <span class="tag">folk-rock</span>
+        <span class="tag">gospel</span>
+        <span class="tag">Americana</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Beware Your Only Friend</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Heart&rsquo;s Arms</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">There Is Something I Have to Say</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">You Don&rsquo;t Love Me</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">My Life&rsquo;s Work</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Death Final</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">I Don&rsquo;t Belong to Anyone</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">I Am Goodbye</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Without Work, You Have Nothing</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">You Can&rsquo;t Hurt Me Now</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Afraid Ain&rsquo;t Me</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">I Won&rsquo;t Ask Again</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Teach Me to Bear You</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Wolfroy Goes to Town</h3>
+        <span class="album-year">2011</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="Wolfroy Goes to Town" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'Wolfroy Goes to Town', '2011', 'Drag City')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        Dark and dense, with guitarist Emmett Kelly and singer Angel Olsen forming a potent supporting cast. The songs are longer, knottier, more demanding &mdash; this is Oldham at his most uncompromising since Arise Therefore. Ben Boye&rsquo;s piano adds an unsettling grandeur.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Emmett Kelly (guitar), Angel Olsen (vocals), Ben Boye (piano), Shahzad Ismaily (bass, synths)
+      </div>
+      <div class="tags">
+        <span class="tag">dark folk</span>
+        <span class="tag">experimental</span>
+        <span class="tag">art rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">No Match</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">New Whaling</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Quail and Dumplings</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Time to Be Clear</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Wolfroy Goes to Town</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">We Are Unhappy</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Night Noises</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Black Captain</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Sounds Are Always Begging</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ REINVENTIONS ═══════════════════════════════════════════════ -->
+
+<section class="section" id="reinventions">
+  <h2 class="section-title">Reinventions</h2>
+  <p class="section-subtitle">2014&ndash;2019 &middot; 5 Albums &middot; Covers, Reworkings &amp; Return</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Singer&rsquo;s Grave a Sea of Tongues</h3>
+        <span class="album-year">2014</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="Singer's Grave a Sea of Tongues" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'Singer\'s Grave a Sea of Tongues', '2014', 'Drag City')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        A radical reworking of Wolfroy Goes to Town &mdash; the same songs re-recorded in Nashville with Music City session musicians including steel guitarist Paul Niehaus (Calexico), organist Tony Crow (Lambchop), and the McCrary Sisters on gospel vocals. The transformation is startling.
+      </div>
+      <div class="tags">
+        <span class="tag">country</span>
+        <span class="tag">gospel</span>
+        <span class="tag">Nashville</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">No Match</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">New Whaling</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Quail and Dumplings</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Time to Be Clear</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Wolfroy Goes to Town</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">We Are Unhappy</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Night Noises</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Black Captain</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Sounds Are Always Begging</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Pond Scum</h3>
+        <span class="album-year">2016</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="Pond Scum" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'Pond Scum', '2016', 'Drag City / Domino')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+        <span class="label-badge label-domino">Domino</span>
+      </div>
+      <div class="album-summary">
+        Live-in-the-studio recordings originally cut for John Peel&rsquo;s BBC radio sessions, collected and finally given a proper release. Includes Palace and BPB favorites plus an idiosyncratic cover of Prince&rsquo;s &lsquo;The Cross.&rsquo; Raw, immediate, and wonderfully loose.
+      </div>
+      <div class="tags">
+        <span class="tag">live sessions</span>
+        <span class="tag">lo-fi</span>
+        <span class="tag">folk</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Best Troubador</h3>
+        <span class="album-year">2017</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="Best Troubador" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'Best Troubador', '2017', 'Drag City')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        A tribute to Merle Haggard &mdash; 15 songs written or recorded by the great country star, reinterpreted through Oldham&rsquo;s singular lens. Not karaoke but genuine communion with the material, backed by a band that includes multi-instrumentalist Emmett Kelly.
+      </div>
+      <div class="tags">
+        <span class="tag">country</span>
+        <span class="tag">covers</span>
+        <span class="tag">tribute</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Wolf of the Cosmos</h3>
+        <span class="album-year">2017</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="Wolf of the Cosmos" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'Wolf of the Cosmos', '2017', 'Drag City / Domino')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+        <span class="label-badge label-domino">Domino</span>
+      </div>
+      <div class="album-summary">
+        An album of covers interpreting every song from Norwegian singer Susanna&rsquo;s 2007 album Sonata Mix Dwarf Cosmos. A characteristically oblique concept that yields surprisingly tender, committed performances.
+      </div>
+      <div class="tags">
+        <span class="tag">covers</span>
+        <span class="tag">art folk</span>
+        <span class="tag">experimental</span>
+      </div>
+    </div>
+
+    <div class="album-card" style="border-color: var(--accent-dim); background: linear-gradient(135deg, var(--bg-card), rgba(122, 154, 106, 0.05));">
+      <div class="album-header">
+        <h3 class="album-title">I Made a Place</h3>
+        <span class="album-year">2019</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="I Made a Place" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'I Made a Place', '2019', 'Drag City')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        A return to core songwriting after years of covers and reinventions. Recorded in Louisville with a dream band including guitarist Nathan Salsburg and singer Joan Shelley. The songs are warm, wise, and deeply lived-in &mdash; Oldham&rsquo;s most purely beautiful album in a decade.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Nathan Salsburg (guitar), Joan Shelley (voice), Jacob Duncan (woodwinds, keys), Mike Hyman (drums), Danny Kiely (bass)
+      </div>
+      <div class="tags">
+        <span class="tag">folk</span>
+        <span class="tag">Americana</span>
+        <span class="tag">chamber</span>
+        <span class="tag">landmark</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">New Memory Box</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Dream Awhile</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">The Devil&rsquo;s Throat</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Look Backward on Your Future, Look Forward to Your Past</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">I Have Made a Place</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Squid Eye</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">You Know the One</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">This Is Far from Over</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Nothing Is Busted</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Mama Mama</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">The Glow Pt. 3</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Thick Air</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Building a Fire</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ LOUISVILLE RETURN ═══════════════════════════════════════════════ -->
+
+<section class="section" id="louisville">
+  <h2 class="section-title">Louisville Return</h2>
+  <p class="section-subtitle">2023&ndash;2026 &middot; 3 Albums &middot; Homecoming</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Keeping Secrets Will Destroy You</h3>
+        <span class="album-year">2023</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="Keeping Secrets Will Destroy You" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'Keeping Secrets Will Destroy You', '2023', 'Drag City')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        The first album for Drag City in eight years marks a return to Louisville recording. Intimate and reflective, with Oldham&rsquo;s voice more weathered and expressive than ever. The songs deal with aging, honesty, and the cost of guardedness.
+      </div>
+      <div class="tags">
+        <span class="tag">folk</span>
+        <span class="tag">indie</span>
+        <span class="tag">introspective</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Purple Bird</h3>
+        <span class="album-year">2025</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="The Purple Bird" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'The Purple Bird', '2025', 'Domino')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-domino">Domino</span>
+      </div>
+      <div class="album-summary">
+        Made in Nashville with legendary producer David &lsquo;Ferg&rsquo; Ferguson (Johnny Cash, Sturgill Simpson) and &lsquo;the best band you can get in Nashville right now&rsquo; &mdash; including country singer John Anderson and bluegrass legend Tim O&rsquo;Brien. Oldham&rsquo;s most polished production, and it suits him.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Fred Eltringham (drums), Steve Mackey (bass), Russ Pahl (electric guitar), Pat McLaughlin (mandolin), Stuart Duncan (fiddle)
+      </div>
+      <div class="tags">
+        <span class="tag">country</span>
+        <span class="tag">Nashville</span>
+        <span class="tag">Americana</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Turned to Dust (Rolling On)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">London May</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Tonight With the Dogs I&rsquo;m Sleeping</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Boise Idaho</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">The Water&rsquo;s Fine</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Sometimes It&rsquo;s Hard to Breathe</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">New Water</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Guns Are For Cowards</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Downstream</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">One of These Days (I&rsquo;m Gonna Spend the Whole Night With You)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Is My Living In Vain?</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Our Home</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">We Are Together Again</h3>
+        <span class="album-year">2026</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="We Are Together Again" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'We Are Together Again', '2026', 'Drag City')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+      </div>
+      <div class="album-summary">
+        The newest album, recorded in Louisville&rsquo;s Portland neighborhood with an expansive ensemble of local and guest musicians. Jim Marlowe recorded and mixed at End of an Ear. Horns, strings, and a chorus of singers create Oldham&rsquo;s most communal-sounding album since Beware.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thomas Deakin (accordion, cornet, tuba, clarinet), Jacob Duncan (sax, flute, piano), Caleb Vasquez (percussion), Ryder McNair (string arrangements, piano), Ned Oldham (bass), Catherine Irwin (vocals), Sally Timms (vocals)
+      </div>
+      <div class="tags">
+        <span class="tag">folk</span>
+        <span class="tag">orchestral</span>
+        <span class="tag">communal</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">&#9654;</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Why is the Lion</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">They Keep Trying To Find You</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Strange Trouble</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Life is Scary Horses</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">(Everybody&rsquo;s Got a) Friend Named Joe</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Vietnam Sunshine</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Hey Little</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Davey Dead</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Children Are Sick</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Bride of the Lion</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ LIVE ═══════════════════════════════════════════════ -->
+
+<section class="section" id="live">
+  <h2 class="section-title">Live Albums</h2>
+  <p class="section-subtitle">2 Albums &middot; On Stage &amp; In the Studio</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Funtown Comedown</h3>
+        <span class="album-year">2009</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Bonnie &quot;Prince&quot; Billy" data-album="Funtown Comedown" onchange="toggleWant(this, 'Bonnie \x22Prince\x22 Billy', 'Funtown Comedown', '2009', 'Drag City')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-drag-city">Drag City</span>
+        <span class="album-credit">with The Picket Line</span>
+      </div>
+      <div class="album-summary">
+        Recorded live with Louisville bluegrass dance band The Picket Line. A joyous, communal set that reimagines Palace and BPB songs through a bluegrass lens. Includes a cover of Merle Haggard&rsquo;s &lsquo;Rambling Fever.&rsquo; Possibly the most fun Oldham record.
+      </div>
+      <div class="tags">
+        <span class="tag">bluegrass</span>
+        <span class="tag">live</span>
+        <span class="tag">country</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Superwolves</h3>
+        <span class="album-year">2021</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">In collection</span>
+        <span class="label-badge label-drag-city">Drag City</span>
+        <span class="album-credit">with Matt Sweeney</span>
+      </div>
+      <div class="album-summary">
+        The long-awaited sequel to Superwolf, 16 years later. The duo&rsquo;s chemistry is undiminished &mdash; Sweeney&rsquo;s guitar is heavier and more textured, and the rhythm section (including Mdou Moctar and his band) adds a new dimension. &lsquo;Hall of Death&rsquo; and &lsquo;My Blue Suit&rsquo; are instant classics.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Matt Sweeney (guitar), Mdou Moctar (lead guitar), Ahmoudou Madassane (rhythm guitar), Mike Coltun (bass), Souleyman Ibrahim (drums)
+      </div>
+      <div class="tags">
+        <span class="tag">alt-rock</span>
+        <span class="tag">blues</span>
+        <span class="tag">collaboration</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>
+      Discography compiled from web sources. Focuses on studio and live albums; excludes compilations, EPs, singles, and remix albums.
+      Recording aliases: Palace Brothers (1993&ndash;94), Palace Music (1995&ndash;96), Will Oldham (1997), Bonnie &ldquo;Prince&rdquo; Billy (1999&ndash;present).
+    </p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    document.querySelectorAll('.era-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  const sections = document.querySelectorAll('.section');
+  const navBtns = document.querySelectorAll('.era-btn');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('onclick').includes(id));
+        });
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '-80px 0px 0px 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

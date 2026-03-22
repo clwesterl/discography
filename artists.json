@@ -16,5 +16,14 @@
     "tags": ["art rock", "electronic", "alternative", "experimental"],
     "albums": "9 studio + 2 live albums",
     "description": "Oxford five-piece whose arc from guitar-band anthems through electronic reinvention made them one of the most critically acclaimed acts of their generation."
+  },
+  {
+    "name": "Bonnie \"Prince\" Billy",
+    "file": "bonnie-prince-billy.html",
+    "years": "1993–present",
+    "genre": "Folk",
+    "tags": ["alt-country", "indie folk", "singer-songwriter", "Americana"],
+    "albums": "23 studio + 2 live albums",
+    "description": "Will Oldham's three-decade catalog — from the raw Palace Brothers recordings through the Bonnie 'Prince' Billy years — is one of American music's most singular and restless bodies of work."
   }
 ]
