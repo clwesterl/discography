@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John Coltrane — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --blue-note: #2a5c8a;
+    --impulse: #c45b28;
+    --atlantic: #3a7a5c;
+    --prestige: #7a5a8a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    padding: 5rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--amber);
+  }
+
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--amber);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* ─── NAVIGATION ─── */
+  .era-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15, 14, 12, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 0;
+    margin-bottom: 2.5rem;
+  }
+
+  .era-nav .container {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: wrap;
+  }
+
+  .era-nav::-webkit-scrollbar { display: none; }
+
+  .era-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+  }
+
+  .era-btn:hover, .era-btn.active {
+    color: var(--cream);
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.08);
+  }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 4rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  /* ─── ALBUM CARDS ─── */
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--amber-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+  .album-card:nth-child(6) { animation-delay: 0.3s; }
+
+  .album-header {
+    padding: 1.25rem 1.25rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .album-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--cream);
+    line-height: 1.3;
+  }
+
+  .album-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.8rem;
+    color: var(--amber);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+
+  .album-meta {
+    padding: 0.5rem 1.25rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+
+  .label-prestige { background: rgba(122, 90, 138, 0.2); color: #b89ac8; border: 1px solid rgba(122, 90, 138, 0.3); }
+  .label-blue-note { background: rgba(42, 92, 138, 0.2); color: #7abadf; border: 1px solid rgba(42, 92, 138, 0.3); }
+  .label-atlantic { background: rgba(58, 122, 92, 0.2); color: #7ac8a8; border: 1px solid rgba(58, 122, 92, 0.3); }
+  .label-impulse { background: rgba(196, 91, 40, 0.2); color: #e8935a; border: 1px solid rgba(196, 91, 40, 0.3); }
+  .label-pablo { background: rgba(138, 106, 47, 0.2); color: #d4b86a; border: 1px solid rgba(138, 106, 47, 0.3); }
+  .label-other { background: rgba(100, 100, 100, 0.2); color: #aaa; border: 1px solid rgba(100, 100, 100, 0.3); }
+
+  .recording-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+  }
+
+  .album-summary {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.92rem;
+    color: var(--cream-muted);
+    line-height: 1.65;
+  }
+
+  .album-personnel {
+    padding: 0 1.25rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .personnel-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber-dim);
+    margin-bottom: 0.2rem;
+  }
+
+  .tags {
+    padding: 0 1.25rem 1.25rem;
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  /* ─── TRACK LISTING ─── */
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--amber-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .tracklist-toggle:hover { color: var(--amber); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+
+  .tracklist {
+    display: none;
+    padding: 0 1.25rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .tracklist.open { display: block; }
+
+  .track {
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+
+  .track-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--amber-dim);
+    min-width: 1.4rem;
+    text-align: right;
+  }
+
+  .track-name {
+    color: var(--cream-muted);
+  }
+
+  .track-duration {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0 3rem;
+    margin-top: 2rem;
+  }
+
+  footer p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 3rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Saxophone · Composer · Bandleader &nbsp;·&nbsp; 1926–1967</div>
+    <h1 class="artist-name">John Coltrane</h1>
+    <p class="artist-bio">
+      Among the most influential figures in the history of jazz and 20th-century music. 
+      From hard bop to modal jazz to spiritual free jazz, Coltrane's decade of recordings 
+      as a leader charted one of the most extraordinary artistic evolutions in American music.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">28</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">14+</span>
+        <span class="stat-label">Live Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">4</span>
+        <span class="stat-label">Labels</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1957–67</span>
+        <span class="stat-label">Active as Leader</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="era-nav">
+  <div class="container">
+    <button class="era-btn active" onclick="scrollToSection('prestige')">Prestige 1957–58</button>
+    <button class="era-btn" onclick="scrollToSection('bluenote')">Blue Note 1957</button>
+    <button class="era-btn" onclick="scrollToSection('atlantic')">Atlantic 1959–61</button>
+    <button class="era-btn" onclick="scrollToSection('impulse-studio')">Impulse! Studio</button>
+    <button class="era-btn" onclick="scrollToSection('impulse-posthumous')">Posthumous Studio</button>
+    <button class="era-btn" onclick="scrollToSection('live')">Live Albums</button>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PRESTIGE RECORDS -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="prestige">
+  <h2 class="section-title">Prestige Records</h2>
+  <p class="section-subtitle">1957–1958 · The Apprentice Years as Leader</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Coltrane</h3>
+        <span class="album-year">1957</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-prestige">Prestige</span>
+        <span class="recording-date">Rec. May 31, 1957</span>
+      </div>
+      <div class="album-summary">
+        Coltrane's debut as a leader, recorded while he was still working through the hard bop idiom. It's a confident, swinging date that hints at the harmonic adventurousness to come — particularly on his original "Straight Street" — but is primarily a showcase for his growing command of the tenor's full range.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Johnnie Splawn (tp), Sahib Shihab (bs), Mal Waldron (p), Red Garland (p), Paul Chambers (b), Albert Heath (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">post-bop</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">John Coltrane with the Red Garland Trio</h3>
+        <span class="album-year">1958</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-prestige">Prestige</span>
+        <span class="recording-date">Rec. Aug 23, 1957</span>
+      </div>
+      <div class="album-summary">
+        A stripped-down trio setting (no other horn) that lets Coltrane stretch out against Red Garland's elegant, block-chord comping. The reduced format was unusual for the period and foreshadowed Coltrane's later preference for leaner ensembles where the saxophone carries all the melodic weight.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Red Garland (p), Paul Chambers (b), Art Taylor (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">ballads</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Soultrane</h3>
+        <span class="album-year">1958</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-prestige">Prestige</span>
+        <span class="recording-date">Rec. Feb 7, 1958</span>
+      </div>
+      <div class="album-summary">
+        Often considered the finest of the Prestige dates. Mostly ballads and mid-tempo tunes, but Coltrane's tone is already unmistakable — regal and probing at once. "Russian Lullaby" at breakneck speed previews the "sheets of sound" approach that would define his next phase, while "I Want to Talk About You" became a lifelong concert staple.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Red Garland (p), Paul Chambers (b), Art Taylor (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">sheets of sound</span>
+        <span class="tag">ballads</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- BLUE NOTE -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="bluenote">
+  <h2 class="section-title">Blue Note Records</h2>
+  <p class="section-subtitle">1957 · One Session, One Masterpiece</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Blue Train</h3>
+        <span class="album-year">1958</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-blue-note">Blue Note</span>
+        <span class="recording-date">Rec. Sep 15, 1957</span>
+      </div>
+      <div class="album-summary">
+        Coltrane's sole date as leader for Blue Note, and one of hard bop's defining statements. The title track's three-horn frontline — with Lee Morgan's bright trumpet and Curtis Fuller's trombone — creates a sound both powerful and precise. Every tune is a Coltrane original, and the whole session radiates the confidence of an artist who knows exactly what he wants. Recorded at Rudy Van Gelder's studio in Hackensack.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Lee Morgan (tp), Curtis Fuller (tb), Kenny Drew (p), Paul Chambers (b), Philly Joe Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">Van Gelder</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">▶</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Blue Train</span><span class="track-duration">10:40</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Moment's Notice</span><span class="track-duration">9:12</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Locomotion</span><span class="track-duration">7:14</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">I'm Old Fashioned</span><span class="track-duration">7:55</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Lazy Bird</span><span class="track-duration">7:03</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- ATLANTIC RECORDS -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="atlantic">
+  <h2 class="section-title">Atlantic Records</h2>
+  <p class="section-subtitle">1959–1961 · The Breakthrough</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Giant Steps</h3>
+        <span class="album-year">1960</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-atlantic">Atlantic</span>
+        <span class="recording-date">Rec. May 1959 & Dec 1959</span>
+      </div>
+      <div class="album-summary">
+        The album that announced Coltrane as a compositional force. The title track's rapidly cycling chord changes — the "Coltrane changes" — remain a rite of passage for jazz musicians. "Naima," named for his first wife, is among the most achingly beautiful ballads in the repertoire. Every composition here became a jazz standard. A watershed in the literature.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Tommy Flanagan (p), Wynton Kelly (p), Cedar Walton (p), Paul Chambers (b), Art Taylor (d), Jimmy Cobb (d), Lex Humphries (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">Coltrane changes</span>
+        <span class="tag">modal jazz</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">▶</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Giant Steps</span><span class="track-duration">4:46</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Cousin Mary</span><span class="track-duration">5:46</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Countdown</span><span class="track-duration">2:23</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Spiral</span><span class="track-duration">5:58</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Syeeda's Song Flute</span><span class="track-duration">7:03</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Naima</span><span class="track-duration">4:23</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Mr. P.C.</span><span class="track-duration">6:57</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Coltrane Jazz</h3>
+        <span class="album-year">1961</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-atlantic">Atlantic</span>
+        <span class="recording-date">Rec. 1959–1960</span>
+      </div>
+      <div class="album-summary">
+        A transitional album assembled from sessions spanning more than a year, bridging the Giant Steps harmonic explorations with the modal approach of My Favorite Things. Features both the Miles rhythm section (Kelly/Chambers/Cobb) and the nascent Classic Quartet (Tyner/Davis/Jones). "Village Blues" shows Coltrane beginning to explore vamps and drones.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Wynton Kelly (p), McCoy Tyner (p), Paul Chambers (b), Steve Davis (b), Jimmy Cobb (d), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">hard bop</span>
+        <span class="tag">transitional</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">My Favorite Things</h3>
+        <span class="album-year">1961</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-atlantic">Atlantic</span>
+        <span class="recording-date">Rec. Oct 1960</span>
+      </div>
+      <div class="album-summary">
+        A turning point: Coltrane's soprano saxophone debut on record, transforming the Rodgers & Hammerstein waltz into a hypnotic modal incantation. Atlantic released an edit as a single and it became a surprise radio hit. The album introduced McCoy Tyner and Elvin Jones as core members of what would become the Classic Quartet. One of the best-selling jazz albums ever recorded.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Steve Davis (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">modal jazz</span>
+        <span class="tag">soprano sax</span>
+        <span class="tag">landmark</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Olé Coltrane</h3>
+        <span class="album-year">1961</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-atlantic">Atlantic</span>
+        <span class="recording-date">Rec. May 25, 1961</span>
+      </div>
+      <div class="album-summary">
+        Coltrane's final Atlantic session and his most ambitious to that point — an expanded ensemble with Eric Dolphy on flute and alto, Freddie Hubbard on trumpet, and a rare two-bass lineup (Reggie Workman and Art Davis). The 18-minute title track is essentially a concerto for soprano sax over a Spanish-tinged modal vamp, pointing directly toward the expansive explorations of the Impulse! years.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Eric Dolphy (fl, as), Freddie Hubbard (tp), McCoy Tyner (p), Reggie Workman (b), Art Davis (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">modal jazz</span>
+        <span class="tag">extended form</span>
+        <span class="tag">Spanish tinge</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- IMPULSE! STUDIO -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="impulse-studio">
+  <h2 class="section-title">Impulse! Records — Studio Albums</h2>
+  <p class="section-subtitle">1961–1967 · "The House That Trane Built"</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Africa/Brass</h3>
+        <span class="album-year">1961</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. May–Jun 1961</span>
+      </div>
+      <div class="album-summary">
+        Coltrane's Impulse! debut, and the label's first release — an audacious large-ensemble date with orchestrations by Eric Dolphy and McCoy Tyner. "Africa" builds from a deep bass ostinato into a gathering storm of horns, driven by Elvin Jones's polyrhythmic fury. A statement of intent: Coltrane would use Impulse! to go wherever the music led.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Reggie Workman (b), Art Davis (b), Elvin Jones (d), Pat Patrick (bs), plus brass section arr. Eric Dolphy & McCoy Tyner
+      </div>
+      <div class="tags">
+        <span class="tag">modal jazz</span>
+        <span class="tag">large ensemble</span>
+        <span class="tag">Afrocentric</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Coltrane</h3>
+        <span class="album-year">1962</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Apr–Jun 1962</span>
+      </div>
+      <div class="album-summary">
+        Not to be confused with the 1957 Prestige debut. This Impulse! album captures the Classic Quartet — now with Jimmy Garrison on bass — in its early maturity. "Out of This World" stretches past 15 minutes of relentless, ecstatic improvisation over a waltz vamp, one of the first recordings to fully capture the Quartet's supernatural intensity.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">post-bop</span>
+        <span class="tag">modal jazz</span>
+        <span class="tag">Classic Quartet</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Duke Ellington & John Coltrane</h3>
+        <span class="album-year">1963</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Sep 26, 1962</span>
+      </div>
+      <div class="album-summary">
+        A summit meeting between eras. Ellington's urbane elegance and Coltrane's spiritual fire prove unexpectedly complementary, with two contrasting rhythm sections (Garrison/Jones and Bell/Woodyard) providing shifting textures. "In a Sentimental Mood" is a highlight of both artists' discographies — a masterclass in tenderness and restraint.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Duke Ellington (p, co-leader), Jimmy Garrison (b), Elvin Jones (d), Aaron Bell (b), Sam Woodyard (d)
+      </div>
+      <div class="tags">
+        <span class="tag">ballads</span>
+        <span class="tag">co-leader date</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Ballads</h3>
+        <span class="album-year">1963</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. 1961–1962</span>
+      </div>
+      <div class="album-summary">
+        A gentle rebuke to critics who thought Coltrane could only play loud: eight standards rendered with exquisite tenderness and a warm, glowing tone. An ideal entry point for listeners new to Coltrane, and a reminder that behind the torrential improviser was a musician of profound sensitivity and melodic grace. Became one of his best-selling records.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Reggie Workman (b, 12/21 session), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">ballads</span>
+        <span class="tag">standards</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Impressions</h3>
+        <span class="album-year">1963</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. 1961–1963</span>
+      </div>
+      <div class="album-summary">
+        A composite album drawn from several sessions, anchored by the title track — a modal burner built on the same AABA structure as "So What" but taken at a fiercer tempo and with far more harmonic freedom. "India" with its double-bass drone and "After the Rain" with its hymn-like stillness represent opposite poles of the Quartet's range.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d), Eric Dolphy (bcl, on some tracks), Roy Haynes (d, on some tracks)
+      </div>
+      <div class="tags">
+        <span class="tag">modal jazz</span>
+        <span class="tag">post-bop</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">John Coltrane and Johnny Hartman</h3>
+        <span class="album-year">1963</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Mar 7, 1963</span>
+      </div>
+      <div class="album-summary">
+        Coltrane's only album with a vocalist, and one of the most beloved vocal-jazz records ever made. Hartman's burnished baritone and Coltrane's warm tenor create an intimacy that feels almost private. "Lush Life" and "My One and Only Love" are definitive readings. Recorded in a single session — the two had never played together before.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Johnny Hartman (vocals, co-leader), McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">vocal jazz</span>
+        <span class="tag">ballads</span>
+        <span class="tag">standards</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Crescent</h3>
+        <span class="album-year">1964</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Apr–Jun 1964</span>
+      </div>
+      <div class="album-summary">
+        The Classic Quartet at its most unified and soulful. Often regarded as the immediate precursor to A Love Supreme — darker, more spiritual, and more compositionally integrated than earlier Impulse! dates. "Lonnie's Lament" is a minor-key blues of devastating simplicity; "The Drum Thing" is a duet with Elvin Jones that explores pure rhythm and timbre.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">post-bop</span>
+        <span class="tag">spiritual jazz</span>
+        <span class="tag">Classic Quartet</span>
+      </div>
+    </div>
+
+    <div class="album-card" style="border-color: var(--amber-dim); background: linear-gradient(135deg, var(--bg-card), rgba(212, 160, 74, 0.05));">
+      <div class="album-header">
+        <h3 class="album-title">A Love Supreme</h3>
+        <span class="album-year">1965</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Dec 9, 1964</span>
+      </div>
+      <div class="album-summary">
+        Coltrane's masterpiece and one of the most important albums in the history of recorded music. A four-part suite conceived as a spiritual offering — from the iconic four-note bass motif of "Acknowledgement" through the searching "Resolution," the cathartic "Pursuance," and the prayerful "Psalm" (whose melody follows the cadence of Coltrane's own written poem). Recorded in a single session. Certified gold; awarded a special Pulitzer Prize in 2007.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">spiritual jazz</span>
+        <span class="tag">modal jazz</span>
+        <span class="tag">suite</span>
+        <span class="tag">landmark</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)">
+        <span class="arrow">▶</span> Track listing
+      </button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">I</span><span class="track-name">Acknowledgement</span><span class="track-duration">7:47</span></div>
+        <div class="track"><span class="track-num">II</span><span class="track-name">Resolution</span><span class="track-duration">7:22</span></div>
+        <div class="track"><span class="track-num">III</span><span class="track-name">Pursuance</span><span class="track-duration">10:44</span></div>
+        <div class="track"><span class="track-num">IV</span><span class="track-name">Psalm</span><span class="track-duration">7:05</span></div>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The John Coltrane Quartet Plays</h3>
+        <span class="album-year">1965</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Feb–May 1965</span>
+      </div>
+      <div class="album-summary">
+        An underrated entry that finds the Quartet exploring a mix of standards and originals with increasing freedom. "Chim Chim Cheree" transforms the Mary Poppins tune into a dark, spiraling modal workout. "Brazilia" and "Song of Praise" show Coltrane's growing interest in global musics and devotional composition.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Art Davis (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">post-bop</span>
+        <span class="tag">modal jazz</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Ascension</h3>
+        <span class="album-year">1966</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Jun 28, 1965</span>
+      </div>
+      <div class="album-summary">
+        A seismic event in jazz: 11 musicians playing collective free improvisation for nearly 40 unbroken minutes. Inspired by Ornette Coleman's Free Jazz but more ferocious. The ensemble includes Freddie Hubbard, Pharoah Sanders, Archie Shepp, and Marion Brown. Simultaneously Coltrane's most divisive and most historically significant late-period recording — a declaration that jazz could be communal, spiritual, and overwhelming.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Freddie Hubbard (tp), Dewey Johnson (tp), Marion Brown (as), John Tchicai (as), Pharoah Sanders (ts), Archie Shepp (ts), McCoy Tyner (p), Art Davis (b), Jimmy Garrison (b), Elvin Jones (d), Rashied Ali (d)
+      </div>
+      <div class="tags">
+        <span class="tag">free jazz</span>
+        <span class="tag">collective improvisation</span>
+        <span class="tag">large ensemble</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Meditations</h3>
+        <span class="album-year">1966</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Nov 23, 1965</span>
+      </div>
+      <div class="album-summary">
+        Another five-part suite, this time with an expanded quintet featuring Pharoah Sanders on second tenor and Rashied Ali on second drums. The addition of Sanders — whose overblowing and multiphonics pushed even further than Coltrane's — marked a decisive step into the free-jazz wilderness. The original Quartet's response to this expansion was mixed; it would prove to be one of their last sessions together.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Pharoah Sanders (ts), McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d), Rashied Ali (d)
+      </div>
+      <div class="tags">
+        <span class="tag">free jazz</span>
+        <span class="tag">spiritual jazz</span>
+        <span class="tag">suite</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Kulu Sé Mama</h3>
+        <span class="album-year">1967</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Jun–Oct 1965</span>
+      </div>
+      <div class="album-summary">
+        A composite album that mixes expanded-ensemble pieces with Classic Quartet tracks. The title track is a 17-minute percussion-and-chant-driven piece with Juno Lewis's spoken-word invocations over layered polyrhythms — one of Coltrane's most explicitly Afrocentric recordings. "Welcome" balances the intensity with lyrical warmth.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d), Pharoah Sanders (ts), Donald Rafael Garrett (b, bcl), Juno Lewis (perc, vocals)
+      </div>
+      <div class="tags">
+        <span class="tag">spiritual jazz</span>
+        <span class="tag">Afrocentric</span>
+        <span class="tag">free jazz</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Expression</h3>
+        <span class="album-year">1967</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Feb–Mar 1967</span>
+      </div>
+      <div class="album-summary">
+        The last album released in Coltrane's lifetime, and among his most searching. With Alice Coltrane replacing Tyner on piano and Rashied Ali's fluid drumming replacing Jones's polyrhythmic thunder, the ensemble has a completely different character — more diffuse, meditative, and unconstrained. "Ogunde" and "To Be" suggest new directions he would never live to fully explore. He died four months after the final session.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Alice Coltrane (p), Pharoah Sanders (ts, piccolo), Jimmy Garrison (b), Rashied Ali (d)
+      </div>
+      <div class="tags">
+        <span class="tag">free jazz</span>
+        <span class="tag">avant-garde</span>
+        <span class="tag">final album</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- POSTHUMOUS STUDIO -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="impulse-posthumous">
+  <h2 class="section-title">Posthumous Studio Albums</h2>
+  <p class="section-subtitle">Released 1968–2019 · From the Vault</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Transition</h3>
+        <span class="album-year">1970</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. May–Jun 1965</span>
+      </div>
+      <div class="album-summary">
+        Shelved during Coltrane's lifetime in favor of other releases, Transition captures the Classic Quartet at a pivotal moment — just after A Love Supreme and just before the expanded-ensemble experiments. The title track and "Suite" show Coltrane pushing into longer, freer forms while retaining the Quartet's signature cohesion.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">post-bop</span>
+        <span class="tag">spiritual jazz</span>
+        <span class="tag">Classic Quartet</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Sun Ship</h3>
+        <span class="album-year">1971</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Aug 26, 1965</span>
+      </div>
+      <div class="album-summary">
+        One of the most intense documents of the Classic Quartet. Recorded in a single afternoon, every track burns with fierce, almost ecstatic energy. Some listeners consider this the true culmination of the Tyner/Garrison/Jones unit — more uncompromising than A Love Supreme, recorded on the very brink of the group's dissolution.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">free jazz</span>
+        <span class="tag">spiritual jazz</span>
+        <span class="tag">Classic Quartet</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Interstellar Space</h3>
+        <span class="album-year">1974</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Feb 22, 1967</span>
+      </div>
+      <div class="album-summary">
+        Coltrane's most radical statement: a series of duets with drummer Rashied Ali, each named for a planet. No piano, no bass — just tenor saxophone and drums in raw, unmediated dialogue. The textures range from screaming intensity to moments of fragile, spectral beauty. A profound influence on free improvisation and noise music that followed.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Rashied Ali (d)
+      </div>
+      <div class="tags">
+        <span class="tag">free jazz</span>
+        <span class="tag">avant-garde</span>
+        <span class="tag">duo</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Stellar Regions</h3>
+        <span class="album-year">1995</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Feb 15, 1967</span>
+      </div>
+      <div class="album-summary">
+        Eleven compact pieces from the same sessions as Interstellar Space and Expression, here with the full quartet. Short, concentrated bursts of invention — many under four minutes — that feel like rapid-fire sketches for future exploration. A late discovery that enriched understanding of Coltrane's final creative period.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Alice Coltrane (p), Jimmy Garrison (b), Rashied Ali (d)
+      </div>
+      <div class="tags">
+        <span class="tag">free jazz</span>
+        <span class="tag">avant-garde</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Both Directions at Once: The Lost Album</h3>
+        <span class="album-year">2018</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Mar 6, 1963</span>
+      </div>
+      <div class="album-summary">
+        A sensation when announced: a previously unknown studio session from 1963, discovered from a reference tape held by Coltrane's first wife Naima. Seven tracks of the Classic Quartet at their most poised, including previously unheard originals. The master tapes were lost or destroyed; these survive from a mono reference copy. A rare window into a working session.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">post-bop</span>
+        <span class="tag">modal jazz</span>
+        <span class="tag">lost tapes</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Blue World</h3>
+        <span class="album-year">2019</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Jun 24, 1964</span>
+      </div>
+      <div class="album-summary">
+        Recorded for an obscure Canadian film, "Le chat dans le sac," and unreleased for over 50 years. The Classic Quartet performs reworked versions of earlier Coltrane pieces ("Naima," "Village Blues," "Traneing In") plus one original — "Blue World" — in a relaxed, lyrical session. A companion piece to Crescent, recorded around the same period.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">post-bop</span>
+        <span class="tag">soundtrack</span>
+        <span class="tag">Classic Quartet</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- LIVE ALBUMS -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="live">
+  <h2 class="section-title">Live Albums</h2>
+  <p class="section-subtitle">Selected Live Recordings — Where the Quartet Truly Lived</p>
+  <div class="album-grid">
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Live! at the Village Vanguard</h3>
+        <span class="album-year">1962</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Nov 2–3, 1961</span>
+      </div>
+      <div class="album-summary">
+        The first officially released live album, drawn from a legendary multi-night residency. Features Eric Dolphy on bass clarinet alongside the working group. "Chasin' the 'Trane" — 16 minutes of blues-drenched tenor over Garrison's walking bass and Jones's relentless swing — was a shock to critics at the time and is now regarded as one of the great live jazz performances ever recorded.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Eric Dolphy (bcl), McCoy Tyner (p), Reggie Workman (b), Jimmy Garrison (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">live</span>
+        <span class="tag">modal jazz</span>
+        <span class="tag">Village Vanguard</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Live at Birdland</h3>
+        <span class="album-year">1964</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Oct–Nov 1963</span>
+      </div>
+      <div class="album-summary">
+        A hybrid album mixing live tracks from Birdland with studio recordings. The live "Afro Blue" and "I Want to Talk About You" — where Coltrane's unaccompanied tenor cadenza became a nightly ritual — capture the Classic Quartet at peak intensity. "Alabama," the studio track, was Coltrane's response to the 16th Street Baptist Church bombing.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">live</span>
+        <span class="tag">spiritual jazz</span>
+        <span class="tag">civil rights</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Live at the Half Note: One Down, One Up</h3>
+        <span class="album-year">2005</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Mar–May 1965</span>
+      </div>
+      <div class="album-summary">
+        Radio broadcasts from the Half Note club that capture the Classic Quartet in its final, most superhuman phase. "One Down, One Up" stretches past 25 minutes of unrelenting intensity. Many Coltrane scholars consider these Half Note performances the absolute summit of the Quartet's live playing — the energy level is almost incomprehensible.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">live</span>
+        <span class="tag">post-bop</span>
+        <span class="tag">Classic Quartet</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">A Love Supreme: Live in Seattle</h3>
+        <span class="album-year">2021</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Oct 2, 1965</span>
+      </div>
+      <div class="album-summary">
+        One of only two known live performances of the complete A Love Supreme suite, discovered from an amateur recording. The expanded ensemble — with Pharoah Sanders and Donald Garrett joining the Quartet — takes the suite into extended free territory far beyond the studio version. A revelatory document, released over 55 years after it was recorded.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        McCoy Tyner (p), Jimmy Garrison (b), Elvin Jones (d), Pharoah Sanders (ts), Donald Garrett (b, bcl), Carlos Ward (as)
+      </div>
+      <div class="tags">
+        <span class="tag">live</span>
+        <span class="tag">spiritual jazz</span>
+        <span class="tag">free jazz</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Evenings at the Village Gate</h3>
+        <span class="album-year">2023</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Aug 1961</span>
+      </div>
+      <div class="album-summary">
+        The most recent archival discovery: recordings from the Village Gate with Eric Dolphy, captured by the club's sound system and rediscovered decades later. Documents the Coltrane-Dolphy partnership in an intimate club setting during the fertile period between the Atlantic and Impulse! contracts. Released to critical acclaim.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Eric Dolphy (as, bcl, fl), McCoy Tyner (p), Reggie Workman (b), Elvin Jones (d)
+      </div>
+      <div class="tags">
+        <span class="tag">live</span>
+        <span class="tag">post-bop</span>
+        <span class="tag">archival</span>
+      </div>
+    </div>
+
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Olatunji Concert: The Last Live Recording</h3>
+        <span class="album-year">2001</span>
+      </div>
+      <div class="album-meta">
+        <span class="label-badge label-impulse">Impulse!</span>
+        <span class="recording-date">Rec. Apr 23, 1967</span>
+      </div>
+      <div class="album-summary">
+        Coltrane's final known live recording, made at Olatunji Center of African Culture in Harlem less than three months before his death. The music is volcanic — extended free improvisations that push into pure sound. A difficult, powerful listen that captures an artist at the extreme edge of expression, still reaching for something beyond.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Alice Coltrane (p), Pharoah Sanders (ts), Jimmy Garrison (b), Rashied Ali (d), Algie DeWitt (perc)
+      </div>
+      <div class="tags">
+        <span class="tag">live</span>
+        <span class="tag">free jazz</span>
+        <span class="tag">final recording</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>Discography compiled from web sources. Focuses on leader dates (studio + live); excludes compilations, reissues, and sideman sessions unless noted. Some posthumous studio albums listed separately. For a complete sessionography, see The John Coltrane Reference (DeVito, Fujioka, Schmaler, Wild; Routledge, 2008).</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    document.querySelectorAll('.era-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // Update active nav on scroll
+  const sections = document.querySelectorAll('.section');
+  const navBtns = document.querySelectorAll('.era-btn');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('onclick').includes(id));
+        });
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '-80px 0px 0px 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
