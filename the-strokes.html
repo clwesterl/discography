@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Strokes — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #c43c3c;
+    --accent-dim: #8a2a2a;
+    --rca: #6a7a8a;
+    --cult: #8a6a7a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+  .album-card:nth-child(6) { animation-delay: 0.3s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-rca { background: rgba(106, 122, 138, 0.2); color: #90a8c0; border: 1px solid rgba(106, 122, 138, 0.3); }
+  .label-cult { background: rgba(138, 106, 122, 0.2); color: #c090a8; border: 1px solid rgba(138, 106, 122, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Garage Rock &middot; Post-Punk Revival &middot; Indie Rock &nbsp;&middot;&nbsp; 1998&ndash;present &middot; New York City</div>
+    <h1 class="artist-name">The Strokes</h1>
+    <p class="artist-bio">
+      Five New Yorkers whose taut, wired debut single-handedly reignited
+      guitar rock at the turn of the millennium &mdash; fusing Velvet
+      Underground cool, Television's guitar geometry, and a downtown swagger
+      into a sound that launched a thousand bands and redefined what indie
+      rock could mean in the twenty-first century.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">6</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2001&ndash;2020</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">3/6</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2 vinyl &middot; 3 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">2001&ndash;2020 &middot; Six releases across two decades on RCA / Cult</p>
+  <div class="album-grid">
+
+    <!-- Is This It -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Is This It</h3>
+        <span class="album-year">2001</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-rca">RCA</span>
+      </div>
+      <div class="album-summary">
+        The album that rebooted rock at the start of the new century. Recorded at Transporterraum studio in downtown Manhattan with producer Gordon Raphael, Is This It stripped guitar music to its nervy, melodic essentials. Casablancas's buried-in-the-mix vocals, Valensi and Hammond Jr.'s interlocking guitar lines, and the impossibly tight rhythm section created a sound both retro and urgent. Initially released in Australia on Rough Trade before RCA issued it worldwide, it became the critical consensus album of 2001 and a generational touchstone for garage rock revival.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Julian Casablancas &mdash; vocals &middot; Nick Valensi &mdash; lead guitar &middot; Albert Hammond Jr. &mdash; rhythm guitar &middot; Nikolai Fraiture &mdash; bass &middot; Fabrizio Moretti &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Gordon Raphael
+      </div>
+      <div class="tags">
+        <span class="tag">garage rock</span>
+        <span class="tag">post-punk revival</span>
+        <span class="tag">indie rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Is This It</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Modern Age</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Soma</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Barely Legal</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Someday</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Alone, Together</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Last Nite</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Hard to Explain</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">New York City Cops</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Trying Your Luck</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Take It or Leave It</span></div>
+      </div>
+    </div>
+
+    <!-- Room on Fire -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Room on Fire</h3>
+        <span class="album-year">2003</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-rca">RCA</span>
+      </div>
+      <div class="album-summary">
+        The difficult second album that turned out to be a worthy companion to the debut. Gordon Raphael returned to produce, this time at Transporterraum's new Long Island City location, preserving the lo-fi grit while subtly expanding the palette. The guitars are sharper and more layered, Casablancas's melodies more adventurous. Singles like "Reptilia" and "12:51" demonstrated range, while "Under Control" and "The End Has No End" revealed a maturing band unafraid of vulnerability. Commercially strong but overshadowed by the debut's mythology, it has aged gracefully into a fan favorite.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Julian Casablancas &mdash; vocals &middot; Nick Valensi &mdash; lead guitar &middot; Albert Hammond Jr. &mdash; rhythm guitar &middot; Nikolai Fraiture &mdash; bass &middot; Fabrizio Moretti &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Gordon Raphael
+      </div>
+      <div class="tags">
+        <span class="tag">garage rock</span>
+        <span class="tag">post-punk revival</span>
+        <span class="tag">indie rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">What Ever Happened?</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Reptilia</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Automatic Stop</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">12:51</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">You Talk Way Too Much</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Between Love &amp; Hate</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Meet Me in the Bathroom</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Under Control</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Way It Is</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The End Has No End</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">I Can't Win</span></div>
+      </div>
+    </div>
+
+    <!-- First Impressions of Earth -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">First Impressions of Earth</h3>
+        <span class="album-year">2006</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-rca">RCA</span>
+      </div>
+      <div class="album-summary">
+        The pivot point. Swapping Gordon Raphael for David Kahne (who replaced Raphael midway through sessions), the band pushed toward a bigger, heavier sound across fourteen tracks &mdash; their longest album by far. The guitars gained distortion and density, Casablancas's vocals moved to the foreground, and the songwriting grew more ambitious and uneven in equal measure. "Juicebox" and "Heart in a Cage" hit hard; "Ask Me Anything" stripped everything back to synths and voice. Divisive on release, it revealed a band restlessly unsatisfied with repeating itself.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Julian Casablancas &mdash; vocals &middot; Nick Valensi &mdash; lead guitar &middot; Albert Hammond Jr. &mdash; rhythm guitar &middot; Nikolai Fraiture &mdash; bass &middot; Fabrizio Moretti &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        David Kahne
+      </div>
+      <div class="tags">
+        <span class="tag">garage rock</span>
+        <span class="tag">post-punk revival</span>
+        <span class="tag">alternative rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">You Only Live Once</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Juicebox</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Heart in a Cage</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Razorblade</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">On the Other Side</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Vision of Division</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Ask Me Anything</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Electricityscape</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Killing Lies</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Fear of Sleep</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">15 Minutes</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Ize of the World</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Evening Sun</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Red Light</span></div>
+      </div>
+    </div>
+
+    <!-- Angles -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Angles</h3>
+        <span class="album-year">2011</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="The Strokes" data-album="Angles" onchange="toggleWant(this, 'The Strokes', 'Angles', '2011', 'RCA')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-rca">RCA</span>
+      </div>
+      <div class="album-summary">
+        Born from a fractured recording process &mdash; Casablancas largely absent from the studio, sending vocal parts remotely &mdash; Angles arrived after a five-year gap as the band's most stylistically varied record. Joe Chiccarelli and Gus Oberg shared production duties, and the sound veered from new wave synths to Beatlesque pop to funk-inflected grooves. "Under Cover of Darkness" proved the old magic was intact; "Machu Picchu" and "Taken for a Fool" showed new colors. The collaborative songwriting marked a departure from Casablancas's prior dominance, with mixed but intriguing results.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Julian Casablancas &mdash; vocals &middot; Nick Valensi &mdash; lead guitar &middot; Albert Hammond Jr. &mdash; rhythm guitar &middot; Nikolai Fraiture &mdash; bass &middot; Fabrizio Moretti &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Gus Oberg &middot; Joe Chiccarelli
+      </div>
+      <div class="tags">
+        <span class="tag">indie rock</span>
+        <span class="tag">new wave</span>
+        <span class="tag">post-punk revival</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Machu Picchu</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Under Cover of Darkness</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Two Kinds of Happiness</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">You're So Right</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Taken for a Fool</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Games</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Call Me Back</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Gratisfaction</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Metabolism</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Life Is Simple in the Moonlight</span></div>
+      </div>
+    </div>
+
+    <!-- Comedown Machine -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Comedown Machine</h3>
+        <span class="album-year">2013</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="The Strokes" data-album="Comedown Machine" onchange="toggleWant(this, 'The Strokes', 'Comedown Machine', '2013', 'RCA')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-rca">RCA</span>
+      </div>
+      <div class="album-summary">
+        The most underrated entry in their catalog, and the last album under their RCA contract. Produced by Gus Oberg, Comedown Machine leans into falsetto vocals, synth textures, and a restrained, almost introverted energy that bewildered fans expecting garage rock bombast. "One Way Trigger" channels a-ha; "Tap Out" is wistful pop; "80's Comedown Machine" drifts into ambient territory. Barely promoted and released without a tour, it was initially dismissed but has since been critically reappraised as a quietly adventurous record that proved the band could evolve beyond their brand.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Julian Casablancas &mdash; vocals &middot; Nick Valensi &mdash; lead guitar &middot; Albert Hammond Jr. &mdash; rhythm guitar &middot; Nikolai Fraiture &mdash; bass &middot; Fabrizio Moretti &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Gus Oberg
+      </div>
+      <div class="tags">
+        <span class="tag">indie rock</span>
+        <span class="tag">new wave</span>
+        <span class="tag">synth-pop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Tap Out</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">All the Time</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">One Way Trigger</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Welcome to Japan</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">80's Comedown Machine</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">50/50</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Slow Animals</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Partners in Crime</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Chances</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Happy Ending</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Call It Fate, Call It Karma</span></div>
+      </div>
+    </div>
+
+    <!-- The New Abnormal -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The New Abnormal</h3>
+        <span class="album-year">2020</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="The Strokes" data-album="The New Abnormal" onchange="toggleWant(this, 'The Strokes', 'The New Abnormal', '2020', 'Cult / RCA')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-cult">Cult</span>
+        <span class="label-badge label-rca">RCA</span>
+      </div>
+      <div class="album-summary">
+        The triumphant return, seven years after Comedown Machine and produced by Rick Rubin at his Shangri-La studio in Malibu. Longer, looser, and more emotionally exposed than anything in their catalog, The New Abnormal gave the band room to breathe &mdash; tracks stretch past five and six minutes without losing momentum. "The Adults Are Talking" and "Bad Decisions" recapture the band's rhythmic swagger, while "At the Door" and "Ode to the Mets" are among Casablancas's most nakedly affecting vocal performances. It won the Grammy for Best Rock Album, a belated institutional acknowledgment of the band's significance.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Julian Casablancas &mdash; vocals &middot; Nick Valensi &mdash; lead guitar &middot; Albert Hammond Jr. &mdash; rhythm guitar &middot; Nikolai Fraiture &mdash; bass &middot; Fabrizio Moretti &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Rick Rubin
+      </div>
+      <div class="tags">
+        <span class="tag">indie rock</span>
+        <span class="tag">alternative rock</span>
+        <span class="tag">post-punk revival</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Adults Are Talking</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Selfless</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Brooklyn Bridge to Chorus</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Bad Decisions</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Eternal Summer</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">At the Door</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Why Are Sundays So Depressing</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Not the Same Anymore</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Ode to the Mets</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

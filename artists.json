@@ -70,5 +70,14 @@
     "tags": ["art rock", "indie rock", "glam", "baroque pop"],
     "albums": "14 studio albums",
     "description": "Dan Bejar's shape-shifting vehicle for three decades of literate, self-referential art-rock — moving restlessly from lo-fi home recordings through glam, MIDI orchestration, soft-rock sophistication, and electronic abstraction — while maintaining one of indie music's most distinctive lyrical voices."
+  },
+  {
+    "name": "The Strokes",
+    "file": "the-strokes.html",
+    "years": "1998–present",
+    "genre": "Rock",
+    "tags": ["garage rock", "post-punk revival", "indie rock"],
+    "albums": "6 studio albums",
+    "description": "Five New Yorkers whose taut, wired debut single-handedly reignited guitar rock at the turn of the millennium — fusing Velvet Underground cool, Television's guitar geometry, and a downtown swagger into a sound that launched a thousand bands."
   }
 ]
