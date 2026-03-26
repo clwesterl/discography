@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Destroyer &mdash; Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #9a6fb0;
+    --accent-dim: #6b4d7a;
+    --merge: #7a8a6a;
+    --dead-oceans: #6a7a8a;
+    --scratch: #8a7a5a;
+    --misra: #7a6a5a;
+    --tinker: #6a6a7a;
+    --catsup: #7a5a6a;
+    --bella-union: #5a7a7a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-merge { background: rgba(122, 138, 106, 0.2); color: #a0b890; border: 1px solid rgba(122, 138, 106, 0.3); }
+  .label-dead-oceans { background: rgba(106, 122, 138, 0.2); color: #90a8c0; border: 1px solid rgba(106, 122, 138, 0.3); }
+  .label-scratch { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-misra { background: rgba(122, 106, 90, 0.2); color: #b8a088; border: 1px solid rgba(122, 106, 90, 0.3); }
+  .label-tinker { background: rgba(106, 106, 122, 0.2); color: #9898b0; border: 1px solid rgba(106, 106, 122, 0.3); }
+  .label-catsup { background: rgba(122, 90, 106, 0.2); color: #b888a0; border: 1px solid rgba(122, 90, 106, 0.3); }
+  .label-bella-union { background: rgba(90, 122, 122, 0.2); color: #88b0b0; border: 1px solid rgba(90, 122, 122, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Art Rock &middot; Baroque Pop &middot; Indie Rock &nbsp;&middot;&nbsp; 1995&ndash;present &middot; Vancouver, BC</div>
+    <h1 class="artist-name">Destroyer</h1>
+    <p class="artist-bio">
+      Dan Bejar&rsquo;s shape-shifting vehicle for three decades of literate,
+      self-referential art-rock &mdash; moving restlessly from lo-fi home recordings
+      through glam, MIDI orchestration, soft-rock sophistication, and electronic
+      abstraction &mdash; while maintaining one of indie music&rsquo;s most distinctive
+      and unpredictable lyrical voices.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">14</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1996&ndash;2025</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">12/14</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">7 vinyl &middot; 8 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">1996&ndash;2025 &middot; Fourteen releases across three decades on Tinker / Scratch / Misra / Merge / Dead Oceans</p>
+  <div class="album-grid">
+
+    <!-- We'll Build Them a Golden Bridge -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">We&rsquo;ll Build Them a Golden Bridge</h3>
+        <span class="album-year">1996</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Destroyer" data-album="We'll Build Them a Golden Bridge" onchange="toggleWant(this, 'Destroyer', 'We\'ll Build Them a Golden Bridge', '1996', 'Tinker')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-tinker">Tinker</span>
+      </div>
+      <div class="album-summary">
+        Sixteen lo-fi home recordings that constitute Bejar&rsquo;s debut, released on the tiny Vancouver label Tinker Recordings. The songs are skeletal and cassette-rough, but the literary ambition and melodic instincts are already audible. Tracks reference everything from labor politics to country music mythology, sketching a worldview that would deepen across the next three decades. A cult document more than a polished statement, later reissued on Scratch Records in 2006.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, guitar, all instruments
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Dan Bejar
+      </div>
+      <div class="tags">
+        <span class="tag">lo-fi</span>
+        <span class="tag">indie rock</span>
+        <span class="tag">home recording</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Revolution</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">J. Tailor</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Smith</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">I, as McCarthy</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Mending Song</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Leave Little Fiddler</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">The Pornographers</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">War On Jazz</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Islands in the Stream</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Sad</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Streets of Fire</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Rose Fleched This</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Breakin&rsquo; the Law</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Whistlin&rsquo; Dixie</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Riota</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Knowing When To Leave</span></div>
+      </div>
+    </div>
+
+    <!-- City of Daughters -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">City of Daughters</h3>
+        <span class="album-year">1998</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Destroyer" data-album="City of Daughters" onchange="toggleWant(this, 'Destroyer', 'City of Daughters', '1998', 'Triple Crown')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-scratch">Triple Crown</span>
+      </div>
+      <div class="album-summary">
+        The first proper studio effort, produced by John Collins at JC/DC Studios in Vancouver &mdash; beginning a partnership that would define the Destroyer sound for decades. The seventeen-track album is dense and ambitious, weaving literary references, synth textures, and Collins&rsquo;s careful production into something far more expansive than the debut. The songs-within-songs structure and self-referential lyrical world that would become Bejar&rsquo;s signature are already crystallizing here.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, guitar &middot; John Collins &mdash; bass, production &middot; Scott Morgan &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        John Collins
+      </div>
+      <div class="tags">
+        <span class="tag">indie rock</span>
+        <span class="tag">art rock</span>
+        <span class="tag">lo-fi</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Comments on the World as Will</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">No Cease Fires! (Crimes Against the State of Our Love, Baby)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Dark Purposes</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Emax I</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">I Want This Cyclops</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Loves of a Gnostic</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Emax II</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">State of the Union</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">School, and the Girls Who Go There</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Space Race</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Melanie and Jennifer and Melanie</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">War on Jazz II Or How I Learned to Love the War On Jazz</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Emax III</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">You Were So Cruel</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Signs</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Rereading the Marble Faun</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Son of the Earth</span></div>
+      </div>
+    </div>
+
+    <!-- Thief -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Thief</h3>
+        <span class="album-year">2000</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-catsup">Catsup Plate</span>
+      </div>
+      <div class="album-summary">
+        The third album and a significant step forward, bringing Jason Zumpano&rsquo;s keyboards and Stephen Wood&rsquo;s layered guitars into the fold alongside Collins and Morgan. The result is lusher and more cinematic than anything before, with songs like &ldquo;Destroyer&rsquo;s the Temple&rdquo; and the sprawling title track showcasing Bejar&rsquo;s growing confidence as an arranger. Released on the American indie label Catsup Plate, it marks the beginning of Destroyer&rsquo;s crossover from local Vancouver concern to wider underground recognition.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, guitar, fuzz &middot; John Collins &mdash; bass &middot; Scott Morgan &mdash; drums &middot; Jason Zumpano &mdash; piano, keyboards &middot; Stephen Wood &mdash; guitar, e-bow, effects
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        John Collins
+      </div>
+      <div class="tags">
+        <span class="tag">indie rock</span>
+        <span class="tag">art rock</span>
+        <span class="tag">chamber pop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Destroyer&rsquo;s the Temple</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">To the Heart of the Sun on the Back of the Vulture, I&rsquo;ll Go</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">The Way of Perpetual Roads</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Canadian Lover / Falcon&rsquo;s Escape</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">City of Daughters</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Every Christmas</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Mercy (We Had the Right)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Queen of Languages</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">I.H.O.J.</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">In Dreams</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Death on the Festival Circuit</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">M.E.R.C.I.</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Thief</span></div>
+      </div>
+    </div>
+
+    <!-- Streethawk: A Seduction -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Streethawk: A Seduction</h3>
+        <span class="album-year">2001</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-misra">Misra</span>
+      </div>
+      <div class="album-summary">
+        The breakthrough. Recorded at JC/DC Studios in the fall of 2000, this is the album where everything snaps into focus &mdash; Bejar&rsquo;s literary-glam ambitions, the band&rsquo;s increasingly sophisticated arrangements, and an irresistible sense of romantic grandiosity. Songs like &ldquo;The Bad Arts&rdquo; and &ldquo;Beggars Might Ride&rdquo; toggle between intimacy and anthemic sweep, while the bookending &ldquo;Streethawk&rdquo; instrumentals frame the album as a conceptual whole. Widely regarded as one of the great Canadian indie records of its era.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, guitar, synth, piano, percussion &middot; John Collins &mdash; bass, percussion &middot; Scott Morgan &mdash; drums &middot; Stephen Wood &mdash; guitars &middot; Jason Zumpano &mdash; piano, organ
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        JC/DC (John Collins &amp; David Carswell)
+      </div>
+      <div class="tags">
+        <span class="tag">indie rock</span>
+        <span class="tag">glam</span>
+        <span class="tag">art rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Streethawk I</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Bad Arts</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Beggars Might Ride</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Sublimation Hour</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">English Music</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Virgin With a Memory</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">The Very Modern Dance</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">The Crossover</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Helena</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Farrar, Straus and Giroux (Sea of Tears)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Strike</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Streethawk II</span></div>
+      </div>
+    </div>
+
+    <!-- This Night -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">This Night</h3>
+        <span class="album-year">2002</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-merge">Merge</span>
+      </div>
+      <div class="album-summary">
+        Bejar&rsquo;s first release on Merge Records and a deliberate swerve toward sprawling, loosely recorded maximalism. A new lineup &mdash; Nicolas Bragg on guitar, Chris Frey on bass, Fisher Rose on drums &mdash; replaced the Streethawk band, and the fifteen tracks revel in beautiful chaos: trumpet fanfares, organ drones, and Bejar&rsquo;s increasingly theatrical vocal delivery. Critics were divided, some hearing purposeful mess, others a visionary expansion. Time has been kind to it.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, guitar, synth, organ, piano, melodica &middot; Nicolas Bragg &mdash; guitar, trumpet, organ &middot; Chris Frey &mdash; bass &middot; Fisher Rose &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Destroyer &amp; JC/DC
+      </div>
+      <div class="tags">
+        <span class="tag">art rock</span>
+        <span class="tag">baroque pop</span>
+        <span class="tag">glam</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">This Night</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Holly Going Lightly</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Here Comes the Night</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Chosen Few</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Makin&rsquo; Angels</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Hey, Snow White</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Modern Painters</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Crystal Country</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Trembling Peacock</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">I Have Seen a Light</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Students Carve Hearts Out Of Coal</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Goddess Of Drought</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Self Portrait With Thing (Tonight Is Not Your Night)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">The Relevant Ballads</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">The Night Moves</span></div>
+      </div>
+    </div>
+
+    <!-- Your Blues -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Your Blues</h3>
+        <span class="album-year">2004</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-merge">Merge</span>
+      </div>
+      <div class="album-summary">
+        An audacious left turn: Bejar replaced his live band with MIDI-generated orchestration, coining the term &ldquo;European blues&rdquo; for the result. Lush, theatrical, and deliberately artificial, the album sounds like a lost Europop opera scored for synthesized strings and brass. The songs themselves &mdash; &ldquo;Notorious Lightning,&rdquo; &ldquo;An Actor&rsquo;s Revenge,&rdquo; &ldquo;Don&rsquo;t Become the Thing You Hated&rdquo; &mdash; are among his most melodically inventive. A polarizing record that rewarded patient listeners and signaled that no two Destroyer albums would ever sound alike.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, acoustic guitar, MIDI programming &middot; John Collins &mdash; MIDI programming &middot; David Carswell &mdash; MIDI programming
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        JC/DC &amp; Dan Bejar
+      </div>
+      <div class="tags">
+        <span class="tag">chamber pop</span>
+        <span class="tag">MIDI</span>
+        <span class="tag">baroque pop</span>
+        <span class="tag">art pop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Notorious Lightning</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">It&rsquo;s Gonna Take An Airplane</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">An Actor&rsquo;s Revenge</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Music Lovers</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">From Oakland to Warsaw</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Your Blues</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">New Ways of Living</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Don&rsquo;t Become the Thing You Hated</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Mad Foxes</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Fox and the Hound</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">What Road</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Certain Things You Ought to Know</span></div>
+      </div>
+    </div>
+
+    <!-- Destroyer's Rubies -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Destroyer&rsquo;s Rubies</h3>
+        <span class="album-year">2006</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-merge">Merge</span>
+      </div>
+      <div class="album-summary">
+        The consensus masterpiece. Bejar returned to a full live band after the MIDI experiment of Your Blues, and the result is his most confident and expansive record &mdash; ten songs of surging, literate indie rock anchored by the nine-minute opening title track. Nicolas Bragg&rsquo;s guitar work, Ted Bois&rsquo;s keyboards, and Fisher Rose&rsquo;s vibraphone give the album a warm, muscular richness. It became Destroyer&rsquo;s best-selling album to that point and remains the entry point most fans recommend.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, guitar, tambourine &middot; Nicolas Bragg &mdash; lead guitar &middot; Ted Bois &mdash; piano, Wurlitzer, organ &middot; Tim Loewen &mdash; bass &middot; Fisher Rose &mdash; vibraphone, trumpet &middot; Scott Morgan &mdash; drums, baritone saxophone
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        John Collins &amp; David Carswell
+      </div>
+      <div class="tags">
+        <span class="tag">indie rock</span>
+        <span class="tag">art rock</span>
+        <span class="tag">glam</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Rubies</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Your Blood</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">European Oils</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Painter in Your Pocket</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Looter&rsquo;s Follies</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">3000 Flowers</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Dangerous Woman Up to a Point</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Priest&rsquo;s Knees</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Water Colours Into the Ocean</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Sick Priest Learns to Last Forever</span></div>
+      </div>
+    </div>
+
+    <!-- Trouble in Dreams -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Trouble in Dreams</h3>
+        <span class="album-year">2008</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-merge">Merge</span>
+      </div>
+      <div class="album-summary">
+        A direct sequel to the Rubies-era band sound, recorded at JC/DC in the summer of 2007 with the same core ensemble. Eleven tracks of tightly wound, guitar-driven art-rock that maintains the predecessor&rsquo;s energy while adding new textures &mdash; Rodney Graham guests on gong and potato. &ldquo;Blue Flower/Blue Flame&rdquo; and &ldquo;Foam Hands&rdquo; are standouts, and the album as a whole represents the peak of Destroyer&rsquo;s mid-period guitar-band incarnation before Bejar would pivot dramatically with Kaputt.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, guitar &middot; Nicolas Bragg &mdash; lead guitar, backing vocals &middot; Ted Bois &mdash; keyboards, M-Tron &middot; Tim Loewen &mdash; bass &middot; Fisher Rose &mdash; drums, vibraphone, percussion, brass, backing vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        David Carswell, John Collins &amp; Destroyer
+      </div>
+      <div class="tags">
+        <span class="tag">indie rock</span>
+        <span class="tag">art rock</span>
+        <span class="tag">glam</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Blue Flower/Blue Flame</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Dark Leaves Form a Thread</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">The State</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Foam Hands</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">My Favorite Year</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Shooting Rockets (From the Desk of Night&rsquo;s Ape)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Introducing Angels</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Rivers</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Leopard of Honor</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Plaza Trinidad</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Libby&rsquo;s First Sunrise</span></div>
+      </div>
+    </div>
+
+    <!-- Kaputt -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Kaputt</h3>
+        <span class="album-year">2011</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-merge">Merge</span>
+        <span class="label-badge label-dead-oceans">Dead Oceans</span>
+      </div>
+      <div class="album-summary">
+        The reinvention that changed everything. Bejar abandoned guitar rock entirely for a lush, soft-rock/sophisti-pop palette of saxophones, trumpet, synthesizers, and drum machines &mdash; channeling Roxy Music, Steely Dan, and late-night FM radio through his unmistakable lyrical sensibility. &ldquo;Chinatown&rdquo; and &ldquo;Kaputt&rdquo; became the closest things Destroyer had to hits, and the album landed on dozens of year-end lists. It proved Bejar could execute a total sonic reinvention while keeping his songwriting identity intact.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, guitar, tambourine, piano &middot; Nicolas Bragg &mdash; lead guitar &middot; Ted Bois &mdash; keyboards &middot; John Collins &mdash; bass &middot; Joshua Wells &mdash; drums &middot; Joseph Shabason &mdash; saxophone, flute, clarinet &middot; JP Carter &mdash; trumpet &middot; Sibel Thrasher &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        John Collins &amp; David Carswell
+      </div>
+      <div class="tags">
+        <span class="tag">sophisti-pop</span>
+        <span class="tag">art pop</span>
+        <span class="tag">soft rock</span>
+        <span class="tag">new wave</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Chinatown</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Blue Eyes</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Savage Night at the Opera</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Suicide Demo for Kara Walker</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Poor in Love</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Kaputt</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Downtown</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Song for America</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Prelude (Estuary) Nagel&rsquo;s Marimba</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Laziest River</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Bay of Pigs (Detail)</span></div>
+      </div>
+    </div>
+
+    <!-- Poison Season -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Poison Season</h3>
+        <span class="album-year">2015</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508; In collection</span>
+        <span class="label-badge label-merge">Merge</span>
+        <span class="label-badge label-dead-oceans">Dead Oceans</span>
+      </div>
+      <div class="album-summary">
+        A dramatic, orchestral affair that pulls back from Kaputt&rsquo;s soft-rock elegance toward something grander and more cinematic. Bookended by two versions of &ldquo;Times Square, Poison Season&rdquo; performed with a string quintet, the album moves through Springsteen-scaled rock (&ldquo;Dream Lover&rdquo;), torch-song balladry (&ldquo;Archer on the Beach&rdquo;), and horn-drenched art-pop. It&rsquo;s Bejar&rsquo;s most ambitious production, with a large ensemble of horns, strings, and guest vocalists filling out the arrangements.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals &middot; Nicolas Bragg &mdash; guitar &middot; Ted Bois &mdash; piano, synth &middot; David Carswell &mdash; guitar &middot; John Collins &mdash; bass &middot; JP Carter &mdash; trumpet &middot; Joseph Shabason &mdash; saxophone, flute &middot; Joshua Wells &mdash; drums, percussion
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        John Collins
+      </div>
+      <div class="tags">
+        <span class="tag">chamber pop</span>
+        <span class="tag">art rock</span>
+        <span class="tag">orchestral</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Times Square, Poison Season I</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Dream Lover</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Forces From Above</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Hell</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">The River</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Girl in a Sling</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Times Square</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Archer on the Beach</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Midnight Meet the Rain</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Solace&rsquo;s Bride</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Bangkok</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Sun in the Sky</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Times Square, Poison Season II</span></div>
+      </div>
+    </div>
+
+    <!-- ken -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">ken</h3>
+        <span class="album-year">2017</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-merge">Merge</span>
+      </div>
+      <div class="album-summary">
+        The darkest, most atmospheric Destroyer album. Drummer Joshua Wells served as producer for the first time, and the result is dense, goth-inflected art-pop built on layers of synthesizer, drum programming, and reverb-heavy guitar. Bejar described it as the most goth record anyone would hear from him. &ldquo;Tinseltown Swimming in Blood&rdquo; is a nocturnal highlight, and the album as a whole trades the gregariousness of Kaputt and Poison Season for something colder and more interior.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, guitar, bass, synth &middot; Joshua Wells &mdash; drums, synth, drum programming, bass, piano &middot; Nicolas Bragg &mdash; guitar &middot; David Carswell &mdash; guitar &middot; Ted Bois &mdash; piano &middot; John Collins &mdash; bass &middot; JP Carter &mdash; trumpet &middot; Joseph Shabason &mdash; saxophone
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Joshua Wells
+      </div>
+      <div class="tags">
+        <span class="tag">art pop</span>
+        <span class="tag">post-punk</span>
+        <span class="tag">goth</span>
+        <span class="tag">synth</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Sky&rsquo;s Grey</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">In the Morning</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Tinseltown Swimming in Blood</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Cover From the Sun</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Saw You at the Hospital</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">A Light Travels Down the Catwalk</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Rome</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Sometimes in the World</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Ivory Coast</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Stay Lost</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">La Regle du Jeu</span></div>
+      </div>
+    </div>
+
+    <!-- Have We Met -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Have We Met</h3>
+        <span class="album-year">2020</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508; In collection</span>
+        <span class="label-badge label-merge">Merge</span>
+        <span class="label-badge label-dead-oceans">Dead Oceans</span>
+      </div>
+      <div class="album-summary">
+        A lean, ten-song set built largely from John Collins&rsquo;s laptop and iPad experiments &mdash; synth textures, drum programming, and guitar lines from Nicolas Bragg layered into surreal, nocturnal pop. The production is more minimal and electronic than anything since Your Blues, but warmer and more inviting. &ldquo;Crimson Tide&rdquo; and &ldquo;Cue Synthesizer&rdquo; are among Bejar&rsquo;s catchiest songs, and the album was widely praised as one of his most accessible and emotionally direct.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, synth &middot; Nicolas Bragg &mdash; guitar &middot; John Collins &mdash; bass, synth, drum programming, production
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        John Collins
+      </div>
+      <div class="tags">
+        <span class="tag">art pop</span>
+        <span class="tag">synth-pop</span>
+        <span class="tag">electronic</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Crimson Tide</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Kinda Dark</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">It Just Doesn&rsquo;t Happen</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Television Music Supervisor</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">The Raven</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Cue Synthesizer</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">University Hill</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Have We Met</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Man in Black&rsquo;s Blues</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">foolssong</span></div>
+      </div>
+    </div>
+
+    <!-- LABYRINTHITIS -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">LABYRINTHITIS</h3>
+        <span class="album-year">2022</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508; In collection</span>
+        <span class="label-badge label-merge">Merge</span>
+        <span class="label-badge label-bella-union">Bella Union</span>
+      </div>
+      <div class="album-summary">
+        Bejar and Collins made this album remotely during the pandemic, sending ideas back and forth between Vancouver and Galiano Island. The result is Destroyer at its most playful and disorienting: club-adjacent beats, distorted synths, and tape-loop textures collide with Bejar&rsquo;s stream-of-consciousness lyrics. &ldquo;June&rdquo; and &ldquo;It&rsquo;s in Your Heart Now&rdquo; are hypnotic extended pieces, while &ldquo;Tintoretto, It&rsquo;s for You&rdquo; distills the album&rsquo;s restless energy into three brisk minutes. A late-career curveball that proved Bejar still had new territory to explore.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, synth, guitar &middot; Ted Bois &mdash; piano, synth &middot; Nicolas Bragg &mdash; guitar &middot; David Carswell &mdash; guitar &middot; JP Carter &mdash; trumpet &middot; John Collins &mdash; bass, synth, guitar, drum programming &middot; Joshua Wells &mdash; drums, percussion
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        John Collins
+      </div>
+      <div class="tags">
+        <span class="tag">art pop</span>
+        <span class="tag">electronic</span>
+        <span class="tag">experimental</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">It&rsquo;s in Your Heart Now</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Suffer</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">June</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">All My Pretty Dresses</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Tintoretto, It&rsquo;s for You</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Labyrinthitis</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Eat the Wine, Drink the Bread</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">It Takes a Thief</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The States</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Last Song</span></div>
+      </div>
+    </div>
+
+    <!-- Dan's Boogie -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Dan&rsquo;s Boogie</h3>
+        <span class="album-year">2025</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508; In collection</span>
+        <span class="label-badge label-merge">Merge</span>
+      </div>
+      <div class="album-summary">
+        The fourteenth album finds Bejar playing a lounge singer and hustler, imagining himself as a supporting character in his own fantasies. Nine songs that lean into piano-driven balladry, wry romanticism, and a warmth that feels earned after three decades of reinvention. &ldquo;Bologna&rdquo; features guest vocals from Simone Schmidt of Fiver, and Joseph Shabason returns on saxophone for the first time since Poison Season. Collins again produces, and the album sounds like a late-night cabaret &mdash; intimate, slightly dissolute, and unmistakably Destroyer.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Dan Bejar &mdash; vocals, piano, guitar, synth &middot; Ted Bois &mdash; piano, organ, synth &middot; Nicolas Bragg &mdash; guitar &middot; David Carswell &mdash; acoustic guitar &middot; John Collins &mdash; bass, synth, programming &middot; Joshua Wells &mdash; drums &middot; Simone Schmidt &mdash; vocals (track 5) &middot; Joseph Shabason &mdash; saxophone (track 9)
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        John Collins
+      </div>
+      <div class="tags">
+        <span class="tag">art pop</span>
+        <span class="tag">lounge</span>
+        <span class="tag">baroque pop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Same Thing as Nothing at All</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Hydroplaning Off the Edge of the World</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">The Ignoramus of Love</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Dan&rsquo;s Boogie</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Bologna</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">I Materialize</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Sun Meet Snow</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Cataract Time</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Travel Light</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

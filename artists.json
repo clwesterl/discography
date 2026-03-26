@@ -61,5 +61,14 @@
     "tags": ["art rock", "post-punk", "alternative", "gothic rock"],
     "albums": "10 solo studio + 2 collaboration albums",
     "description": "One of the most fearless and shape-shifting artists in rock, whose three-decade career — from raw blues-punk fury through gothic Americana, spectral piano ballads, and politically charged art-rock — is defined by constant reinvention."
+  },
+  {
+    "name": "Destroyer",
+    "file": "destroyer.html",
+    "years": "1995–present",
+    "genre": "Rock",
+    "tags": ["art rock", "indie rock", "glam", "baroque pop"],
+    "albums": "14 studio albums",
+    "description": "Dan Bejar's shape-shifting vehicle for three decades of literate, self-referential art-rock — moving restlessly from lo-fi home recordings through glam, MIDI orchestration, soft-rock sophistication, and electronic abstraction — while maintaining one of indie music's most distinctive lyrical voices."
   }
 ]
