@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sonic Youth — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #8b5cf6;
+    --accent-dim: #6d3fc4;
+    --neutral: #7a8a6a;
+    --homestead: #8a7a5a;
+    --sst: #c47a3c;
+    --enigma: #6a7a8a;
+    --dgc: #6a8a7a;
+    --matador: #9a6a7a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-neutral { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-homestead { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-sst { background: rgba(196, 122, 60, 0.2); color: #d4944c; border: 1px solid rgba(196, 122, 60, 0.3); }
+  .label-enigma { background: rgba(106, 122, 138, 0.2); color: #90a8c0; border: 1px solid rgba(106, 122, 138, 0.3); }
+  .label-dgc { background: rgba(106, 138, 122, 0.2); color: #90c0a8; border: 1px solid rgba(106, 138, 122, 0.3); }
+  .label-matador { background: rgba(154, 106, 122, 0.2); color: #c090a8; border: 1px solid rgba(154, 106, 122, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Noise Rock &middot; No Wave &middot; Art Punk &nbsp;&middot;&nbsp; 1981&ndash;2011 &middot; New York, NY</div>
+    <h1 class="artist-name">Sonic Youth</h1>
+    <p class="artist-bio">
+      New York&rsquo;s great noise architects, whose three decades of alternate tunings,
+      feedback sculpting, and downtown art-world ambition &mdash; from no-wave abrasion
+      through SST-era guitar epics to a decade on a major label &mdash; redrew the
+      boundaries of what a rock band could sound like and mean.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">15</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1983&ndash;2009</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">10/15</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1 vinyl &middot; 10 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">1983&ndash;2009 &middot; Fifteen releases across three decades on Neutral / Homestead / SST / Enigma / DGC / Matador</p>
+  <div class="album-grid">
+
+    <!-- Confusion Is Sex -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Confusion Is Sex</h3>
+        <span class="album-year">1983</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Sonic Youth" data-album="Confusion Is Sex" onchange="toggleWant(this, 'Sonic Youth', 'Confusion Is Sex', '1983', 'Neutral')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-neutral">Neutral</span>
+      </div>
+      <div class="album-summary">
+        The debut full-length, recorded by Wharton Tiers in his Chelsea studio. A forbidding, atonal slab of no-wave guitar abuse that owes as much to Glenn Branca&rsquo;s massed-guitar compositions as to punk rock. Alternate tunings and prepared guitars produce a sound that barely resembles rock music &mdash; clanking, droning, scraping textures underneath Moore and Ranaldo&rsquo;s half-spoken vocals. Jim Sclavunos played drums on most tracks, with Bob Bert returning for the closing &ldquo;Making the Nature Scene.&rdquo;
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Jim Sclavunos &mdash; drums &middot; Bob Bert &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth &middot; Wharton Tiers (engineer)
+      </div>
+      <div class="tags">
+        <span class="tag">no wave</span>
+        <span class="tag">noise rock</span>
+        <span class="tag">experimental</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">(She&rsquo;s in a) Bad Mood</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Protect Me You</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Freezer Burn / I Wanna Be Your Dog</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Shaking Hell</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Inhuman</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">The World Looks Red</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Confusion Is Next</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Making the Nature Scene</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Lee Is Free</span></div>
+      </div>
+    </div>
+
+    <!-- Bad Moon Rising -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Bad Moon Rising</h3>
+        <span class="album-year">1985</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Sonic Youth" data-album="Bad Moon Rising" onchange="toggleWant(this, 'Sonic Youth', 'Bad Moon Rising', '1985', 'Homestead / Blast First')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-homestead">Homestead</span>
+      </div>
+      <div class="album-summary">
+        A lurching, cinematic expansion of the debut&rsquo;s claustrophobia into something more narrative and haunted. Bob Bert&rsquo;s tribal drumming anchors extended pieces that evoke the dark underbelly of American suburban life, while the closing &ldquo;Death Valley &rsquo;69&rdquo; &mdash; a duet with Lydia Lunch referencing the Manson Family &mdash; became their first song to break beyond the downtown scene. Martin Bisi&rsquo;s production at BC Studio gave the guitars a cavernous depth absent from the debut.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Bob Bert &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth &middot; Martin Bisi (engineer)
+      </div>
+      <div class="tags">
+        <span class="tag">noise rock</span>
+        <span class="tag">no wave</span>
+        <span class="tag">experimental</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Brave Men Run (In My Family)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Society Is a Hole</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">I Love Her All the Time</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Ghost Bitch</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">I&rsquo;m Insane</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Justice Is Might</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Death Valley &rsquo;69</span></div>
+      </div>
+    </div>
+
+    <!-- EVOL -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">EVOL</h3>
+        <span class="album-year">1986</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-sst">SST</span>
+      </div>
+      <div class="album-summary">
+        The first album with Steve Shelley on drums, and a quantum leap in songcraft. Recorded at BC Studio with Martin Bisi, EVOL balances the earlier records&rsquo; noise with genuine pop instincts for the first time: &ldquo;Starpower&rdquo; is a bona fide indie anthem built on Kim Gordon&rsquo;s deadpan vocal, while &ldquo;Tom Violence&rdquo; and &ldquo;Shadow of a Doubt&rdquo; stretch feedback and alternate tunings into something hypnotic rather than merely confrontational. The title, &ldquo;love&rdquo; reversed, signals a band learning to embrace melody from within their dissonance.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth &middot; Martin Bisi (engineer)
+      </div>
+      <div class="tags">
+        <span class="tag">noise rock</span>
+        <span class="tag">indie rock</span>
+        <span class="tag">post-punk</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Green Light</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Starpower</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Secret Girl</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Tom Violence</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Death to Our Friends</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Shadow of a Doubt</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Marilyn Moore</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">In the Kingdom #19</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Madonna, Sean and Me</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Bubblegum</span></div>
+      </div>
+    </div>
+
+    <!-- Sister -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Sister</h3>
+        <span class="album-year">1987</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-sst">SST</span>
+      </div>
+      <div class="album-summary">
+        The album where everything locked into place. Inspired by Philip K. Dick&rsquo;s science fiction and the idea of a phantom twin, Sister crystallizes the band&rsquo;s competing impulses &mdash; noise abstraction and melodic songwriting &mdash; into a unified vision. &ldquo;Schizophrenia&rdquo; is one of their greatest songs, its chiming arpeggios and surging dynamics anticipating the alt-rock sound of the next decade. &ldquo;Stereo Sanctity&rdquo; and &ldquo;Tuff Gnarl&rdquo; are compact blasts of guitar fury, while &ldquo;Pacific Coast Highway&rdquo; stretches into an eerie seven-minute drone.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth
+      </div>
+      <div class="tags">
+        <span class="tag">noise rock</span>
+        <span class="tag">indie rock</span>
+        <span class="tag">post-punk</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Schizophrenia</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">(I Got a) Catholic Block</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Beauty Lies in the Eye</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Stereo Sanctity</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Pipeline / Kill Time</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Tuff Gnarl</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Pacific Coast Highway</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Hot Wire My Heart</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Kotton Krown</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">White Kross</span></div>
+      </div>
+    </div>
+
+    <!-- Daydream Nation -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Daydream Nation</h3>
+        <span class="album-year">1988</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-enigma">Enigma</span>
+      </div>
+      <div class="album-summary">
+        The masterpiece. A sprawling double album recorded at Greene St. with Nick Sansano, Daydream Nation is the fullest realization of Sonic Youth&rsquo;s ambition: seventy minutes of interlocking guitar architectures, sustained feedback as compositional element, and songwriting at a peak the band would never quite match again. &ldquo;Teen Age Riot&rdquo; is one of the great opening tracks in rock, while the closing &ldquo;Trilogy&rdquo; suite stretches across three movements of escalating intensity. Added to the Library of Congress&rsquo;s National Recording Registry in 2005.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth &middot; Nick Sansano (engineer)
+      </div>
+      <div class="tags">
+        <span class="tag">noise rock</span>
+        <span class="tag">indie rock</span>
+        <span class="tag">post-punk</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Teen Age Riot</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Silver Rocket</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">The Sprawl</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">&rsquo;Cross the Breeze</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Eric&rsquo;s Trip</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Total Trash</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Hey Joni</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Providence</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Candle</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Rain King</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Kissability</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Trilogy: a) The Wonder</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Trilogy: b) Hyperstation</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Trilogy: c) Eliminator Jr.</span></div>
+      </div>
+    </div>
+
+    <!-- Goo -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Goo</h3>
+        <span class="album-year">1990</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-dgc">DGC</span>
+      </div>
+      <div class="album-summary">
+        The major-label debut, and a deliberate move toward shorter, punchier songs without abandoning the band&rsquo;s experimental instincts. Raymond Pettibon&rsquo;s iconic cover art set the visual tone for an album that balanced pop accessibility (&ldquo;Kool Thing,&rdquo; featuring Chuck D) with dense noise workouts like &ldquo;Mote.&rdquo; The production, shared between Nick Sansano and veteran mixer Ron Saint Germain, gave the guitars more body and commercial presence than anything they&rsquo;d released before.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth &middot; Nick Sansano &middot; Ron Saint Germain
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">noise rock</span>
+        <span class="tag">noise pop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Dirty Boots</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Tunic (Song for Karen)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Mary-Christ</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Kool Thing</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Mote</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">My Friend Goo</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Disappearer</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Mildred Pierce</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Cinderella&rsquo;s Big Score</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Scooter &amp; Jinx</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Titanium Expos&eacute;</span></div>
+      </div>
+    </div>
+
+    <!-- Dirty -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Dirty</h3>
+        <span class="album-year">1992</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-dgc">DGC</span>
+      </div>
+      <div class="album-summary">
+        Their bid for the Nevermind moment, produced by Butch Vig and mixed by Andy Wallace &mdash; the same team behind that very album. The result is Sonic Youth at their most aggressive and commercially direct: &ldquo;100%&rdquo; channels punk fury, &ldquo;Youth Against Fascism&rdquo; is a snarling political broadside, and &ldquo;Sugar Kane&rdquo; unspools into one of their most ecstatic guitar codas. At fifteen tracks it sprawls, but the energy never flags. It reached No. 83 on the Billboard 200 and produced several MTV staples.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Butch Vig
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">noise rock</span>
+        <span class="tag">grunge</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">100%</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Swimsuit Issue</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Theresa&rsquo;s Sound-World</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Drunken Butterfly</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Shoot</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Wish Fulfillment</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Sugar Kane</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Orange Rolls, Angel&rsquo;s Spit</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Youth Against Fascism</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Nic Fit</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">On the Strip</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Chapel Hill</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">JC</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Purr</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Cr&egrave;me Br&ucirc;l&eacute;e</span></div>
+      </div>
+    </div>
+
+    <!-- Experimental Jet Set, Trash and No Star -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Experimental Jet Set, Trash and No Star</h3>
+        <span class="album-year">1994</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Sonic Youth" data-album="Experimental Jet Set, Trash and No Star" onchange="toggleWant(this, 'Sonic Youth', 'Experimental Jet Set, Trash and No Star', '1994', 'DGC')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-dgc">DGC</span>
+      </div>
+      <div class="album-summary">
+        A deliberate step back from Dirty&rsquo;s aggression into something quieter, stranger, and more intimate. Recorded and mixed with John Siket at Sear Sound and Greene St., the songs favor atmosphere over volume &mdash; hushed vocals, skeletal arrangements, and an almost folk-like simplicity in places. &ldquo;Bull in the Heather&rdquo; became a modest alt-rock hit thanks to its Kathleen Hanna-directed video, while the album as a whole signaled the band&rsquo;s retreat from commercial ambition and back toward art-world experimentation.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth &middot; John Siket
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">noise rock</span>
+        <span class="tag">lo-fi</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Winner&rsquo;s Blues</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Bull in the Heather</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Androgynous Mind</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Starfield Road</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Self-Obsessed and Sexxee</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Skink</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Screaming Skull</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Quest for the Cup</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Waist</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Doctor&rsquo;s Orders</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Bone</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Tokyo Eye</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">In the Mind of the Bourgeois Reader</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Sweet Shine</span></div>
+      </div>
+    </div>
+
+    <!-- Washing Machine -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Washing Machine</h3>
+        <span class="album-year">1995</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-dgc">DGC</span>
+      </div>
+      <div class="album-summary">
+        A towering late-career statement that embraces extended form and unhurried exploration. Again co-produced with John Siket, the album trades Dirty&rsquo;s compression for vast open spaces &mdash; nowhere more spectacularly than &ldquo;The Diamond Sea,&rdquo; a twenty-minute ballad-turned-noise-epic that stands as one of the band&rsquo;s crowning achievements. &ldquo;Junkie&rsquo;s Promise&rdquo; and &ldquo;Saucer-Like&rdquo; are among their most tuneful songs, while the title track and &ldquo;Skip Tracer&rdquo; maintain the art-damaged edge.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth &middot; John Siket
+      </div>
+      <div class="tags">
+        <span class="tag">noise rock</span>
+        <span class="tag">indie rock</span>
+        <span class="tag">experimental</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Becuz</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Junkie&rsquo;s Promise</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Saucer-Like</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Washing Machine</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Unwind</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Little Trouble Girl</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">No Queen Blues</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Panty Lies</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Becuz Coda</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Skip Tracer</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">The Diamond Sea</span></div>
+      </div>
+    </div>
+
+    <!-- A Thousand Leaves -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">A Thousand Leaves</h3>
+        <span class="album-year">1998</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Sonic Youth" data-album="A Thousand Leaves" onchange="toggleWant(this, 'Sonic Youth', 'A Thousand Leaves', '1998', 'DGC')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-dgc">DGC</span>
+      </div>
+      <div class="album-summary">
+        A sprawling, largely improvised record that marks the beginning of the band&rsquo;s most aggressively uncommercial period on a major label. Co-produced with Wharton Tiers (returning from the Confusion Is Sex sessions), the songs stretch into extended jams &mdash; &ldquo;Hits of Sunshine (For Allen Ginsberg)&rdquo; runs to eleven minutes of luminous drone. &ldquo;Sunday&rdquo; and &ldquo;Female Mechanic Now on Duty&rdquo; are the most conventionally structured tracks, but even they feel unhurried and open-ended.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth &middot; Wharton Tiers
+      </div>
+      <div class="tags">
+        <span class="tag">experimental rock</span>
+        <span class="tag">noise rock</span>
+        <span class="tag">avant-garde</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Contre le Sexisme</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Sunday</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Female Mechanic Now on Duty</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Wildflower Soul</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Hoarfrost</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">French Tickler</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Hits of Sunshine (For Allen Ginsberg)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Karen Koltrane</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Ineffable Me</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Snare, Girl</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Heather Angel</span></div>
+      </div>
+    </div>
+
+    <!-- NYC Ghosts & Flowers -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">NYC Ghosts &amp; Flowers</h3>
+        <span class="album-year">2000</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Sonic Youth" data-album="NYC Ghosts &amp; Flowers" onchange="toggleWant(this, 'Sonic Youth', 'NYC Ghosts &amp; Flowers', '2000', 'DGC')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-dgc">DGC</span>
+      </div>
+      <div class="album-summary">
+        The most divisive album in the catalog, and arguably the most radical thing they released on a major label. Produced by Jim O&rsquo;Rourke, it pushes deep into spoken-word poetry and free improvisation, drawing on the Beat Generation and the New York School of poets. The loss of their entire guitar collection in a 1999 theft forced the band to rebuild their arsenal of alternate tunings from scratch, giving the album an unsettled, searching quality. Polarizing on release, it has gained defenders as a brave, uncompromising artistic statement.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums &middot; Jim O&rsquo;Rourke &mdash; guitar, bass
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Jim O&rsquo;Rourke
+      </div>
+      <div class="tags">
+        <span class="tag">experimental rock</span>
+        <span class="tag">noise rock</span>
+        <span class="tag">spoken word</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Free City Rhymes</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Renegade Princess</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Nevermind (What Was It Anyway)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Small Flowers Crack Concrete</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Side2Side</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">StreamXSonik Subway</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">NYC Ghosts &amp; Flowers</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Lightnin&rsquo;</span></div>
+      </div>
+    </div>
+
+    <!-- Murray Street -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Murray Street</h3>
+        <span class="album-year">2002</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-dgc">DGC</span>
+      </div>
+      <div class="album-summary">
+        A remarkable renewal. Named for the Lower Manhattan street near their rehearsal space, and released in the shadow of September 11th, Murray Street finds Sonic Youth &mdash; now a five-piece with Jim O&rsquo;Rourke on guitar, bass, and keyboards &mdash; rediscovering the marriage of noise and melody that made their late-1980s work so potent. &ldquo;The Empty Page&rdquo; and &ldquo;Rain on Tin&rdquo; are gorgeous, wide-open guitar pieces, while &ldquo;Disconnection Notice&rdquo; has the urgency of their best pop moments.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums &middot; Jim O&rsquo;Rourke &mdash; guitar, bass, keyboards
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth
+      </div>
+      <div class="tags">
+        <span class="tag">indie rock</span>
+        <span class="tag">noise rock</span>
+        <span class="tag">post-rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Empty Page</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Disconnection Notice</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Rain on Tin</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Karen Revisited</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Radical Adults Lick Godhead Style</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Plastic Sun</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Sympathy for the Strawberry</span></div>
+      </div>
+    </div>
+
+    <!-- Sonic Nurse -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Sonic Nurse</h3>
+        <span class="album-year">2004</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-dgc">DGC</span>
+      </div>
+      <div class="album-summary">
+        The five-piece lineup&rsquo;s second album and arguably the best of the O&rsquo;Rourke era. Recorded at Echo Canyon and mixed by O&rsquo;Rourke at the Magic Shop, it features some of their most expansive and lyrical guitar interplay &mdash; three guitars weaving in and out across ten tracks that range from the compact pop of &ldquo;Unmade Bed&rdquo; to the seven-minute drone meditations of &ldquo;Dripping Dream&rdquo; and &ldquo;Stones.&rdquo; Named for a painting series by Richard Prince, who also provided the cover art.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums &middot; Jim O&rsquo;Rourke &mdash; guitar, bass, keyboards
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth
+      </div>
+      <div class="tags">
+        <span class="tag">indie rock</span>
+        <span class="tag">noise rock</span>
+        <span class="tag">experimental</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Pattern Recognition</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Unmade Bed</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Dripping Dream</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Kim Gordon and the Arthur Doyle Hand Cream</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Stones</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Dude Ranch Nurse</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">New Hampshire</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Paper Cup Exit</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">I Love You Golden Blue</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Peace Attack</span></div>
+      </div>
+    </div>
+
+    <!-- Rather Ripped -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Rather Ripped</h3>
+        <span class="album-year">2006</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-dgc">DGC</span>
+      </div>
+      <div class="album-summary">
+        A surprise return to concision after the extended-form explorations of the O&rsquo;Rourke years. With O&rsquo;Rourke departed and John Agnello producing, the band stripped back to the classic four-piece and delivered twelve lean, tuneful songs &mdash; the most straightforwardly melodic album since Goo. &ldquo;Incinerate&rdquo; and &ldquo;Do You Believe in Rapture?&rdquo; are bright, hooky pieces that recall the SST-era pop instincts, while &ldquo;Pink Steam&rdquo; and &ldquo;Turquoise Boy&rdquo; provide the noise-guitar counterbalance.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth &middot; John Agnello
+      </div>
+      <div class="tags">
+        <span class="tag">indie rock</span>
+        <span class="tag">alternative rock</span>
+        <span class="tag">noise pop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Reena</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Incinerate</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Do You Believe in Rapture?</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Sleepin&rsquo; Around</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">What a Waste</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Jams Run Free</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Rats</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Turquoise Boy</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Lights Out</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Neutral</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Pink Steam</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Or</span></div>
+      </div>
+    </div>
+
+    <!-- The Eternal -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Eternal</h3>
+        <span class="album-year">2009</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-matador">Matador</span>
+      </div>
+      <div class="album-summary">
+        The final studio album, and a fitting capstone. Leaving Geffen after nearly two decades, the band signed to Matador and recruited bassist Mark Ibold (Pavement) to fill out the live sound. Produced with John Agnello, The Eternal has the energy and directness of a band with something to prove: &ldquo;Sacred Trickster&rdquo; and &ldquo;Anti-Orgasm&rdquo; are furious punk blasts, while &ldquo;Massage the History&rdquo; stretches into a nine-minute epic worthy of Daydream Nation. The band went on indefinite hiatus in 2011 following Moore and Gordon&rsquo;s separation.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Thurston Moore &mdash; guitar, vocals &middot; Lee Ranaldo &mdash; guitar, vocals &middot; Kim Gordon &mdash; bass, vocals &middot; Steve Shelley &mdash; drums &middot; Mark Ibold &mdash; bass (live)
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sonic Youth &middot; John Agnello
+      </div>
+      <div class="tags">
+        <span class="tag">noise rock</span>
+        <span class="tag">indie rock</span>
+        <span class="tag">alternative rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Sacred Trickster</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Anti-Orgasm</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Leaky Lifeboat (For Gregory Corso)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Antenna</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">What We Know</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Calming the Snake</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Poison Arrow</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Malibu Gas Station</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Thunderclap for Bobby Pyn</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">No Way</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Walkin Blue</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Massage the History</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>Discography compiled for personal collection reference. Data sourced from Discogs, AllMusic, and official releases.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

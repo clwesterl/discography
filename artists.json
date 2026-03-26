@@ -79,5 +79,14 @@
     "tags": ["garage rock", "post-punk revival", "indie rock"],
     "albums": "6 studio albums",
     "description": "Five New Yorkers whose taut, wired debut single-handedly reignited guitar rock at the turn of the millennium — fusing Velvet Underground cool, Television's guitar geometry, and a downtown swagger into a sound that launched a thousand bands."
+  },
+  {
+    "name": "Sonic Youth",
+    "file": "sonic-youth.html",
+    "years": "1981–2011",
+    "genre": "Rock",
+    "tags": ["noise rock", "no wave", "art punk", "experimental"],
+    "albums": "15 studio albums",
+    "description": "New York's great noise architects, whose three decades of alternate tunings, feedback sculpting, and downtown art-world ambition — from no-wave abrasion through SST-era guitar epics to a decade on a major label — redrew the boundaries of what a rock band could sound like and mean."
   }
 ]
