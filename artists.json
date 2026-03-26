@@ -52,5 +52,14 @@
     "tags": ["alternative rock", "noise pop", "indie rock", "post-punk"],
     "albums": "10 studio albums",
     "description": "The loud-quiet-loud architects of alternative rock, whose taut surrealist songs — fusing punk velocity with pop melody and surf guitar — detonated a blueprint that shaped the sound of the 1990s."
+  },
+  {
+    "name": "PJ Harvey",
+    "file": "pj-harvey.html",
+    "years": "1991–present",
+    "genre": "Rock",
+    "tags": ["art rock", "post-punk", "alternative", "gothic rock"],
+    "albums": "10 solo studio + 2 collaboration albums",
+    "description": "One of the most fearless and shape-shifting artists in rock, whose three-decade career — from raw blues-punk fury through gothic Americana, spectral piano ballads, and politically charged art-rock — is defined by constant reinvention."
   }
 ]

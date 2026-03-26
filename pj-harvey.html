@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PJ Harvey — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #8a3a5c;
+    --accent-dim: #6a2a44;
+    --island: #6a8a7a;
+    --too-pure: #9a7a6a;
+    --vagrant: #7a6a9a;
+    --partisan: #8a7a5a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-too-pure { background: rgba(154, 122, 106, 0.2); color: #c0a090; border: 1px solid rgba(154, 122, 106, 0.3); }
+  .label-island { background: rgba(106, 138, 122, 0.2); color: #90c0a8; border: 1px solid rgba(106, 138, 122, 0.3); }
+  .label-vagrant { background: rgba(122, 106, 154, 0.2); color: #a090c8; border: 1px solid rgba(122, 106, 154, 0.3); }
+  .label-partisan { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+
+  .collab-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(138, 58, 92, 0.2);
+    color: #c87a9a;
+    border: 1px solid rgba(138, 58, 92, 0.25);
+    text-transform: uppercase;
+  }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Art Rock &middot; Post-Punk &middot; Alternative &nbsp;&middot;&nbsp; 1991&ndash;present &middot; Dorset, England</div>
+    <h1 class="artist-name">PJ Harvey</h1>
+    <p class="artist-bio">
+      Polly Jean Harvey &mdash; one of the most fearless and shape-shifting artists in rock,
+      whose three-decade career has moved from the raw blues-punk fury of the early trio through
+      gothic Americana, spectral piano ballads, and politically charged art-rock, reinventing
+      herself completely with each record while maintaining an uncompromising artistic vision.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">10</span>
+        <span class="stat-label">Solo Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2</span>
+        <span class="stat-label">Collaboration Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1992&ndash;2023</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">7/12</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">0 vinyl &middot; 7 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">1992&ndash;2023 &middot; Ten solo albums on Too Pure / Island / Vagrant / Partisan</p>
+  <div class="album-grid">
+
+    <!-- Dry -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Dry</h3>
+        <span class="album-year">1992</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="PJ Harvey" data-album="Dry" onchange="toggleWant(this, 'PJ Harvey', 'Dry', '1992', 'Too Pure')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-too-pure">Too Pure</span>
+      </div>
+      <div class="album-summary">
+        Harvey's debut arrived fully formed, a jagged manifesto of desire, frustration, and female power delivered by her eponymous trio. Recorded at The Icehouse in Yeovil with co-producer Head (Howard Bullivant), the album channels blues and post-punk into something rawer than either. "Sheela-Na-Gig" and "Dress" became underground anthems, while deep cuts like "Plants and Rags" and "Water" revealed a songwriter already operating with remarkable range and control.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals, guitar, violin &middot; Rob Ellis &mdash; drums, vocals, harmonium &middot; Steve Vaughan &mdash; bass
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        PJ Harvey, Rob Ellis &amp; Head
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">blues rock</span>
+        <span class="tag">post-punk</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Oh My Lover</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">O Stella</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Dress</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Victory</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Happy and Bleeding</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Sheela-Na-Gig</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Hair</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Joe</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Plants and Rags</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Fountain</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Water</span></div>
+      </div>
+    </div>
+
+    <!-- Rid of Me -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Rid of Me</h3>
+        <span class="album-year">1993</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-island">Island</span>
+      </div>
+      <div class="album-summary">
+        Harvey's major-label debut and her most abrasive record, produced by Steve Albini at Pachyderm Studio in Minnesota with his trademark dry, visceral sound. The dynamics are extreme &mdash; whispers exploding into screams, silence detonating into walls of noise. "50ft Queenie" and the title track are among the most physically intense songs in the alternative rock canon, while the Bob Dylan cover "Highway '61 Revisited" is gleefully unhinged. Ranked among the greatest albums of the 1990s.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals, guitar, violin, cello &middot; Rob Ellis &mdash; drums, backing vocals &middot; Steve Vaughan &mdash; bass
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Steve Albini
+      </div>
+      <div class="tags">
+        <span class="tag">noise rock</span>
+        <span class="tag">alternative rock</span>
+        <span class="tag">blues punk</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Rid of Me</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Missed</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Legs</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Rub 'Til It Bleeds</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Hook</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Man-Size Sextet</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Highway '61 Revisited</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">50ft Queenie</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Yuri-G</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Man-Size</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Dry</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Me-Jane</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Snake</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Ecstasy</span></div>
+      </div>
+    </div>
+
+    <!-- To Bring You My Love -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">To Bring You My Love</h3>
+        <span class="album-year">1995</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-island">Island</span>
+      </div>
+      <div class="album-summary">
+        A dramatic reinvention that traded the trio's raw power for a cinematic, blues-gothic landscape. Co-produced with Flood and John Parish at Townhouse Studios in London, the album introduced a far more expansive and theatrical Harvey, with organ drones, string arrangements, and layered atmospherics. "Down by the Water" became her biggest single, and the record earned a Grammy nomination, establishing her as one of the most important artists of the decade.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals, guitar, organ &middot; John Parish &mdash; guitar, drums &middot; Joe Gore &mdash; guitar &middot; Nick Bagnall &mdash; keyboards &middot; Jean-Marc Butty &mdash; drums &middot; Mick Harvey &mdash; bass, organ
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Flood &amp; PJ Harvey
+      </div>
+      <div class="tags">
+        <span class="tag">gothic rock</span>
+        <span class="tag">blues rock</span>
+        <span class="tag">alternative rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">To Bring You My Love</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Meet Ze Monsta</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Working for the Man</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">C'mon Billy</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Teclo</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Long Snake Moan</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Down by the Water</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">I Think I'm a Mother</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Send His Love to Me</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Dancer</span></div>
+      </div>
+    </div>
+
+    <!-- Is This Desire? -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Is This Desire?</h3>
+        <span class="album-year">1998</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-island">Island</span>
+      </div>
+      <div class="album-summary">
+        Harvey's most introverted and electronically textured album, a stark departure from the theatrical grandeur of its predecessor. Again co-produced with Flood, the record trades blues swagger for claustrophobic loops, sampled percussion, and eerie digital processing. Character sketches of damaged women &mdash; Catherine, Angelene, Leah &mdash; populate a nocturnal world of longing and isolation. Commercially cooler on arrival, it has aged into one of her most admired works.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals, guitar, bass, piano, keyboards &middot; Mick Harvey &mdash; guitar, keyboards, bass &middot; Rob Ellis &mdash; drums &middot; Joe Gore &mdash; guitar
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Flood &amp; PJ Harvey
+      </div>
+      <div class="tags">
+        <span class="tag">art rock</span>
+        <span class="tag">electronic</span>
+        <span class="tag">gothic</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Angelene</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Sky Lit Up</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">The Wind</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">My Beautiful Leah</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">A Perfect Day Elise</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Catherine</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Electric Light</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">The Garden</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Joy</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The River</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">No Girl So Sweet</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Is This Desire?</span></div>
+      </div>
+    </div>
+
+    <!-- Stories from the City, Stories from the Sea -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Stories from the City, Stories from the Sea</h3>
+        <span class="album-year">2000</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-island">Island</span>
+      </div>
+      <div class="album-summary">
+        Harvey's most outward-looking and emotionally direct album, inspired by her time living in New York City and written during a period of personal contentment rare in her catalog. The production by Rob Ellis, Mick Harvey, and Harvey herself is warm and guitar-driven, recalling classic rock with a modern edge. "This Mess We're In," a duet with Thom Yorke, and "Good Fortune" became fan favorites. The album won the Mercury Prize in 2001, confirming her status as a singular force.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals, guitar, piano, bass &middot; Rob Ellis &mdash; drums, backing vocals &middot; Mick Harvey &mdash; bass, guitar, organ &middot; Thom Yorke &mdash; vocals (track 7)
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        PJ Harvey, Rob Ellis &amp; Mick Harvey
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">indie rock</span>
+        <span class="tag">art rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Big Exit</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Good Fortune</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">A Place Called Home</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">One Line</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Beautiful Feeling</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">The Whores Hustle and the Hustlers Whore</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">This Mess We're In</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">You Said Something</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Kamikaze</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">This Is Love</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Horses in My Dreams</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">We Float</span></div>
+      </div>
+    </div>
+
+    <!-- Uh Huh Her -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Uh Huh Her</h3>
+        <span class="album-year">2004</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-island">Island</span>
+      </div>
+      <div class="album-summary">
+        A return to raw, guitar-driven intensity after the relative polish of its predecessor. Harvey played nearly every instrument herself and co-produced with longtime engineer Head, making it her most hands-on solo effort since the early trio days. Rob Ellis returned on drums. The sound is loose and combustible, full of jagged riffs and vocal distortion, with "The Letter," "Shame," and "You Come Through" standing out as immediate highlights. A deliberate stripping-back of the orchestral ambitions of the previous decade.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals, guitar, bass, piano, melodica, accordion, autoharp &middot; Rob Ellis &mdash; drums, percussion
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        PJ Harvey &amp; Head
+      </div>
+      <div class="tags">
+        <span class="tag">garage rock</span>
+        <span class="tag">alternative rock</span>
+        <span class="tag">lo-fi</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Life and Death of Mr. Badmouth</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Shame</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Who the Fuck?</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Pocket Knife</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">The Letter</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">The Slow Drug</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">No Child of Mine</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Cat on the Wall</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">You Come Through</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">It's You</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">The End</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">The Desperate Kingdom of Love</span></div>
+      </div>
+    </div>
+
+    <!-- White Chalk -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">White Chalk</h3>
+        <span class="album-year">2007</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-island">Island</span>
+      </div>
+      <div class="album-summary">
+        Harvey's most radical transformation: a hushed, piano-led album sung almost entirely in a fragile high soprano, a world away from the guitar-wielding howl of her earlier work. Drawing on the landscape and folklore of her native Dorset, the songs evoke Victorian ghost stories and chalk-white cliffs, suffused with themes of death, loss, and haunting. "When Under Ether" and "The Devil" are among her most unsettling and beautiful compositions. A divisive record on release, now widely regarded as one of her finest.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals, piano, guitar, zither, harp &middot; Eric Drew Feldman &mdash; piano, bass, guitar &middot; Jim White &mdash; drums &middot; Rob Ellis &mdash; drums, backing vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        PJ Harvey, Head &amp; Flood
+      </div>
+      <div class="tags">
+        <span class="tag">art rock</span>
+        <span class="tag">chamber pop</span>
+        <span class="tag">gothic folk</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Devil</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Dear Darkness</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Grow Grow Grow</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">White Chalk</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Broken Harp</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Silence</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">To Talk to You</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Before Departure</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Mountain</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Piano</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">When Under Ether</span></div>
+      </div>
+    </div>
+
+    <!-- Let England Shake -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Let England Shake</h3>
+        <span class="album-year">2011</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-island">Island</span>
+      </div>
+      <div class="album-summary">
+        A sweeping meditation on England, war, and nationhood that won Harvey her second Mercury Prize &mdash; making her the only artist to win the award twice. Recorded in a Dorset church with longtime collaborators John Parish, Mick Harvey, and drummer Jean-Marc Butty, the album's autoharp-driven songs draw on World War I, Gallipoli, and the erosion of English identity. Samples of older recordings weave through the fabric, and Harvey's vocals float above like dispatches from the front. Widely hailed as a masterpiece.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals, autoharp, guitar, zither &middot; John Parish &mdash; guitar, keyboards, vocals &middot; Mick Harvey &mdash; bass, guitar, keyboards, vocals &middot; Jean-Marc Butty &mdash; drums, vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Flood, PJ Harvey, John Parish &amp; Mick Harvey
+      </div>
+      <div class="tags">
+        <span class="tag">art rock</span>
+        <span class="tag">folk rock</span>
+        <span class="tag">political</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Let England Shake</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Last Living Rose</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">The Glorious Land</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Words That Maketh Murder</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">All and Everyone</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">On Battleship Hill</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">England</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">In the Dark Places</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Bitter Branches</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Hanging in the Wire</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Written on the Forehead</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">The Colour of the Earth</span></div>
+      </div>
+    </div>
+
+    <!-- The Hope Six Demolition Project -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Hope Six Demolition Project</h3>
+        <span class="album-year">2016</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="PJ Harvey" data-album="The Hope Six Demolition Project" onchange="toggleWant(this, 'PJ Harvey', 'The Hope Six Demolition Project', '2016', 'Island')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-island">Island</span>
+      </div>
+      <div class="album-summary">
+        Inspired by Harvey's travels to Afghanistan, Kosovo, and Washington D.C., this is her most overtly political album since Let England Shake, turning outward to document communities under pressure. Recorded at Somerset House in London as a public art installation &mdash; visitors watched through one-way glass &mdash; and produced with Flood and John Parish. The same core band returns, augmented by a community choir and horns. "The Community of Hope" and "The Orange Monkey" are pointed dispatches from the world's neglected corners.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals, guitar, saxophone &middot; John Parish &mdash; guitar, percussion, keyboards &middot; Mick Harvey &mdash; guitar, bass, keyboards &middot; Jean-Marc Butty &mdash; drums &middot; Terry Edwards &mdash; horns &middot; James Johnston &mdash; guitar, keyboards
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Flood &amp; John Parish
+      </div>
+      <div class="tags">
+        <span class="tag">art rock</span>
+        <span class="tag">post-punk</span>
+        <span class="tag">political</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Community of Hope</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Ministry of Defence</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">A Line in the Sand</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Chain of Keys</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">River Anacostia</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Near the Memorials to Vietnam and Lincoln</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">The Orange Monkey</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Medicinals</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Ministry of Social Affairs</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Wheel</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Dollar, Dollar</span></div>
+      </div>
+    </div>
+
+    <!-- I Inside the Old Year Dying -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">I Inside the Old Year Dying</h3>
+        <span class="album-year">2023</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="PJ Harvey" data-album="I Inside the Old Year Dying" onchange="toggleWant(this, 'PJ Harvey', 'I Inside the Old Year Dying', '2023', 'Partisan')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-partisan">Partisan</span>
+      </div>
+      <div class="album-summary">
+        Harvey's most recent album and first in seven years, adapted from her poetry collection Orlam, written in Dorset dialect. A deeply pastoral and personal work, it returns to the landscape of her childhood &mdash; the fields, rivers, and folklore of southwest England &mdash; filtered through incantatory, almost trance-like songwriting. Produced with Flood and John Parish, it is her quietest and most literary record, with Harvey, Parish, and longtime associate Cecil layering acoustic instruments over subtle electronic textures.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals, guitars, bass guitar, piano, Rhodes, bass clarinet &middot; John Parish &mdash; drums, guitar, bass, synth, trombone, vocals &middot; Cecil &mdash; keyboards, synth, samples &middot; Flood &mdash; synth, effects
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Flood &amp; John Parish
+      </div>
+      <div class="tags">
+        <span class="tag">art rock</span>
+        <span class="tag">pastoral folk</span>
+        <span class="tag">experimental</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Prayer at the Gate</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Autumn Term</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Lwonesome Tonight</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Seem an I</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">The Nether-edge</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">I Inside the Old Year Dying</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">All Souls</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">A Child's Question, August</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">I Inside the Old I Dying</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">August</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">A Child's Question, July</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">A Noiseless Noise</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="collaborations">
+  <h2 class="section-title">Collaboration Albums</h2>
+  <p class="section-subtitle">With John Parish &middot; 1996 &amp; 2009</p>
+  <div class="album-grid">
+
+    <!-- Dance Hall at Louse Point -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Dance Hall at Louse Point</h3>
+        <span class="album-year">1996</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="PJ Harvey" data-album="Dance Hall at Louse Point" onchange="toggleWant(this, 'PJ Harvey', 'Dance Hall at Louse Point', '1996', 'Island')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="collab-note">with John Parish</span>
+        <span class="label-badge label-island">Island</span>
+      </div>
+      <div class="album-summary">
+        The first collaboration between Harvey and her fellow Dorset musician John Parish, credited to "John Parish &amp; Polly Jean Harvey." Parish composed all the music and played most instruments; Harvey wrote lyrics and sang. The result is darker and more abstract than either artist's solo work, with cinematic instrumentals, spoken-word passages, and unsettling atmospherics. "That Was My Veil" and "Taut" are highlights of this adventurous, under-appreciated record.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals &middot; John Parish &mdash; guitar, bass, drums, keyboards, programming &middot; Rob Ellis &mdash; drums &middot; Jeremy Hogg &mdash; guitar &middot; Nick Bagnall &mdash; keyboards
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        John Parish
+      </div>
+      <div class="tags">
+        <span class="tag">art rock</span>
+        <span class="tag">experimental</span>
+        <span class="tag">post-punk</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Girl</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Rope Bridge Crossing</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">City of No Sun</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">That Was My Veil</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Urn with Dead Flowers in a Drained Pool</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Civil War Correspondent</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Taut</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Un Cercle Autour du Soleil</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Heela</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Is That All There Is?</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Dance Hall at Louse Point</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Lost Fun Zone</span></div>
+      </div>
+    </div>
+
+    <!-- A Woman a Man Walked By -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">A Woman a Man Walked By</h3>
+        <span class="album-year">2009</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="PJ Harvey" data-album="A Woman a Man Walked By" onchange="toggleWant(this, 'PJ Harvey', 'A Woman a Man Walked By', '2009', 'Island')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="collab-note">with John Parish</span>
+        <span class="label-badge label-island">Island</span>
+      </div>
+      <div class="album-summary">
+        The second Parish-Harvey collaboration, this time credited to "PJ Harvey &amp; John Parish," reversing the billing. Again, Parish wrote the music and Harvey the words, but the sound is wilder and more confrontational than its predecessor. "Black Hearted Love" is one of their most accessible songs together, while "Pig Will Not" and "Passionless, Pointless" push into genuinely abrasive territory. An uncompromising record that rewards repeated listening.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        PJ Harvey &mdash; vocals, guitar &middot; John Parish &mdash; guitar, bass, drums, keyboards, programming &middot; Jean-Marc Butty &mdash; drums &middot; Rob Ellis &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        PJ Harvey, John Parish &amp; Head
+      </div>
+      <div class="tags">
+        <span class="tag">art rock</span>
+        <span class="tag">noise rock</span>
+        <span class="tag">experimental</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Black Hearted Love</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Sixteen, Fifteen, Fourteen</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Leaving California</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Chair</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">April</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">A Woman a Man Walked By / The Crow Knows Where All the Little Children Go</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">The Soldier</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Pig Will Not</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Passionless, Pointless</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Cracks in the Canvas</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>
