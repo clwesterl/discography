@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixies — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #c45a3c;
+    --accent-dim: #8a3e2a;
+    --four-ad: #7a6a9a;
+    --elektra: #6a8a7a;
+    --pixiesmusic: #8a7a5a;
+    --bmg: #6a7a8a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-4ad { background: rgba(122, 106, 154, 0.2); color: #a090c8; border: 1px solid rgba(122, 106, 154, 0.3); }
+  .label-elektra { background: rgba(106, 138, 122, 0.2); color: #90c0a8; border: 1px solid rgba(106, 138, 122, 0.3); }
+  .label-pixiesmusic { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-bmg { background: rgba(106, 122, 138, 0.2); color: #90a8c0; border: 1px solid rgba(106, 122, 138, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Alternative Rock &middot; Noise Pop &middot; Indie Rock &nbsp;&middot;&nbsp; 1986&ndash;1993, 2004&ndash;present &middot; Boston, MA</div>
+    <h1 class="artist-name">Pixies</h1>
+    <p class="artist-bio">
+      The loud-quiet-loud architects of alternative rock, whose taut, surrealist
+      songs &mdash; fusing punk velocity with pop melody, surf guitar, and
+      Black Francis's biblical-extraterrestrial obsessions &mdash; detonated a
+      blueprint that shaped the sound of the 1990s and beyond.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">10</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1987&ndash;2024</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">5/10</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">3 vinyl &middot; 4 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">1987&ndash;2024 &middot; Ten releases across four decades on 4AD / Elektra / Pixiesmusic / BMG</p>
+  <div class="album-grid">
+
+    <!-- Come On Pilgrim -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Come On Pilgrim</h3>
+        <span class="album-year">1987</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-4ad">4AD</span>
+      </div>
+      <div class="album-summary">
+        Eight songs culled from the Purple Tape demo sessions at Fort Apache Studios, released as a mini-LP that announced something genuinely new. The bilingual lyrics, lurching dynamics, and Francis's feral vocal attack arrived fully formed, drawing equally from Husker Du's velocity and Buddy Holly's melodic instincts. Songs like "Caribou" and "Vamos" established the surrealist, reference-dense lyrical world the band would inhabit for the next four years.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Black Francis &mdash; vocals, guitar &middot; Joey Santiago &mdash; lead guitar &middot; Kim Deal &mdash; bass, vocals &middot; David Lovering &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Gary Smith
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">indie rock</span>
+        <span class="tag">mini-LP</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Caribou</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Vamos</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Isla de Encanta</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Ed Is Dead</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">The Holiday Song</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Nimrod's Son</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">I've Been Tired</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Levitate Me</span></div>
+      </div>
+    </div>
+
+    <!-- Surfer Rosa -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Surfer Rosa</h3>
+        <span class="album-year">1988</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-4ad">4AD</span>
+      </div>
+      <div class="album-summary">
+        The debut full-length, produced by Steve Albini with his signature dry, explosive drum sound. The loud-quiet-loud template is fully weaponized here: "Where Is My Mind?" became the band's most enduring song, while Kim Deal's "Gigantic" proved she was a songwriting force in her own right. Albini's production gave every instrument a physical, confrontational presence that influenced a generation of alternative bands &mdash; Kurt Cobain famously cited it as the sonic blueprint for Nevermind.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Black Francis &mdash; vocals, guitar &middot; Joey Santiago &mdash; lead guitar &middot; Kim Deal &mdash; bass, vocals &middot; David Lovering &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Steve Albini
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">noise pop</span>
+        <span class="tag">punk</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Bone Machine</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Break My Body</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Something Against You</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Broken Face</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Gigantic</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">River Euphrates</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Where Is My Mind?</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Cactus</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Tony's Theme</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Oh My Golly!</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Vamos</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">I'm Amazed</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Brick Is Red</span></div>
+      </div>
+    </div>
+
+    <!-- Doolittle -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Doolittle</h3>
+        <span class="album-year">1989</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-4ad">4AD</span>
+        <span class="label-badge label-elektra">Elektra</span>
+      </div>
+      <div class="album-summary">
+        The masterpiece and commercial breakthrough, produced by Gil Norton with a polish that sharpened rather than dulled the band's edges. From the surrealist assault of "Debaser" through the pop perfection of "Here Comes Your Man" to the environmental anxiety of "Monkey Gone to Heaven," all fifteen tracks sustain an extraordinary level of invention. It became a cornerstone of alternative rock, landing on virtually every best-of-the-decade list and selling over a million copies.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Black Francis &mdash; vocals, guitar &middot; Joey Santiago &mdash; lead guitar &middot; Kim Deal &mdash; bass, vocals &middot; David Lovering &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Gil Norton
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">indie rock</span>
+        <span class="tag">noise pop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Debaser</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Tame</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Wave of Mutilation</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">I Bleed</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Here Comes Your Man</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Dead</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Monkey Gone to Heaven</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Mr. Grieves</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Crackity Jones</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">La La Love You</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">No. 13 Baby</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">There Goes My Gun</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Hey</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Silver</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Gouge Away</span></div>
+      </div>
+    </div>
+
+    <!-- Bossanova -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Bossanova</h3>
+        <span class="album-year">1990</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-4ad">4AD</span>
+        <span class="label-badge label-elektra">Elektra</span>
+      </div>
+      <div class="album-summary">
+        A sharp left turn into space rock, surf guitar, and science fiction. Gil Norton returned to produce, and Santiago's tremolo-bar explorations took center stage alongside Francis's obsession with UFOs, extraterrestrials, and the cosmos. "Velouria" and "Dig for Fire" became alt-rock radio staples, while deep cuts like "Havalina" and the instrumental opener "Cecilia Ann" (a cover of The Surftones) showed a band confidently expanding its palette. Kim Deal's role diminished here, fueling tensions that would eventually split the group.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Black Francis &mdash; vocals, guitar &middot; Joey Santiago &mdash; lead guitar &middot; Kim Deal &mdash; bass, vocals &middot; David Lovering &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Gil Norton
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">space rock</span>
+        <span class="tag">surf rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Cecilia Ann</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Rock Music</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Velouria</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Allison</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Is She Weird</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Ana</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">All Over the World</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Dig for Fire</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Down to the Well</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Happening</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Blown Away</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Hang Wire</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Stormy Weather</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Havalina</span></div>
+      </div>
+    </div>
+
+    <!-- Trompe le Monde -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Trompe le Monde</h3>
+        <span class="album-year">1991</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Pixies" data-album="Trompe le Monde" onchange="toggleWant(this, 'Pixies', 'Trompe le Monde', '1991', '4AD / Elektra')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-4ad">4AD</span>
+        <span class="label-badge label-elektra">Elektra</span>
+      </div>
+      <div class="album-summary">
+        The final album of the original era, and the heaviest &mdash; a relentless fifteen-track barrage that leans into thrash tempos and sci-fi themes. Francis dominates almost completely, with Deal's contributions reduced to near-zero as the interpersonal dysfunction peaked. "U-Mass," "Planet of Sound," and "Motorway to Roswell" are standouts, and the Jesus and Mary Chain cover "Head On" became a fan favorite. The band dissolved via fax shortly after touring in support of it, not to reconvene for thirteen years.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Black Francis &mdash; vocals, guitar &middot; Joey Santiago &mdash; lead guitar &middot; Kim Deal &mdash; bass &middot; David Lovering &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Gil Norton
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">noise rock</span>
+        <span class="tag">space rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Trompe le Monde</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Planet of Sound</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Alec Eiffel</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Sad Punk</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Head On</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">U-Mass</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Palace of the Brine</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Letter to Memphis</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Bird Dream of the Olympus Mons</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Space (I Believe In)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Subbacultcha</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Distance Equals Rate Times Time</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Lovely Day</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Motorway to Roswell</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">The Navajo Know</span></div>
+      </div>
+    </div>
+
+    <!-- Indie Cindy -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Indie Cindy</h3>
+        <span class="album-year">2014</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Pixies" data-album="Indie Cindy" onchange="toggleWant(this, 'Pixies', 'Indie Cindy', '2014', 'Pixiesmusic / PIAS')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-pixiesmusic">Pixiesmusic</span>
+      </div>
+      <div class="album-summary">
+        The comeback album, twenty-three years after Trompe le Monde and the first without Kim Deal, who departed during the sessions. Compiled from three EPs released incrementally, it reunited the band with Gil Norton at Rockfield Studios in Wales. Reviews were mixed &mdash; the songwriting doesn't match the original run's density &mdash; but "Bagboy" and "Blue Eyed Hexe" showed the band could still generate real menace and momentum. Kim Shattuck (Muffs) briefly filled in on bass before Paz Lenchantin joined permanently.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Black Francis &mdash; vocals, guitar &middot; Joey Santiago &mdash; lead guitar &middot; Paz Lenchantin &mdash; bass, vocals &middot; David Lovering &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Gil Norton
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">indie rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">What Goes Boom</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Greens and Blues</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Indie Cindy</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Bagboy</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Magdalena 318</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Silver Snail</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Blue Eyed Hexe</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Ring the Bell</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Another Toe in the Ocean</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Andro Queen</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Snakes</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Jaime Bravo</span></div>
+      </div>
+    </div>
+
+    <!-- Head Carrier -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Head Carrier</h3>
+        <span class="album-year">2016</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Pixies" data-album="Head Carrier" onchange="toggleWant(this, 'Pixies', 'Head Carrier', '2016', 'Pixiesmusic / PIAS')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-pixiesmusic">Pixiesmusic</span>
+      </div>
+      <div class="album-summary">
+        The first album with Paz Lenchantin as a full member and the first produced by Tom Dalgety, who would helm the band's next three records. More cohesive than Indie Cindy, it foregrounds Lenchantin's harmonies and occasionally gives her the lead &mdash; "All I Think About Now" is an overt love letter to Kim Deal's "Gigantic." "Tenement Song" and "Baal's Back" recapture some of the classic era's twitchy energy, while the overall tone is darker and more deliberate.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Black Francis &mdash; vocals, guitar &middot; Joey Santiago &mdash; lead guitar &middot; Paz Lenchantin &mdash; bass, vocals &middot; David Lovering &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Tom Dalgety
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">noise pop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Head Carrier</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Classic Masher</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Baal's Back</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Might as Well Be Gone</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Oona</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Talent</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Tenement Song</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Bel Esprit</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">All I Think About Now</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Um Chagga Lagga</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Plaster of Paris</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">All the Saints</span></div>
+      </div>
+    </div>
+
+    <!-- Beneath the Eyrie -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Beneath the Eyrie</h3>
+        <span class="album-year">2019</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Pixies" data-album="Beneath the Eyrie" onchange="toggleWant(this, 'Pixies', 'Beneath the Eyrie', '2019', 'BMG / Infectious')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-bmg">BMG</span>
+      </div>
+      <div class="album-summary">
+        Recorded at Dreamland Studios, a converted church in upstate New York, with the gothic setting seeping into the music. Tom Dalgety produced again, and the album leans into folk-tinged darkness, witchcraft imagery, and narrative storytelling. "Catfish Kate" and "On Graveyard Hill" build atmosphere over volume, while "Los Surfers Muertos" and "St. Nazaire" hint at broader melodic ambitions. An accompanying podcast documented the recording sessions, a first for the band.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Black Francis &mdash; vocals, guitar &middot; Joey Santiago &mdash; lead guitar &middot; Paz Lenchantin &mdash; bass, vocals &middot; David Lovering &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Tom Dalgety
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">gothic rock</span>
+        <span class="tag">folk rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">In the Arms of Mrs. Mark of Cain</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">On Graveyard Hill</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Catfish Kate</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">This Is My Fate</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Ready for Love</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Silver Bullet</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Long Rider</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Los Surfers Muertos</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">St. Nazaire</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Bird of Prey</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Daniel Boone</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Death Horizon</span></div>
+      </div>
+    </div>
+
+    <!-- Doggerel -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Doggerel</h3>
+        <span class="album-year">2022</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Pixies" data-album="Doggerel" onchange="toggleWant(this, 'Pixies', 'Doggerel', '2022', 'BMG / Infectious')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-bmg">BMG</span>
+      </div>
+      <div class="album-summary">
+        Recorded at Guilford Sound in Vermont, the eighth studio album finds the band in a looser, more expansive mode. Tom Dalgety produced once more, encouraging longer arrangements and more layered textures. "There's a Moon On" and "Vault of Heaven" push toward a spacious, almost classic-rock grandeur, while "Haunted House" and "Thunder and Lightning" retain the band's abrasive edge. Joey Santiago called it the grown-up version of Doolittle &mdash; a bold claim, but the ambition is audible.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Black Francis &mdash; vocals, guitar &middot; Joey Santiago &mdash; lead guitar &middot; Paz Lenchantin &mdash; bass, vocals &middot; David Lovering &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Tom Dalgety
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">indie rock</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Nomatterday</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Vault of Heaven</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Dregs of the Wine</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Haunted House</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Get Simulated</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">The Lord Has Come Back Today</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Thunder and Lightning</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">There's a Moon On</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Pagan Man</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Who's More Sorry Now?</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">You're Such a Sadducee</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Doggerel</span></div>
+      </div>
+    </div>
+
+    <!-- The Night the Zombies Came -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Night the Zombies Came</h3>
+        <span class="album-year">2024</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Pixies" data-album="The Night the Zombies Came" onchange="toggleWant(this, 'Pixies', 'The Night the Zombies Came', '2024', 'BMG')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-bmg">BMG</span>
+      </div>
+      <div class="album-summary">
+        The ninth studio album and fourth with Paz Lenchantin, produced once again by Tom Dalgety. A loose concept album with narrative threads about small-town America, zombies, and apocalyptic unease. "Chicken" and "You're So Impatient" recall the band's punchier side, while "The Vegas Suite" closes the record with an ambitious multi-part instrumental coda. Lenchantin's role continues to deepen, and the album was received as one of the stronger reunion-era entries.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Black Francis &mdash; vocals, guitar &middot; Joey Santiago &mdash; lead guitar &middot; Paz Lenchantin &mdash; bass, vocals &middot; David Lovering &mdash; drums
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Tom Dalgety
+      </div>
+      <div class="tags">
+        <span class="tag">alternative rock</span>
+        <span class="tag">indie rock</span>
+        <span class="tag">concept album</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Primrose</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">You're So Impatient</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Jane (The Night the Zombies Came)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Chicken</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Hypnotised</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Johnny Good Man</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Motoroller</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">I Hear You Mary</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Oyster Beds</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Mercy Me</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Ernest Evans</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Kings of the Prairie</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">The Vegas Suite</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

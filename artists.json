@@ -43,5 +43,14 @@
     "tags": ["cool jazz", "hard bop", "modal jazz", "fusion", "post-bop"],
     "albums": "60+ total (27 essential studio + 7 key live highlighted)",
     "description": "The most restlessly innovative figure in jazz history, whose unbroken arc of reinvention — from bebop through cool jazz, modal jazz, post-bop, and fusion — redefined the music at every turn."
+  },
+  {
+    "name": "Pixies",
+    "file": "pixies.html",
+    "years": "1986–1993, 2004–present",
+    "genre": "Rock",
+    "tags": ["alternative rock", "noise pop", "indie rock", "post-punk"],
+    "albums": "10 studio albums",
+    "description": "The loud-quiet-loud architects of alternative rock, whose taut surrealist songs — fusing punk velocity with pop melody and surf guitar — detonated a blueprint that shaped the sound of the 1990s."
   }
 ]
