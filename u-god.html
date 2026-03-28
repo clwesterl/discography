@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U-God — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #c45a3c;
+    --accent-dim: #8a3e2a;
+    --priority: #7a6a9a;
+    --free-agency: #6a8a7a;
+    --babygrande: #8a7a5a;
+    --soul-temple: #6a7a8a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-priority { background: rgba(122, 106, 154, 0.2); color: #a090c8; border: 1px solid rgba(122, 106, 154, 0.3); }
+  .label-free-agency { background: rgba(106, 138, 122, 0.2); color: #90c0a8; border: 1px solid rgba(106, 138, 122, 0.3); }
+  .label-babygrande { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-soul-temple { background: rgba(106, 122, 138, 0.2); color: #90a8c0; border: 1px solid rgba(106, 122, 138, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Hip-Hop &middot; East Coast Rap &middot; Wu-Tang Clan &nbsp;&middot;&nbsp; Solo career 1999&ndash;present &middot; Brooklyn, NY</div>
+    <h1 class="artist-name">U-God</h1>
+    <p class="artist-bio">
+      Lamont Jody Hawkins, one of the nine founding pillars of the Wu-Tang Clan,
+      whose gruff, commanding baritone and street-hardened lyricism carved out a
+      distinct lane across five solo albums &mdash; bridging the raw Staten Island
+      grit of the Clan's golden era with evolving production aesthetics from RZA,
+      True Master, DJ Homicide, and a rotating cast of beatmakers.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">5</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1999&ndash;2018</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">0/5</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">1999&ndash;2018 &middot; Five releases on Priority / Free Agency / Babygrande / Soul Temple</p>
+  <div class="album-grid">
+
+    <!-- Golden Arms Redemption -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Golden Arms Redemption</h3>
+        <span class="album-year">1999</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="U-God" data-album="Golden Arms Redemption" onchange="toggleWant(this, 'U-God', 'Golden Arms Redemption', '1999', 'Wu-Tang / Priority')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-priority">Wu-Tang / Priority</span>
+      </div>
+      <div class="album-summary">
+        U-God's solo debut, executive produced by RZA and released on the Wu-Tang/Priority imprint during the Clan's imperial phase. The production draws heavily on the Wu-Tang sonic palette &mdash; dusty soul loops, cinematic strings, and hard-hitting drums &mdash; with contributions from True Master, Inspectah Deck, and Bink!. Fellow Wu members Method Man, Raekwon, and Inspectah Deck appear throughout, anchoring U-God's commanding delivery in the brotherhood that defined the era.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        U-God &mdash; vocals &middot; Method Man, Inspectah Deck, Raekwon, Hell Razah, Leathafase &mdash; featured vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, True Master, Inspectah Deck, Bink!, Homicide, Hak Da Navigator, John The Baptist, Omonte Ward
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Enter U-God</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Turbulence</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Glide (feat. Leathafase &amp; Drey Wit Da Y)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Dat's Gangsta</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Soul Dazzle</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Bizarre</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Rumble (feat. Leathafase, Inspectah Deck &amp; Method Man)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Pleasure or Pain (feat. Hell Razah)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Stay in Your Lane</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Shell Shock (feat. Leathafase, Raekwon &amp; Hell Razah)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Lay Down</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Hungry</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Turbo Charge</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Knockin at Your Door (feat. Leathafase)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Night the City Cried</span></div>
+      </div>
+    </div>
+
+    <!-- Mr. Xcitement -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Mr. Xcitement</h3>
+        <span class="album-year">2005</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="U-God" data-album="Mr. Xcitement" onchange="toggleWant(this, 'U-God', 'Mr. Xcitement', '2005', 'Free Agency')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-free-agency">Free Agency</span>
+      </div>
+      <div class="album-summary">
+        The sophomore effort, released on the independent Free Agency label after U-God's departure from Priority. A departure from the RZA-dominated sound, the album leans into club-ready production from DJ Homicide, Mike Baiardi, and Leathafase, with west coast guests MC Eiht and Boo Kapone adding geographic range. More polished and party-oriented than its predecessor, with a Don King cameo underscoring the album's brash, larger-than-life energy.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        U-God &mdash; vocals &middot; MC Eiht, Squeak Ru, Boo Kapone, Ebony Burke, Leathafase &mdash; featured vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        DJ Homicide, The Produkt, Mike Baiardi, 4th Disciple, Leathafase, Cuetrax
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Blow Yo Mind Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">It's a Wrap (feat. Leathafase)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Hit 'Em Up, Roll Out (feat. Leathafase)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Get Down (feat. MC Eiht, Squeak Ru &amp; Boo Kapone)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Don King Speaks to U-God (Skit)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">I'm Talkin' to You</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Kick Azz</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">You Don't Want to Dance</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Go Get Pretty Like Me</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">A Long Time Ago (feat. Ebony Burke)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Stop (Carry On) (feat. Ebony Burke)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Bump</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Dedication Skit</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Don't Love the Drugs</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Heart of Stone</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Jenny</span></div>
+      </div>
+    </div>
+
+    <!-- Dopium -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Dopium</h3>
+        <span class="album-year">2009</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="U-God" data-album="Dopium" onchange="toggleWant(this, 'U-God', 'Dopium', '2009', 'Babygrande')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-babygrande">Babygrande</span>
+      </div>
+      <div class="album-summary">
+        A return to the Wu-Tang family fold, stacked with Clan guest appearances from Ghostface Killah, GZA, Raekwon, Method Man, Cappadonna, and Killah Priest. The production by Teddy Ted, J. Serbe, The Twilite Tone (Common's longtime collaborator), and Large Professor gives the album a grittier, more varied texture than its predecessor. The Bloody Beetroots remix of "Stomp da Roach" nods toward electronic crossover territory, an unusual move for a Wu-Tang affiliate.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        U-God &mdash; vocals &middot; Ghostface Killah, GZA, Method Man, Raekwon, Cappadonna, Killah Priest, Jim Jones, Sheek Louch, Slaine, Large Professor, Mike Ladd, Leathafase &mdash; featured vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Teddy Ted &amp; J. Serbe, The Twilite Tone, Large Professor, 4th Pyramid, Hak Da Navigator, Da Beathoven, DZ &amp; Andre Clarke
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Train Trussle (feat. Ghostface Killah &amp; Scotty Wotty)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">God Is Love (feat. Cappadonna &amp; Killah Priest)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Stomp da Roach (feat. GZA &amp; Scotty Wotty)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Lipton (feat. Mike Ladd)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Coke (feat. Raekwon &amp; Slaine)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Magnum Force (feat. Jim Jones &amp; Sheek Louch)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Hips</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Wu-Tang (feat. Method Man)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Dopium</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Rims Pokin' Out (feat. Leathafase)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">New Classic (feat. Large Professor)</span></div>
+      </div>
+    </div>
+
+    <!-- The Keynote Speaker -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Keynote Speaker</h3>
+        <span class="album-year">2013</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="U-God" data-album="The Keynote Speaker" onchange="toggleWant(this, 'U-God', 'The Keynote Speaker', '2013', 'Soul Temple')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-soul-temple">Soul Temple</span>
+      </div>
+      <div class="album-summary">
+        U-God's fourth album and the most RZA-involved project since the debut, with the Abbott serving as executive producer and contributing several beats. Released on RZA's Soul Temple Records, the album also features production from UK beatmaker Leaf Dog and longtime collaborator DJ Homicide. Guest spots from GZA, Method Man, Styles P, Inspectah Deck, Elzhi, and Kool Keith make this the most eclectic lineup of any U-God record, while the skits featuring Vivian Scarlett add theatrical connective tissue.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        U-God &mdash; vocals &middot; GZA, Method Man, Inspectah Deck, Styles P, Elzhi, Kool Keith, Jackpot Scotty Wotty &mdash; featured vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, DJ Homicide, Leaf Dog, Teddy Powell, Steve Reaves, Blastah Beatz, Jose Reynoso Jr., Jay Serbe
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Vortex of My Mind (Skit)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Keynote Speaker</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Heads Up (feat. Jackpot Scotty Wotty &amp; GZA)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Inferno (Skit)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Fire (feat. Jackpot Scotty Wotty &amp; Method Man)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Fame (feat. Styles P)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Skyscraper</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Heavyweight</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Colossal Cosmos (Skit)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Stars</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Golden Arms</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Room Keeps Spinning</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Zilla</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Get Mine</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Mt. Everest (feat. Inspectah Deck &amp; Elzhi)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Transform</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Journey (feat. Kool Keith)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Be Right There (Bonus)</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">Days of Glory (Bonus)</span></div>
+      </div>
+    </div>
+
+    <!-- Venom -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Venom</h3>
+        <span class="album-year">2018</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="U-God" data-album="Venom" onchange="toggleWant(this, 'U-God', 'Venom', '2018', 'Babygrande')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-babygrande">Babygrande</span>
+      </div>
+      <div class="album-summary">
+        U-God's fifth and most recent studio album, released the same month as his memoir Raw: My Journey into the Wu-Tang. Production from DJ Green Lantern, Large Professor, Lord Finesse, and Powers Pleasant gives the album a boom-bap foundation with modern edge. Inspectah Deck, Raekwon, and Method Man return as guests, while the Jose Reynoso and DJ Homicide team anchors much of the album's sound. The record debuted at number 34 on the US Rap Albums chart.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        U-God &mdash; vocals &middot; Inspectah Deck, Raekwon, Method Man, Jackpot Scotty Wotty, Nomadiq &mdash; featured vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Jose Reynoso, DJ Homicide, DJ Green Lantern, Large Professor, Lord Finesse, Powers Pleasant, ILL TAL, Davel McKenzie, K Ford
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Exordium</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Unstoppable</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Epicenter (feat. Inspectah Deck, Raekwon &amp; Jackpot Scotty Wotty)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Bit da Dust</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Elegance (feat. Nomadiq)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Climate</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Venom</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Felon</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Legacy</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Whole World Watchin'</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">XXX (feat. Method Man)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Jackpot (feat. Jackpot Scotty Wotty)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Wisdom</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Venom (DJ Green Lantern Remix)</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

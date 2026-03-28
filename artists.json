@@ -88,5 +88,104 @@
     "tags": ["noise rock", "no wave", "art punk", "experimental"],
     "albums": "15 studio albums",
     "description": "New York's great noise architects, whose three decades of alternate tunings, feedback sculpting, and downtown art-world ambition — from no-wave abrasion through SST-era guitar epics to a decade on a major label — redrew the boundaries of what a rock band could sound like and mean."
+  },
+  {
+    "name": "Wu-Tang Clan",
+    "file": "wu-tang-clan.html",
+    "years": "1992–present",
+    "genre": "Hip-Hop",
+    "tags": ["hardcore hip-hop", "East Coast", "martial arts rap"],
+    "albums": "7 studio albums",
+    "description": "Staten Island's nine-man army whose RZA-orchestrated debut fused gritty street narratives with kung-fu cinema and dusty soul loops, launching a dynasty of solo careers and redefining hip-hop as a collective enterprise."
+  },
+  {
+    "name": "GZA",
+    "file": "gza.html",
+    "years": "1991–2008",
+    "genre": "Hip-Hop",
+    "tags": ["hardcore hip-hop", "East Coast", "lyrical rap", "Wu-Tang"],
+    "albums": "5 studio albums",
+    "description": "Wu-Tang's cerebral sword — whose dense, chess-metaphor lyricism and RZA's icy production on Liquid Swords created one of the most acclaimed albums in hip-hop history."
+  },
+  {
+    "name": "Ghostface Killah",
+    "file": "ghostface-killah.html",
+    "years": "1996–2019",
+    "genre": "Hip-Hop",
+    "tags": ["hardcore hip-hop", "East Coast", "soul rap", "Wu-Tang"],
+    "albums": "12 studio albums",
+    "description": "Wu-Tang's most prolific and vivid storyteller, whose stream-of-consciousness narratives — woven through soul samples, luxury-brand namedropping, and cinematic street tales from Ironman through Supreme Clientele and beyond — produced the Clan's deepest solo catalog."
+  },
+  {
+    "name": "Method Man",
+    "file": "method-man.html",
+    "years": "1994–2015",
+    "genre": "Hip-Hop",
+    "tags": ["hardcore hip-hop", "East Coast", "Wu-Tang"],
+    "albums": "5 solo + 2 collaboration albums",
+    "description": "Wu-Tang's most charismatic voice — whose gravel-toned baritone, effortless punchlines, and chemistry with Redman made him the Clan's crossover star across music, film, and television."
+  },
+  {
+    "name": "Raekwon",
+    "file": "raekwon.html",
+    "years": "1995–2017",
+    "genre": "Hip-Hop",
+    "tags": ["hardcore hip-hop", "East Coast", "mafioso rap", "Wu-Tang"],
+    "albums": "7 studio albums",
+    "description": "The Chef — whose Only Built 4 Cuban Linx... invented mafioso rap as a cinematic subgenre, and whose two-decade solo run delivered some of Wu-Tang's most vivid and ruthlessly detailed street narratives."
+  },
+  {
+    "name": "RZA",
+    "file": "rza.html",
+    "years": "1998–2022",
+    "genre": "Hip-Hop",
+    "tags": ["hardcore hip-hop", "East Coast", "experimental hip-hop", "Wu-Tang"],
+    "albums": "4 Bobby Digital + 1 solo + 1 soundtrack",
+    "description": "Wu-Tang's mastermind producer and philosopher-king, whose Bobby Digital alter ego and genre-defying solo work extended his vision beyond the Clan — from grimy boom-bap through cinematic scoring and digital-age experimentation."
+  },
+  {
+    "name": "Ol' Dirty Bastard",
+    "file": "ol-dirty-bastard.html",
+    "years": "1995–2005",
+    "genre": "Hip-Hop",
+    "tags": ["hardcore hip-hop", "East Coast", "Wu-Tang"],
+    "albums": "2 studio + 2 posthumous albums",
+    "description": "Wu-Tang's unhinged id — whose raw, unfiltered vocal style careened between singing, screaming, and stream-of-consciousness rapping with a chaotic energy that no one before or since has replicated."
+  },
+  {
+    "name": "Inspectah Deck",
+    "file": "inspectah-deck.html",
+    "years": "1999–present",
+    "genre": "Hip-Hop",
+    "tags": ["hardcore hip-hop", "East Coast", "lyrical rap", "Wu-Tang"],
+    "albums": "5 solo + 10 CZARFACE albums",
+    "description": "Wu-Tang's most underrated pen — whose scene-stealing verses on Clan records gave way to a steady solo career and a prolific second act as one-third of CZARFACE, channeling comic-book aesthetics into hard-hitting boom-bap."
+  },
+  {
+    "name": "U-God",
+    "file": "u-god.html",
+    "years": "1999–2018",
+    "genre": "Hip-Hop",
+    "tags": ["hardcore hip-hop", "East Coast", "Wu-Tang"],
+    "albums": "5 studio albums",
+    "description": "Wu-Tang's golden-armed warrior, whose gruff baritone and rugged delivery across five solo albums carved out a workmanlike catalog in the shadow of the Clan's more celebrated soloists."
+  },
+  {
+    "name": "Masta Killa",
+    "file": "masta-killa.html",
+    "years": "2004–2025",
+    "genre": "Hip-Hop",
+    "tags": ["hardcore hip-hop", "East Coast", "Wu-Tang"],
+    "albums": "5 studio albums",
+    "description": "The last Wu-Tang member to debut solo — whose patient, understated flow and loyalty to the Clan's original sound produced a quiet, consistent catalog anchored by the RZA-blessed No Said Date."
+  },
+  {
+    "name": "Cappadonna",
+    "file": "cappadonna.html",
+    "years": "1998–present",
+    "genre": "Hip-Hop",
+    "tags": ["hardcore hip-hop", "East Coast", "Wu-Tang"],
+    "albums": "18 studio albums",
+    "description": "Wu-Tang's unofficial tenth member, whose scene-stealing verse on 'Winter Warz' and prominent role on Wu-Tang Forever earned him a prolific if uneven solo career — the Clan's most relentless independent grinder."
   }
 ]

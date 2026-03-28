@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspectah Deck — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #c45a3c;
+    --accent-dim: #8a3e2a;
+    --loud: #7a6a9a;
+    --koch: #6a8a7a;
+    --urban-icon: #8a7a5a;
+    --brick: #6a7a8a;
+    --silver-age: #8a6a6a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+  .album-card:nth-child(6) { animation-delay: 0.3s; }
+  .album-card:nth-child(7) { animation-delay: 0.35s; }
+  .album-card:nth-child(8) { animation-delay: 0.4s; }
+  .album-card:nth-child(9) { animation-delay: 0.45s; }
+  .album-card:nth-child(10) { animation-delay: 0.5s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-loud { background: rgba(122, 106, 154, 0.2); color: #a090c8; border: 1px solid rgba(122, 106, 154, 0.3); }
+  .label-koch { background: rgba(106, 138, 122, 0.2); color: #90c0a8; border: 1px solid rgba(106, 138, 122, 0.3); }
+  .label-urban-icon { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-brick { background: rgba(106, 122, 138, 0.2); color: #90a8c0; border: 1px solid rgba(106, 122, 138, 0.3); }
+  .label-silver-age { background: rgba(138, 106, 106, 0.2); color: #c09090; border: 1px solid rgba(138, 106, 106, 0.3); }
+  .label-get-on-down { background: rgba(122, 138, 106, 0.2); color: #a8c090; border: 1px solid rgba(122, 138, 106, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Hip-Hop &middot; East Coast &middot; Boom Bap &nbsp;&middot;&nbsp; 1992&ndash;present &middot; Staten Island, NY</div>
+    <h1 class="artist-name">Inspectah Deck</h1>
+    <p class="artist-bio">
+      Jason Hunter, the lyrical marksman of the Wu-Tang Clan, whose dense,
+      intricate wordplay and razor-sharp battle raps made him one of the group's
+      most consistently formidable MCs &mdash; from his scene-stealing verse on
+      &ldquo;Triumph&rdquo; to a solo catalog built on raw street narratives,
+      boom-bap foundations, and an unyielding commitment to craft.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">5</span>
+        <span class="stat-label">Solo Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1999&ndash;2019</span>
+        <span class="stat-label">Solo Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1/5</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1 disc &middot; 1 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="solo">
+  <h2 class="section-title">Solo Studio Albums</h2>
+  <p class="section-subtitle">1999&ndash;2019 &middot; Five releases on Loud / Koch / Urban Icon</p>
+  <div class="album-grid">
+
+    <!-- Uncontrolled Substance -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Uncontrolled Substance</h3>
+        <span class="album-year">1999</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-loud">Loud</span>
+      </div>
+      <div class="album-summary">
+        Deck's long-awaited solo debut, arriving after years of devastating guest verses across the Wu-Tang catalog. Produced primarily by RZA, True Master, 4th Disciple, and Deck himself, it showcased his gift for stacking dense multisyllabic rhymes over dark, sample-heavy production. The album balanced gritty street narratives with lyrical showcases, establishing Deck as one of the most technically skilled writers in hip-hop even outside the Wu collective.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        U-God &middot; La The Darkman &middot; Street Life &middot; Masta Killa &middot; Killa Sin &middot; Beretta 9 &middot; Shadii
+        <div class="personnel-label" style="margin-top: 0.4rem;">Producers</div>
+        RZA &middot; Inspectah Deck &middot; True Master &middot; 4th Disciple &middot; Pete Rock &middot; Allah Mathematics &middot; V.I.C. &middot; The Blaquesmiths
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">hardcore rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Movas &amp; Shakers</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">9th Chamber (feat. Beretta 9, Killa Sin, La The Darkman, Street Life)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Uncontrolled Substance (feat. Shadii)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Femme Fatale</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">The Grand Prix (feat. Street Life, U-God)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Forget Me Not</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Longevity (feat. U-God)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Word on the Street</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Elevation</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Lovin' You (feat. La The Darkman)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Trouble Man</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">R.E.C. Room</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Friction (feat. Masta Killa)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Hyperdermix</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Show N Prove</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">The Cause</span></div>
+      </div>
+    </div>
+
+    <!-- The Movement -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Movement</h3>
+        <span class="album-year">2003</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Inspectah Deck" data-album="The Movement" onchange="toggleWant(this, 'Inspectah Deck', 'The Movement', '2003', 'Koch')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-koch">Koch</span>
+      </div>
+      <div class="album-summary">
+        Deck's sophomore effort, released independently through Koch Records after parting ways with Loud. Produced primarily by Ayatollah and Phantom of the Beats, the album pursued a grittier, more street-oriented sound with Deck's intricate lyricism riding harder, more aggressive production. Guest spots from Kool G Rap, Street Life, and Killa Sin reinforced the album's uncompromising street-rap identity.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Kool G Rap &middot; Street Life &middot; Killa Sin &middot; Mojehan
+        <div class="personnel-label" style="margin-top: 0.4rem;">Producers</div>
+        Ayatollah &middot; Phantom of the Beats &middot; Arabian Knight &middot; Falling Down
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">boom bap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">City High</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">That Shit</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Get Right</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">The Movement</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Who Got It</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">It's Like That</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Shorty Right There</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">U Wanna Be</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Framed</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Bumpin and Grindin</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Vendetta</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">The Stereotype</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">That Nigga</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Big City</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Cradle to the Grave</span></div>
+      </div>
+    </div>
+
+    <!-- The Resident Patient -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Resident Patient</h3>
+        <span class="album-year">2006</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Inspectah Deck" data-album="The Resident Patient" onchange="toggleWant(this, 'Inspectah Deck', 'The Resident Patient', '2006', 'Urban Icon')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-urban-icon">Urban Icon</span>
+      </div>
+      <div class="album-summary">
+        Named after a Sherlock Holmes story, Deck's third album arrived on his own Urban Icon imprint with production from Mondee, Cilvaringz, Psycho Les of The Beatnuts, and Deck himself. The record balanced rugged Housegang posse cuts with more personal, reflective material, and featured appearances from Masta Killa, U-God, and the Housegang crew. It showcased a more independent Deck, steering his own creative direction outside any major label framework.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Masta Killa &middot; U-God &middot; Housegang &middot; Sugabang &middot; Carlton Fisk &middot; Hugh Hef &middot; Chico Debango
+        <div class="personnel-label" style="margin-top: 0.4rem;">Producers</div>
+        Mondee &middot; Cilvaringz &middot; Psycho Les &middot; Inspectah Deck &middot; Flowers Productions &middot; Live Son &middot; The Marksmen &middot; Concrete Beats
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">hardcore rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Sound of the Slums (feat. Masta Killa)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">C.R.E.E.P.S.</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">What They Want</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Get Ya Weight Up</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Interlude I</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">It's Not a Game (feat. Housegang, Sugabang)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Interlude II</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">My Style</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">All I Want Is Mine</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">A Lil' Story</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Get Down wit Me</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">I.O.U.</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">No Love (feat. Carlton Fisk, Chico Debango)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Grits Freestyle</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Do My Thang</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Handle That (feat. U-God, Hugh Hef)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Animal Rights (feat. Housegang)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">H.G. Is My Life</span></div>
+      </div>
+    </div>
+
+    <!-- Manifesto -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Manifesto</h3>
+        <span class="album-year">2010</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Inspectah Deck" data-album="Manifesto" onchange="toggleWant(this, 'Inspectah Deck', 'Manifesto', '2010', 'Urban Icon')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-urban-icon">Urban Icon</span>
+      </div>
+      <div class="album-summary">
+        Deck's fourth solo album enlisted a deep bench of producers including The Alchemist, MoSS, Lee Bannon, and Agallah, alongside an impressive guest roster featuring Raekwon, Cormega, Termanology, Planet Asia, Cappadonna, Kurupt, and M.O.P. The production leaned into hard-hitting, sample-driven boom bap, and the album represented a statement of creative independence with Deck serving as his own executive producer on Urban Icon Records.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Raekwon &middot; Cormega &middot; Termanology &middot; Planet Asia &middot; Cappadonna &middot; Kurupt &middot; M.O.P.
+        <div class="personnel-label" style="margin-top: 0.4rem;">Producers</div>
+        The Alchemist &middot; MoSS &middot; Lee Bannon &middot; Agallah &middot; Inspectah Deck &middot; Cee The Architech &middot; D-Tox &middot; Flip &middot; J. Glaze &middot; Khino &middot; K. Slack &middot; Mike Cash &middot; Phenom &middot; Shorty 140 &middot; Y-Not Soundsmith
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">hardcore rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Tombstone Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Champion</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Born Survivor</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">This Is It</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Luv Letter</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">P.S.A.</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">T.R.U.E.</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">We Get Down</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Big Game</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Tombstone Interlude</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">9th Chamber</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Really Real</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Serious Rappin</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Do What U Gotta</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Crazy</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Gotta Bang</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">The Bad Apple</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Brothaz Respect</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">5 Star G</span></div>
+        <div class="track"><span class="track-num">20</span><span class="track-name">The Neverending Story</span></div>
+      </div>
+    </div>
+
+    <!-- Chamber No. 9 -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Chamber No. 9</h3>
+        <span class="album-year">2019</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Inspectah Deck" data-album="Chamber No. 9" onchange="toggleWant(this, 'Inspectah Deck', 'Chamber No. 9', '2019', 'Urban Icon')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-urban-icon">Urban Icon</span>
+      </div>
+      <div class="album-summary">
+        After a nine-year gap, Deck returned with a concise, 13-track statement that reaffirmed his position within the Wu-Tang legacy. The emotionally charged tribute track to the late Ol' Dirty Bastard stood as one of the most personal moments in his catalog, while the rest of the record blended classic boom-bap textures with modern production from Danny Caiazzo and Boo Bundy. Features from Cappadonna, Streetlife, Trife Diesel, and Hellfire kept it firmly in the Wu-Tang family orbit.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Cappadonna &middot; Streetlife &middot; Trife Diesel &middot; Hellfire &middot; Mz. Geminii
+        <div class="personnel-label" style="margin-top: 0.4rem;">Producers</div>
+        Danny Caiazzo &middot; Boo Bundy
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Shaolin Rebel</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">No Good</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Russell Jones</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Can't Stay Away</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Na Na Na</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Chamber No. 9</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Certified</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">24K (feat. Cappadonna, Hellfire)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">What It Be Like</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Game Don't Change</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Dolla Signs (feat. Mz. Geminii)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Who Run It (feat. Hellfire, Streetlife)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Fire (feat. Trife Diesel)</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="czarface">
+  <h2 class="section-title">CZARFACE</h2>
+  <p class="section-subtitle">2013&ndash;2024 &middot; Supergroup with 7L &amp; Esoteric &middot; Brick / Silver Age / Get On Down</p>
+  <div class="album-grid">
+
+    <!-- CZARFACE (self-titled) -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">CZARFACE</h3>
+        <span class="album-year">2013</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="CZARFACE" data-album="CZARFACE" onchange="toggleWant(this, 'CZARFACE', 'CZARFACE', '2013', 'Brick')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-brick">Brick</span>
+      </div>
+      <div class="album-summary">
+        The debut from the hip-hop supergroup uniting Inspectah Deck with underground duo 7L &amp; Esoteric, built around a comic-book superhero concept with 7L's heavy, sample-driven production. Guest appearances from Action Bronson, Ghostface Killah, Roc Marciano, and Cappadonna added firepower to a record that revitalized Deck's creative output and launched one of the most prolific collaborations of the 2010s.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Inspectah Deck &mdash; vocals &middot; Esoteric &mdash; vocals &middot; 7L &mdash; production, DJ
+        <div class="personnel-label" style="margin-top: 0.4rem;">Guests</div>
+        Action Bronson &middot; Ghostface Killah &middot; Roc Marciano &middot; Cappadonna &middot; Oh No &middot; Vinnie Paz
+      </div>
+      <div class="tags">
+        <span class="tag">boom bap</span>
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">underground hip-hop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Czar Refigured</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">It's Raw (feat. Action Bronson)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Savagely Attack</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Cement 3's (feat. Roc Marciano)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Hazmat Rap</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Poisonous Thoughts</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Intro: Enter the Czar</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Berserko!</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Hyper Enough</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Get Blasted (feat. Ghostface Killah, Cappadonna)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Czar Wars</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">We Live (feat. Oh No)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Can It Be (feat. Vinnie Paz)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">No Problem</span></div>
+      </div>
+    </div>
+
+    <!-- Every Hero Needs a Villain -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Every Hero Needs a Villain</h3>
+        <span class="album-year">2015</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="CZARFACE" data-album="Every Hero Needs a Villain" onchange="toggleWant(this, 'CZARFACE', 'Every Hero Needs a Villain', '2015', 'Brick')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-brick">Brick</span>
+      </div>
+      <div class="album-summary">
+        The sophomore CZARFACE album deepened the comic-book mythology while expanding the guest roster to include Method Man, GZA, Large Professor, MF DOOM, and RA The Rugged Man. 7L's production grew more cinematic and sample-heavy, and the chemistry between Deck and Esoteric sharpened considerably, yielding what many consider the group's strongest front-to-back listen.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Inspectah Deck &mdash; vocals &middot; Esoteric &mdash; vocals &middot; 7L &mdash; production, DJ
+        <div class="personnel-label" style="margin-top: 0.4rem;">Guests</div>
+        Method Man &middot; GZA &middot; Large Professor &middot; MF DOOM &middot; RA The Rugged Man &middot; Meyhem Lauren &middot; Juju
+      </div>
+      <div class="tags">
+        <span class="tag">boom bap</span>
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">underground hip-hop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Don the Armor</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Czartacus</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Lumberjack Match</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Nightcrawler (feat. Method Man)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">World Premier (feat. Large Professor)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">The Great (Czar Guitar)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Red Alert</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Junkyard Dogs (feat. Juju)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Sgt. Slaughter</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">When Gods Go Mad (feat. GZA)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Ka-Bang! (feat. MF DOOM)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Deadly Class (feat. Meyhem Lauren)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Escape from Czarkham Asylum</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Sinister</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Good Villains Go Last (feat. RA The Rugged Man)</span></div>
+      </div>
+    </div>
+
+    <!-- A Fistful of Peril -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">A Fistful of Peril</h3>
+        <span class="album-year">2016</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="CZARFACE" data-album="A Fistful of Peril" onchange="toggleWant(this, 'CZARFACE', 'A Fistful of Peril', '2016', 'Silver Age')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-silver-age">Silver Age</span>
+      </div>
+      <div class="album-summary">
+        The third CZARFACE album stripped things back to the core trio with no guest features, a deliberate creative choice that put the spotlight entirely on Deck and Esoteric's lyrical interplay over 7L's production. Inspired by spaghetti westerns and grindhouse cinema, the record delivered a focused, self-contained statement of the group's artistic identity.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Inspectah Deck &mdash; vocals &middot; Esoteric &mdash; vocals &middot; 7L &mdash; production, DJ
+      </div>
+      <div class="tags">
+        <span class="tag">boom bap</span>
+        <span class="tag">underground hip-hop</span>
+        <span class="tag">concept album</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Two in the Chest</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Sabers</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">All in Together</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Machine, Man &amp; Monster</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Out of Body Experience</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Fistful of Peril</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Tiger Style</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Iron Claw</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Czar Noir</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Wrecking Ball</span></div>
+      </div>
+    </div>
+
+    <!-- Czarface Meets Metal Face -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Czarface Meets Metal Face</h3>
+        <span class="album-year">2018</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="CZARFACE" data-album="Czarface Meets Metal Face" onchange="toggleWant(this, 'CZARFACE', 'Czarface Meets Metal Face', '2018', 'Silver Age / Get On Down')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-silver-age">Silver Age</span>
+        <span class="label-badge label-get-on-down">Get On Down</span>
+      </div>
+      <div class="album-summary">
+        A full-length collaboration with the late MF DOOM that married CZARFACE's comic-book superhero aesthetic with DOOM's supervillain persona. The album's playful, referential lyricism and dense boom-bap production created a natural meeting point between two of underground hip-hop's most conceptually inventive acts, with additional appearances from Open Mike Eagle and Vinnie Paz.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Inspectah Deck &mdash; vocals &middot; Esoteric &mdash; vocals &middot; 7L &mdash; production, DJ &middot; MF DOOM &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Guests</div>
+        Open Mike Eagle &middot; Vinnie Paz &middot; Blacastan &middot; Kendra Morris
+      </div>
+      <div class="tags">
+        <span class="tag">boom bap</span>
+        <span class="tag">underground hip-hop</span>
+        <span class="tag">collaboration</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro: Czarman Meets Metalman</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Meddle with Metal</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Nautical Depth</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Badness of Madness</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Close Talker</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Forever People</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Captain Crunch</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Don't Spoil It</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Phantoms (feat. Open Mike Eagle)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Bomb Thrown</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">You Masked for It</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Astral Traveling (feat. Vinnie Paz)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Take Your Medicine</span></div>
+      </div>
+    </div>
+
+    <!-- Czarface Meets Ghostface -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Czarface Meets Ghostface</h3>
+        <span class="album-year">2019</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="CZARFACE" data-album="Czarface Meets Ghostface" onchange="toggleWant(this, 'CZARFACE', 'Czarface Meets Ghostface', '2019', 'Silver Age')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-silver-age">Silver Age</span>
+      </div>
+      <div class="album-summary">
+        A Wu-Tang family reunion of sorts, pairing Deck with his Clan brother Ghostface Killah for a full-length collaboration. The two MCs traded verses with the effortless chemistry of artists who had been rhyming together for decades, with 7L and Esoteric providing the connective tissue. The record balanced nostalgia with forward momentum, proving that Wu-Tang's creative well was far from dry.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Inspectah Deck &mdash; vocals &middot; Esoteric &mdash; vocals &middot; 7L &mdash; production, DJ &middot; Ghostface Killah &mdash; vocals
+      </div>
+      <div class="tags">
+        <span class="tag">boom bap</span>
+        <span class="tag">wu-tang</span>
+        <span class="tag">collaboration</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Back at Ringside</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Iron Claw</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Czarface &amp; Ghostface</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Powers and Stuff</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Morning Ritual</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Listen to the Color</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Mongolian Beef</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Super Soldier Serum</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Face Off</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Starting Lineups</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Masked and Anonymous</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Czarmageddon</span></div>
+      </div>
+    </div>
+
+    <!-- Super What? -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Super What?</h3>
+        <span class="album-year">2021</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="CZARFACE" data-album="Super What?" onchange="toggleWant(this, 'CZARFACE', 'Super What?', '2021', 'Silver Age')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-silver-age">Silver Age</span>
+      </div>
+      <div class="album-summary">
+        The second and final CZARFACE collaboration with MF DOOM, completed before DOOM's passing in October 2020 and released posthumously. The album served as both a creative triumph and an unintentional farewell, with DOOM delivering some of his most playful and technically dazzling performances. A poignant document of an artist at the height of his powers.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Inspectah Deck &mdash; vocals &middot; Esoteric &mdash; vocals &middot; 7L &mdash; production, DJ &middot; MF DOOM &mdash; vocals
+      </div>
+      <div class="tags">
+        <span class="tag">boom bap</span>
+        <span class="tag">underground hip-hop</span>
+        <span class="tag">posthumous</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Opening Face-Off</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Super What?</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Young World</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Jason &amp; the Czargonauts</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">A Name to the Face</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Break in the Action</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">DOOM Czarface</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Czarface Czountdown</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">This Is Canon Now</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">So Strange</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">The King and Eye</span></div>
+      </div>
+    </div>
+
+    <!-- Czarmageddon! -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Czarmageddon!</h3>
+        <span class="album-year">2022</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="CZARFACE" data-album="Czarmageddon!" onchange="toggleWant(this, 'CZARFACE', 'Czarmageddon!', '2022', 'Silver Age')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-silver-age">Silver Age</span>
+      </div>
+      <div class="album-summary">
+        A return to the core CZARFACE lineup with production from the Czar Keys, continuing the group's comic-book-influenced aesthetic. The album featured guest spots from Kool Keith and maintained the group's consistently high standard of lyrical density and boom-bap craftsmanship across eleven tracks.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Inspectah Deck &mdash; vocals &middot; Esoteric &mdash; vocals &middot; Czar Keys &mdash; production
+        <div class="personnel-label" style="margin-top: 0.4rem;">Guests</div>
+        Kool Keith &middot; Frankie Pulitzer &middot; Lion Eye
+      </div>
+      <div class="tags">
+        <span class="tag">boom bap</span>
+        <span class="tag">underground hip-hop</span>
+        <span class="tag">east coast hip-hop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Damien's Dinner Time</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Czarlaac Pit (feat. Frankie Pulitzer)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Can It Be?</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Walk thru Walls</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Splash Page</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Bob Laczar</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Big Em Up (feat. Lion Eye)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Nu Mutantes</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Fearless &amp; Inventive (feat. Kool Keith)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Boogie Defmix</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Czarv Wolfman</span></div>
+      </div>
+    </div>
+
+    <!-- Czartificial Intelligence -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Czartificial Intelligence</h3>
+        <span class="album-year">2023</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="CZARFACE" data-album="Czartificial Intelligence" onchange="toggleWant(this, 'CZARFACE', 'Czartificial Intelligence', '2023', 'Silver Age')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-silver-age">Silver Age</span>
+      </div>
+      <div class="album-summary">
+        CZARFACE continued their prolific run with another concept-driven album, this time riffing on artificial intelligence and technology themes through the group's signature comic-book lens. Guests included Logic, Nems, and Kool Keith, with production maintaining the group's trademark dense, sample-heavy boom-bap sound.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Inspectah Deck &mdash; vocals &middot; Esoteric &mdash; vocals &middot; 7L &mdash; production, DJ
+        <div class="personnel-label" style="margin-top: 0.4rem;">Guests</div>
+        Logic &middot; Nems &middot; Kool Keith
+      </div>
+      <div class="tags">
+        <span class="tag">boom bap</span>
+        <span class="tag">underground hip-hop</span>
+        <span class="tag">concept album</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Czartificial Intelligence</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Duo Caliber</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Welcome to the Jungle</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">MF Czar (feat. Kool Keith)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Hall of Famerz</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Get Yours (feat. Logic)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Czartech</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Kaiju Friday (feat. Nems)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Doom Patrol</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Czarverse</span></div>
+      </div>
+    </div>
+
+    <!-- Knull & Void -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Knull &amp; Void</h3>
+        <span class="album-year">2024</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="CZARFACE" data-album="Knull & Void" onchange="toggleWant(this, 'CZARFACE', 'Knull & Void', '2024', 'Silver Age')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-silver-age">Silver Age</span>
+      </div>
+      <div class="album-summary">
+        The latest chapter in the CZARFACE saga, continuing the group's deep engagement with comic-book mythology and underground hip-hop aesthetics. Over a decade into their partnership, Deck and Esoteric continued to deliver sharp, technically accomplished verses over 7L's production, proving the project's creative longevity.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Inspectah Deck &mdash; vocals &middot; Esoteric &mdash; vocals &middot; 7L &mdash; production, DJ
+      </div>
+      <div class="tags">
+        <span class="tag">boom bap</span>
+        <span class="tag">underground hip-hop</span>
+        <span class="tag">east coast hip-hop</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Knull &amp; Void</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Double Dragon</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">One Punch</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Czar Wars II</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Knullified</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Voidwalker</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Dark Czar Rising</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Symbiote</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">End Credits</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

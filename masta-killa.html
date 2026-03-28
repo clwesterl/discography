@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masta Killa — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #c45a3c;
+    --accent-dim: #8a3e2a;
+    --nature-sounds: #7a8a6a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-nature-sounds { background: rgba(122, 138, 106, 0.2); color: #a0b890; border: 1px solid rgba(122, 138, 106, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Hip-Hop &middot; East Coast &middot; Boom Bap &nbsp;&middot;&nbsp; Brooklyn, NY &middot; Wu-Tang Clan</div>
+    <h1 class="artist-name">Masta Killa</h1>
+    <p class="artist-bio">
+      Born Jamel Irief, the last member to join the Wu-Tang Clan &mdash; absent
+      from Enter the Wu-Tang (36 Chambers) save a single verse on
+      &ldquo;Da Mystery of Chessboxin&rsquo;&rdquo; &mdash; who emerged as a
+      deliberate, lyrical craftsman whose patient solo career built a quiet
+      catalogue of producer-rich, classicist East Coast hip-hop.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">5</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2004&ndash;2025</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1/5</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1 vinyl</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">2004&ndash;2025 &middot; Five releases across two decades on Nature Sounds</p>
+  <div class="album-grid">
+
+    <!-- No Said Date -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">No Said Date</h3>
+        <span class="album-year">2004</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508; In collection</span>
+        <span class="label-badge label-nature-sounds">Nature Sounds</span>
+      </div>
+      <div class="album-summary">
+        The long-awaited solo debut, seven years in the making, recorded at
+        36 Chambers Studios with executive production from RZA and GZA.
+        Grounded in the Wu-Tang sonic architecture &mdash; dusty soul loops,
+        martial-arts film samples, and heavy drums &mdash; the album draws from
+        the full Clan roster, with RZA, True Master, and Mathematics sharing
+        production duties. Masta Killa's calm, measured flow proved the
+        antidote to the era's flashier tendencies, earning critical respect
+        as a purist's record.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Masta Killa &mdash; vocals &middot; Raekwon &middot; Ghostface Killah &middot; Method Man &middot; Killah Priest &middot; Inspectah Deck &middot; GZA &middot; U-God &middot; Ol' Dirty Bastard &middot; RZA &middot; Streetlife &middot; Prodigal Sunn
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA &middot; True Master &middot; Mathematics &middot; Brock &middot; Baby Dooks &middot; Dave West &middot; Jose &ldquo;Choco&rdquo; Reynoso
+        <div class="personnel-label" style="margin-top: 0.4rem;">Executive Producers</div>
+        Masta Killa &middot; RZA &middot; GZA
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Born Chamber (Intro)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Grab the Mic</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">No Said Date</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Last Drink</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Love Spell</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">The Future (Skit)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">D.T.D. (feat. Raekwon &amp; Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Whatever (feat. Streetlife &amp; Prodigal Sunn)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Secret Rivals (feat. Killah Priest &amp; Method Man)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Skit</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Digi Warfare (feat. U-God)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Old Man (feat. Ol' Dirty Bastard &amp; RZA)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Queen</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">School (feat. RZA)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Silverbacks (feat. Inspectah Deck &amp; GZA)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Masta Killa</span></div>
+      </div>
+    </div>
+
+    <!-- Made in Brooklyn -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Made in Brooklyn</h3>
+        <span class="album-year">2006</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Masta Killa" data-album="Made in Brooklyn" onchange="toggleWant(this, 'Masta Killa', 'Made in Brooklyn', '2006', 'Nature Sounds')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-nature-sounds">Nature Sounds</span>
+      </div>
+      <div class="album-summary">
+        The sophomore effort broadens the production palette beyond the core
+        Wu stable. Pete Rock, MF DOOM, and Bronze Nazareth join P.F. Cuttin'
+        and Dev 1 behind the boards, while the guest list again reads like a
+        Clan family reunion &mdash; GZA, Raekwon, Ghostface Killah, Method Man,
+        U-God, and Inspectah Deck all appear. The Brooklyn street narratives
+        are sharper, the beats more varied, and the album stands as one of the
+        stronger Wu solo records of the mid-2000s.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Masta Killa &mdash; vocals &middot; RZA &middot; GZA &middot; Method Man &middot; Raekwon &middot; Ghostface Killah &middot; U-God &middot; Inspectah Deck &middot; Popa Wu &middot; Killa Sin &middot; Free Murder
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Pete Rock &middot; MF DOOM &middot; Bronze Nazareth &middot; P.F. Cuttin' &middot; Dev 1 &middot; Whyz Ruler &middot; Jig Sor &middot; Startel &middot; Governor Tools &middot; Chris Conway &amp; Mark Grant
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Then &amp; Now (feat. Kareem Justice, Shamel Irief &amp; Young Prince)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">E.N.Y. House</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Brooklyn King</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">It's What It Is (feat. Raekwon &amp; Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Nehanda &amp; Cream</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Iron God Chamber (feat. U-God, RZA &amp; Method Man)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Pass the Bone Remix (feat. GZA)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Older Gods Part 2 (feat. Popa Wu)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Let's Get Into Something (feat. Startel)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Street Corner (feat. Inspectah Deck &amp; GZA)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Ringing Bells</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">East MC's (feat. Killa Sin, Free Murder, Victorious &amp; K. Born)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Lovely Lady (feat. Ski &amp; Governor Tools)</span></div>
+      </div>
+    </div>
+
+    <!-- Selling My Soul -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Selling My Soul</h3>
+        <span class="album-year">2012</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Masta Killa" data-album="Selling My Soul" onchange="toggleWant(this, 'Masta Killa', 'Selling My Soul', '2012', 'Nature Sounds')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-nature-sounds">Nature Sounds</span>
+      </div>
+      <div class="album-summary">
+        A leaner, more introspective third album that strips away the
+        guest-heavy formula of the first two records. The production
+        credits shift toward a new generation &mdash; 9th Wonder, Inspectah Deck
+        (producing, not just rapping), and Koolade contribute alongside
+        P.F. Cuttin' and Allah Mathematics. Kurupt's appearance on
+        &ldquo;Cali Sun&rdquo; nods westward, while the ODB tribute closer
+        keeps the Wu family ties intact. Self-executive-produced, it marks
+        Masta Killa's most autonomous creative statement.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Masta Killa &mdash; vocals, executive producer &middot; Kurupt &middot; Ol' Dirty Bastard
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Allah Mathematics &middot; 9th Wonder &middot; P.F. Cuttin' &middot; Inspectah Deck &middot; Koolade &middot; Dash &middot; Blackinati &middot; Mediate Souls &middot; Masta Killa
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">conscious rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Skit</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Soul &amp; Substance</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">R U Listening</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Things Just Ain't the Same</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Part 2</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Cali Sun (feat. Kurupt)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">What U See</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Food</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Skit</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">All Natural</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Wise Words</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Divine Glory</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Skit</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Dirty Soul (ODB Tribute) (feat. Ol' Dirty Bastard)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Wisdom</span></div>
+      </div>
+    </div>
+
+    <!-- Loyalty Is Royalty -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Loyalty Is Royalty</h3>
+        <span class="album-year">2017</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Masta Killa" data-album="Loyalty Is Royalty" onchange="toggleWant(this, 'Masta Killa', 'Loyalty Is Royalty', '2017', 'Nature Sounds')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-nature-sounds">Nature Sounds</span>
+      </div>
+      <div class="album-summary">
+        The fourth album assembles a murderers' row of guests &mdash; Method Man
+        and Redman reunite on &ldquo;Therapy,&rdquo; Sean Price delivers a
+        posthumous verse on &ldquo;Down with Me,&rdquo; and Prodigy appears on
+        &ldquo;Real People&rdquo; shortly before his own passing. 9th Wonder
+        handles three productions, P.F. Cuttin' returns, and RZA contributes
+        both a spoken-word interlude and a beat. The album balances street
+        grit with reflective wisdom, its title a statement of Clan loyalty
+        across two decades.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Masta Killa &mdash; vocals &middot; Method Man &middot; Redman &middot; GZA &middot; Inspectah Deck &middot; RZA &middot; Cappadonna &middot; Sean Price &middot; Prodigy &middot; KXNG Crooked
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        9th Wonder &middot; P.F. Cuttin' &middot; Dame Grease &middot; !llmind &middot; RZA &middot; True Master &middot; Blocade &middot; Chainsaw &middot; Ming-Hsueh Lin &middot; Weirdo31654 &middot; Masta Killa
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Return of thee Masta Kill (feat. Cappadonna &amp; Young Dudas)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Loyalty Is Royalty (R.I.F.) (feat. Aaron &ldquo;A.B.&rdquo; Abernathy)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Therapy (feat. Method Man &amp; Redman)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">OGs Told Me (feat. Boy Backs &amp; Moe Roc)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Wise Words by the RZA (feat. RZA)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Trouble</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Skit</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Down with Me (feat. Sean Price)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Tiger and the Mantice (feat. GZA &amp; Inspectah Deck)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Real People (feat. Prodigy &amp; KXNG Crooked)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Flex with Me (feat. Chanel Sosa)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Calculated (feat. Ra Stacks &amp; Nick Guns)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Noodles, Pt. 1</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Noodles, Pt. 2</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Outro</span></div>
+      </div>
+    </div>
+
+    <!-- Balance -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Balance</h3>
+        <span class="album-year">2025</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Masta Killa" data-album="Balance" onchange="toggleWant(this, 'Masta Killa', 'Balance', '2025', 'Nature Sounds')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-nature-sounds">Nature Sounds</span>
+      </div>
+      <div class="album-summary">
+        A late-career highlight executive produced by RZA, reuniting the
+        Abbott and the quiet Clan soldier for the first time as creative
+        partners since No Said Date. Easy Mo Bee, P.F. Cuttin', and Nick
+        Price share board duties alongside RZA himself, while the guest
+        roster mixes Clan staples &mdash; Method Man, Raekwon, Cappadonna
+        &mdash; with outside heavyweights like Snoop Dogg, N.O.R.E., and AZ.
+        At ten tight tracks, it is the most focused entry in the catalogue.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Masta Killa &mdash; vocals &middot; Method Man &middot; Snoop Dogg &middot; RZA &middot; Raekwon &middot; Cappadonna &middot; N.O.R.E. &middot; AZ &middot; Uncle Murda &middot; Head I.C.E &middot; AB Money &middot; Big Bub
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA &middot; Easy Mo Bee &middot; Nick Price &middot; PF Cuttin' &middot; DJ FX
+        <div class="personnel-label" style="margin-top: 0.4rem;">Executive Producer</div>
+        RZA
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Hip Hop Forever</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Eagle Claw (feat. Raekwon &amp; Cappadonna)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">BK Harlem (feat. Head I.C.E)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Building with the Abbott (feat. RZA)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">City (feat. Jamall Ray)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Glad to Meet You (feat. Method Man &amp; Snoop Dogg)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">It's Been a Long Time</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Trumpets (feat. N.O.R.E., AZ &amp; Uncle Murda)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">King Custom</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Again (feat. AB Money &amp; Big Bub)</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

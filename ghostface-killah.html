@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghostface Killah &mdash; Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #c44a2a;
+    --accent-dim: #8a3520;
+    --epic: #9a6a8a;
+    --def-jam: #c45a3c;
+    --soul-temple: #6a8a5a;
+    --tommy-boy: #8a7a5a;
+    --linear-labs: #5a7a8a;
+    --now-gen: #7a6a5a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-epic { background: rgba(154, 106, 138, 0.2); color: #c090b0; border: 1px solid rgba(154, 106, 138, 0.3); }
+  .label-def-jam { background: rgba(196, 90, 60, 0.2); color: #e07050; border: 1px solid rgba(196, 90, 60, 0.3); }
+  .label-soul-temple { background: rgba(106, 138, 90, 0.2); color: #90c078; border: 1px solid rgba(106, 138, 90, 0.3); }
+  .label-tommy-boy { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-linear-labs { background: rgba(90, 122, 138, 0.2); color: #78a8c0; border: 1px solid rgba(90, 122, 138, 0.3); }
+  .label-now-gen { background: rgba(122, 106, 90, 0.2); color: #b0a088; border: 1px solid rgba(122, 106, 90, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Hardcore Hip Hop &middot; East Coast &middot; Soul Rap &nbsp;&middot;&nbsp; 1996&ndash;present &middot; Staten Island, NY</div>
+    <h1 class="artist-name">Ghostface Killah</h1>
+    <p class="artist-bio">
+      Dennis Coles, the soul-drenched voice of Wu-Tang Clan, whose solo work
+      fuses vivid street narratives with vintage R&B samples, blaxploitation
+      cinema, and a torrent of associative imagery &mdash; delivering some of the
+      most inventive and emotionally complex records in hip hop.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">12</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1996&ndash;2019</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">8/12</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">3 vinyl &middot; 8 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">1996&ndash;2019 &middot; Twelve releases on Epic / Def Jam / Soul Temple / Tommy Boy / Linear Labs / Now Generation</p>
+  <div class="album-grid">
+
+    <!-- Ironman -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Ironman</h3>
+        <span class="album-year">1996</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-epic">Epic / Razor Sharp</span>
+      </div>
+      <div class="album-summary">
+        The debut that established Ghostface as Wu-Tang's most emotionally transparent voice. Built almost entirely on RZA's dusty, soul-sample production, the album moves from street-war dispatches to devastating vulnerability, often within a single verse. Raekwon and Cappadonna are constant foils, but it is Ghost's confessional closing stretch &mdash; capped by the devastating mother-and-son poverty narrative with Mary J. Blige &mdash; that elevated the record beyond its crew context into something genuinely literary.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals &middot; Raekwon, Cappadonna, Method Man, Inspectah Deck, U-God, Masta Killa, Streetlife &mdash; guest vocals &middot; Mary J. Blige, The Delfonics, Force MDs &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA (all tracks except "Fish" by True Master)
+      </div>
+      <div class="tags">
+        <span class="tag">hardcore hip hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Iron Maiden (feat. Raekwon &amp; Cappadonna)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Wildflower</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">The Faster Blade (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">260 (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Assassination Day (feat. Raekwon, Inspectah Deck &amp; RZA)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Poisonous Darts</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Winter Warz (feat. Cappadonna, Masta Killa, Raekwon &amp; U-God)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Box in Hand (feat. Method Man &amp; Streetlife)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Fish (feat. Raekwon &amp; Cappadonna)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Camay (feat. Raekwon &amp; Cappadonna)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Daytona 500 (feat. Raekwon &amp; Cappadonna)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Motherless Child (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Black Jesus (feat. Raekwon &amp; U-God)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">After the Smoke Is Clear (feat. The Delfonics)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">All That I Got Is You (feat. Mary J. Blige)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">The Soul Controller (feat. Force MDs)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Marvel</span></div>
+      </div>
+    </div>
+
+    <!-- Supreme Clientele -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Supreme Clientele</h3>
+        <span class="album-year">2000</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-epic">Epic / Razor Sharp</span>
+      </div>
+      <div class="album-summary">
+        Widely regarded as Ghost's masterpiece and one of the finest hip hop albums of its era. The production widens beyond RZA to include Mathematics, JuJu, and Carlos Broady, while Ghost's lyrical style reaches peak abstraction &mdash; a dizzying stream of non-sequiturs, brand names, comic-book references, and soul-music quotations that somehow cohere into pure feeling. The opening run is relentless, and deep cuts reward endless revisitation with details that reveal themselves only on the tenth or twentieth listen.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals, executive producer &middot; RZA, Raekwon, GZA, U-God, Masta Killa, Method Man, Cappadonna, Inspectah Deck, Redman, Superb, 60 Second Assassin, Solomon Childs &mdash; guest vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, Mathematics, Carlos Broady, JuJu, Black Moes-Art, Inspectah Deck, The Blaquesmiths, Choo the Specializt, Carlos Bess, Hassan
+      </div>
+      <div class="tags">
+        <span class="tag">hardcore hip hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">abstract rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Nutmeg (feat. RZA)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">One (feat. T.M.F.)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Saturday Nite</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Ghost Deini (feat. Superb)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Apollo Kids (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">The Grain (feat. RZA)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Buck 50 (feat. Cappadonna, Method Man &amp; Redman)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Mighty Healthy</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Woodrow the Base Head (skit)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Stay True (feat. 60 Second Assassin)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">We Made It (feat. Superb, Chip Banks &amp; Hell Razah)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Stroke of Death (feat. Solomon Childs &amp; RZA)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Iron's Theme &ndash; Intermission</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Malcolm</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Who Would You Fuck (skit)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Child's Play</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Cherchez LaGhost (feat. U-God)</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">Wu Banga 101 (feat. GZA, Cappadonna, Masta Killa &amp; Raekwon)</span></div>
+        <div class="track"><span class="track-num">20</span><span class="track-name">Clyde Smith (skit)</span></div>
+        <div class="track"><span class="track-num">21</span><span class="track-name">Iron's Theme &ndash; Conclusion</span></div>
+      </div>
+    </div>
+
+    <!-- Bulletproof Wallets -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Bulletproof Wallets</h3>
+        <span class="album-year">2001</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-epic">Epic / Starks Enterprises</span>
+      </div>
+      <div class="album-summary">
+        The difficult third album, released into a fractured Wu-Tang landscape and a label situation that stripped several tracks before release. The Alchemist emerges as a key collaborator alongside RZA and Mathematics, lending a grittier, more street-level sound. Despite its troubled birth, standout tracks demonstrate Ghost's continued growth as a storyteller, and the album contains some of his most underrated deep cuts. Its reputation has aged better than initial reception suggested.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals &middot; Raekwon, Method Man, Cappadonna, Trife, Superb, Killa Sin, Tekitha, Streetlife &mdash; guest vocals &middot; Ruff Endz, Madame Majestic &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, Mathematics, The Alchemist, PLX, Carlos Broady, Underdawgz, Rsonist, Chris Liggio
+      </div>
+      <div class="tags">
+        <span class="tag">hardcore hip hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">mafioso rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro &ndash; Stairway to Heaven</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Maxine (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Flowers (feat. Raekwon, Method Man &amp; Superb)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Never Be the Same Again (feat. Raekwon &amp; Carl Thomas)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Teddy (skit)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Theodore (feat. Trife &amp; Twiz)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Ghost Showers (feat. Madame Majestic)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Strawberry (feat. Killa Sin)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Forest</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Juks (feat. Trife &amp; Superb)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Walking Through the Darkness (feat. Tekitha)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Jealousy (skit)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">The Hilton (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Ice (interlude)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Love Session (feat. Ruff Endz)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Street Chemistry (feat. Prodigal Sunn &amp; Trife)</span></div>
+      </div>
+    </div>
+
+    <!-- The Pretty Toney Album -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Pretty Toney Album</h3>
+        <span class="album-year">2004</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-def-jam">Def Jam</span>
+      </div>
+      <div class="album-summary">
+        Ghost's Def Jam debut and a deliberate pivot toward mainstream accessibility, though filtered through his idiosyncratic lens. The production roster broadens dramatically &mdash; No I.D., Nottz, and a young Emile Haynie join the usual suspects &mdash; and the album experiments with R&B crossover formats while retaining the storytelling depth of earlier work. The narrative tracks remain the highlights, showcasing Ghost's gift for cinematic detail and emotional directness in equal measure.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals, producer &middot; Trife da God, Missy Elliott, Jadakiss, Musiq Soulchild, Jacki-O, Sheek Louch, Styles P, Allah Real &mdash; guest vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        True Master, RZA, No I.D., Nottz, Emile Haynie, K-Def, Ghostface Killah, Digga, Minnesota, Dub Dot Z
+      </div>
+      <div class="tags">
+        <span class="tag">hip hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">soul rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Biscuits (feat. Trife da God)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Kunta Fly Shit</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Beat the Clock</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Metal Lungies (feat. Sheek Louch &amp; Styles P)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Bathtub (skit)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Save Me Dear</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">It's Over</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Keisha's House (skit)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Tush (feat. Missy Elliott)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Last Night (skit)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Holla (feat. Allah Real)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Ghostface</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Be This Way</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">The Letter (skit)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Tooken Back (feat. Jacki-O)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Run (feat. Jadakiss)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Love (feat. Musiq Soulchild)</span></div>
+      </div>
+    </div>
+
+    <!-- Fishscale -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Fishscale</h3>
+        <span class="album-year">2006</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-def-jam">Def Jam / Starks Enterprises</span>
+      </div>
+      <div class="album-summary">
+        A stunning return to form and a production showcase that reads like a who's-who of underground and mainstream talent: MF DOOM, J Dilla, Pete Rock, and Just Blaze all contribute beats. The opening narrative is one of Ghost's finest extended storytelling pieces, and the Just Blaze-produced anthem became an instant classic. The album reasserted Ghost's position at the intersection of street credibility and artistic ambition, earning near-universal critical acclaim and strong sales.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals, executive producer &middot; Raekwon, Cappadonna, Ne-Yo, Trife da God, Shawn Wigs, Sun God, Megan Rochell &mdash; guest vocals &middot; Wu-Tang Clan on "9 Milli Bros."
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        MF DOOM, Pete Rock, J Dilla, Just Blaze, Lewis Parker, MoSS, Sean C &amp; LV, Xtreme, Studio Steve, Ghostface Killah, Cool &amp; Dre, Crack Val
+      </div>
+      <div class="tags">
+        <span class="tag">hardcore hip hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">mafioso rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Return of Clyde Smith (skit)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Shakey Dog</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Kilo (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Champ</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Major Operation (skit)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">9 Milli Bros. (feat. Wu-Tang Clan)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Beauty Jackson</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Heart Street Directions (skit)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Columbus Exchange / Crack Spot</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">R.A.G.U. (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Bad Mouth Kid (skit)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Whip You with a Strap</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Back Like That (feat. Ne-Yo)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Be Easy (feat. Trife da God)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Clipse of Doom (feat. Trife)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Jellyfish (feat. Cappadonna, Shawn Wigs &amp; Trife)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Dogs of War (feat. Raekwon, Cappadonna, Sun God &amp; Trife)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Barbershop</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">Ms. Sweetwater (skit)</span></div>
+        <div class="track"><span class="track-num">20</span><span class="track-name">Big Girl</span></div>
+        <div class="track"><span class="track-num">21</span><span class="track-name">Underwater</span></div>
+        <div class="track"><span class="track-num">22</span><span class="track-name">The Ironman Takeover (skit)</span></div>
+        <div class="track"><span class="track-num">23</span><span class="track-name">Momma (feat. Megan Rochell)</span></div>
+      </div>
+    </div>
+
+    <!-- More Fish -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">More Fish</h3>
+        <span class="album-year">2006</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Ghostface Killah" data-album="More Fish" onchange="toggleWant(this, 'Ghostface Killah', 'More Fish', '2006', 'Def Jam')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-def-jam">Def Jam / Starks Enterprises</span>
+      </div>
+      <div class="album-summary">
+        Released the same year as Fishscale, this companion piece leans toward the looser, more experimental end of Ghost's range. MF DOOM, Madlib, and Hi-Tek contribute production alongside a cast of less conventional beatmakers, yielding a record that feels more like a late-night mixtape than a formal album statement. The guest list runs deep &mdash; Redman, Sheek Louch, and Amy Winehouse (via a Mark Ronson-produced reworking) all appear &mdash; and the live instrumentation on several tracks points toward Ghost's growing interest in organic soul arrangements.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals &middot; Trife da God, Sun God, Cappadonna, Killa Sin, Redman, Sheek Louch, Shawn Wigs, Solomon Childs, Eamon, Amy Winehouse &mdash; guest vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        MF DOOM, Madlib, Hi-Tek, Anthony Acid, Fantom of the Beat, Lewis Parker, Mark Ronson, J-Love, Koolade, K. Slack, Xtreme
+      </div>
+      <div class="tags">
+        <span class="tag">hip hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">soul rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Ghost Is Back</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Miguel Sanchez (feat. Trife da God &amp; Sun God)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Guns N' Razors (feat. Trife da God, Cappadonna &amp; Killa Sin)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Outta Town Shit</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Good (feat. Trife da God &amp; Mr. Maygreen)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Street Opera (feat. Sun God)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Block Rock</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Miss Info Celebrity Drama (skit)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Pokerface (feat. Shawn Wigs)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Greedy Bitches (feat. Redman &amp; Shawn Wigs)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Josephine (feat. Trife da God &amp; Willie Cottrell Band)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Grew Up Hard (feat. Trife da God &amp; Solomon Childs)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Blue Armor (feat. Sheek Louch)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">You Know I'm No Good (feat. Amy Winehouse)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Alex (Stolen Script)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Gotta Hold On (feat. Shawn Wigs &amp; Eamon)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Back Like That Remix (feat. Kanye West &amp; Ne-Yo)</span></div>
+      </div>
+    </div>
+
+    <!-- The Big Doe Rehab -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Big Doe Rehab</h3>
+        <span class="album-year">2007</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508; In collection</span>
+        <span class="label-badge label-def-jam">Def Jam / Starks Enterprises</span>
+      </div>
+      <div class="album-summary">
+        A concept album of sorts built around a lavish Toney Awards ceremony, with the Rhythm Roots Allstars providing live interludes that frame Ghost's street narratives in a cinematic soul-revue setting. Sean C &amp; LV handle the majority of the production, giving the record a cohesive, luxurious sound that suits its thematic ambitions. The Wu-Tang crew reunites on the sprawling posse cut, while the Chrisette Michele-assisted closer offers a rare moment of tenderness. Ghost's last Def Jam release before the label relationship ended.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals &middot; Raekwon, Method Man, U-God, Cappadonna, Masta Killa, Beanie Sigel, Kid Capri, Trife da God, Sun God, Shawn Wigs, Chrisette Michele &mdash; guest vocals &middot; Rhythm Roots Allstars &mdash; live band
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Sean C &amp; LV, Anthony Acid, Scram Jones, Ant Live, Syience, Ghostface Killah, Frequency, Baby Grand, Davey Chegwidden
+      </div>
+      <div class="tags">
+        <span class="tag">hip hop</span>
+        <span class="tag">soul rap</span>
+        <span class="tag">concept album</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">At the Cabana (skit)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Toney Sigel a.k.a. the Barrel Brothers (feat. Beanie Sigel)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Yolanda's House (feat. Method Man &amp; Raekwon)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">We Celebrate (feat. Kid Capri)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Walk Around</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Yapp City (feat. Trife da God &amp; Sun God)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">White Linen Affair (feat. Shawn Wigs)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Supa GFK</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Rec-Room Therapy (feat. Raekwon &amp; U-God)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Prayer (skit)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">I'll Die for You</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Paisley Darts (feat. Raekwon, Sun God, Trife da God, Method Man &amp; Cappadonna)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Shakey Dog Starring Lolita (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">! (skit)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Killa Lipstick (feat. Method Man &amp; Masta Killa)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Slow Down (feat. Chrisette Michele)</span></div>
+      </div>
+    </div>
+
+    <!-- Apollo Kids -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Apollo Kids</h3>
+        <span class="album-year">2010</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-def-jam">Def Jam / Starks Enterprises</span>
+      </div>
+      <div class="album-summary">
+        A lean, twelve-track set that finds Ghost refocusing after a few years of scattered releases. Frank Dukes provides three of the strongest beats, Pete Rock and Jake One contribute standout production, and the guest roster balances Wu-Tang familiars with outside voices like Black Thought, Busta Rhymes, and Joell Ortiz. The album plays like a greatest-hits of Ghost's modes &mdash; street narratives, crew anthems, soul interpolations &mdash; compressed into a tight forty-minute runtime with minimal filler.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals, executive producer &middot; Raekwon, Cappadonna, U-God, Method Man, Redman, GZA, Killah Priest, Black Thought, Busta Rhymes, Joell Ortiz, Game, Jim Jones, Sheek Louch, Trife Diesel, Shawn Wiggs, Sun God &mdash; guest vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Frank Dukes, Sean C &amp; LV, Jake One, Pete Rock, Scram Jones, Anthony Acid, Yakub, Shroom, Big Mizza, Chino Maurice
+      </div>
+      <div class="tags">
+        <span class="tag">hip hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">boom bap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Purified Thoughts (feat. GZA &amp; Killah Priest)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Superstar (feat. Busta Rhymes)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Black Tequila (feat. Cappadonna &amp; Trife Diesel)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Drama (feat. Joell Ortiz &amp; Game)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">2getha Baby</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Starkology</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">In tha Park (feat. Black Thought)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">How You Like Me Baby</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Handcuffin' Them Hoes (feat. Jim Jones)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Street Bullies (feat. Sheek Louch, Shawn Wiggs &amp; Sun God)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Ghetto (feat. Raekwon, Cappadonna &amp; U-God)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Troublemakers (feat. Raekwon, Method Man &amp; Redman)</span></div>
+      </div>
+    </div>
+
+    <!-- Twelve Reasons to Die -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Twelve Reasons to Die</h3>
+        <span class="album-year">2013</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-soul-temple">Soul Temple</span>
+      </div>
+      <div class="album-summary">
+        A collaboration with composer-producer Adrian Younge and executive-produced by RZA, built around a concept narrative involving the Italian mafia, vinyl records pressed from human blood, and supernatural vengeance. Younge's production is entirely live and analog &mdash; lush strings, fuzz guitar, vintage keyboards &mdash; creating a cinematic, psychedelic-soul backdrop that perfectly complements Ghost's grindhouse storytelling. The Wu-Tang faithful appear throughout, and the project spawned a comic book adaptation. One of Ghost's most fully realized artistic statements.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals &middot; Masta Killa, U-God, Inspectah Deck, Cappadonna, Killa Sin &mdash; guest vocals &middot; William Hart (The Delfonics) &mdash; vocals &middot; Adrian Younge &mdash; all instrumentation
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Adrian Younge &middot; Executive Producer: RZA
+      </div>
+      <div class="tags">
+        <span class="tag">hip hop</span>
+        <span class="tag">psychedelic soul</span>
+        <span class="tag">concept album</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Beware of the Stare</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Rise of the Black Suits</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">I Declare War (feat. Masta Killa)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Blood on the Cobblestones (feat. U-God &amp; Inspectah Deck)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">The Center of Attraction (feat. Cappadonna)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Enemies All Around Me (feat. William Hart)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">An Unexpected Call (The Set Up) (feat. Inspectah Deck)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Rise of the Ghostface Killah</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Revenge Is Sweet (feat. Masta Killa &amp; Killa Sin)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Murder Spree (feat. U-God, Masta Killa, Inspectah Deck &amp; Killa Sin)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">The Sure Shot (Parts 1 and 2)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">12 Reasons to Die</span></div>
+      </div>
+    </div>
+
+    <!-- 36 Seasons -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">36 Seasons</h3>
+        <span class="album-year">2014</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-tommy-boy">Tommy Boy</span>
+      </div>
+      <div class="album-summary">
+        A narrative concept album backed entirely by The Revelations, a live soul-funk band whose lush arrangements recall classic Philly International and Stax recordings. Ghost plays a character returning to his neighborhood after nine years in prison to find everything changed. AZ serves as the primary narrative foil, with Kool G Rap, Pharoahe Monch, and Kandace Springs in supporting roles. The result is Ghost's most cinematic solo work &mdash; a full soul opera that wears its blaxploitation influences proudly.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals &middot; AZ, Kool G Rap, Pharoahe Monch, Nems, Shawn Wigs, Tre Williams, Kandace Springs &mdash; guest vocals &middot; The Revelations &mdash; live band
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        The Revelations, Fizzy Womack, Malik Abdul-Rahmaan, The 45 King
+      </div>
+      <div class="tags">
+        <span class="tag">hip hop soul</span>
+        <span class="tag">concept album</span>
+        <span class="tag">blaxploitation</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Battlefield (feat. AZ, Kool G Rap &amp; Tre Williams)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Love Don't Live Here No More (feat. Kandace Springs)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Here I Go Again (feat. AZ &amp; Rell)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Loyalty (feat. Kool G Rap &amp; Nems)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">It's a Thin Line Between Love and Hate (feat. The Revelations)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">The Dogs of War (feat. Shawn Wigs &amp; Kool G Rap)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Emergency Procedure (feat. Pharoahe Monch)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Double Cross (feat. AZ)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Bamboo's Lament (feat. Kandace Springs)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Pieces to the Puzzle (feat. AZ)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Homicide (feat. Nems &amp; Shawn Wigs)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Blood in the Streets (feat. AZ)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Call My Name</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">I Love You for All Seasons (feat. The Revelations)</span></div>
+      </div>
+    </div>
+
+    <!-- Twelve Reasons to Die II -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Twelve Reasons to Die II</h3>
+        <span class="album-year">2015</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Ghostface Killah" data-album="Twelve Reasons to Die II" onchange="toggleWant(this, 'Ghostface Killah', 'Twelve Reasons to Die II', '2015', 'Linear Labs')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-linear-labs">Linear Labs</span>
+      </div>
+      <div class="album-summary">
+        The sequel to the Adrian Younge collaboration continues the supernatural-mafia narrative with RZA serving as both executive producer and narrator, linking tracks with spoken interludes. Raekwon features heavily as Ghost's primary sparring partner, with Vince Staples, Bilal, Chino XL, and Lyrics Born contributing from outside the Wu-Tang orbit. Younge's production remains entirely analog and cinematic, though the sequel's shorter runtime and tighter focus yield a more concentrated listening experience.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals &middot; Raekwon, RZA, Vince Staples, Bilal, Chino XL, Lyrics Born, Scarub &mdash; guest vocals &middot; Adrian Younge &mdash; all instrumentation
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Adrian Younge &middot; Executive Producer: RZA
+      </div>
+      <div class="tags">
+        <span class="tag">hip hop</span>
+        <span class="tag">psychedelic soul</span>
+        <span class="tag">concept album</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Powerful One</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Return of the Savage (feat. Raekwon &amp; RZA)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">King of New York (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Rise Up (feat. Scarub)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Daily News</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Get the Money (feat. Vince Staples)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Death's Invitation (interlude, feat. RZA)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Death's Invitation (feat. Chino XL, Lyrics Born &amp; Scarub)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Let the Record Spin (interlude, feat. RZA)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Let the Record Spin (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Blackout (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Resurrection Morning (feat. Raekwon &amp; Bilal)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Life's a Rebirth (feat. RZA)</span></div>
+      </div>
+    </div>
+
+    <!-- Ghostface Killahs -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Ghostface Killahs</h3>
+        <span class="album-year">2019</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Ghostface Killah" data-album="Ghostface Killahs" onchange="toggleWant(this, 'Ghostface Killah', 'Ghostface Killahs', '2019', 'Now Generation')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-now-gen">Now Generation</span>
+      </div>
+      <div class="album-summary">
+        A concise, fourteen-track set produced almost entirely by Danny Caiazzo, giving the album a unified sonic identity built on ominous loops and minimal, hard-hitting drums. The Wu-Tang inner circle &mdash; Method Man, Inspectah Deck, Cappadonna, Masta Killa &mdash; appear throughout, and the record functions as a back-to-basics crew record in Ghost's catalog. At just over thirty-three minutes, it moves with a purpose that recalls the taut construction of Supreme Clientele, even if it doesn't reach those heights.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals, executive producer &middot; Method Man, Inspectah Deck, Cappadonna, Masta Killa, Sun God, Shawn Wigs, Solomon Childs, Harley, Eamon &mdash; guest vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Danny Caiazzo (all tracks)
+      </div>
+      <div class="tags">
+        <span class="tag">hardcore hip hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">boom bap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Killah Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Me Denny &amp; Darryl (feat. Method Man &amp; Cappadonna)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Burner to Burner (feat. Inspectah Deck &amp; Cappadonna)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Flex (feat. Harley)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">News Report (skit)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Conditioning</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Fly Everything (feat. Sun God &amp; Shawn Wigs)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Party over Here</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Pistol Smoke (feat. Solomon Childs)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Revolution (skit)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">New World (feat. Eamon)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Waffles &amp; Ice Cream (feat. Cappadonna)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">The Chase (feat. Sun God)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Soursop (feat. Masta Killa, Harley &amp; Solomon Childs)</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="compilations">
+  <h2 class="section-title">Compilations &amp; Greatest Hits</h2>
+  <p class="section-subtitle">Not included in studio album count</p>
+  <div class="album-grid">
+
+    <!-- GhostDeini the Great -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">GhostDeini the Great</h3>
+        <span class="album-year">2008</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Ghostface Killah" data-album="GhostDeini the Great" onchange="toggleWant(this, 'Ghostface Killah', 'GhostDeini the Great', '2008', 'Def Jam')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-def-jam">Def Jam</span>
+      </div>
+      <div class="album-summary">
+        A compilation album collecting remixes, fan favorites, and key tracks from across Ghost's Def Jam tenure. Includes reworked versions of Fishscale and Big Doe Rehab highlights alongside deeper cuts and the holiday-themed closer. Not a studio album proper, but a useful survey of a prolific mid-career stretch.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ghostface Killah &mdash; vocals &middot; Various Wu-Tang members, Kanye West, Ne-Yo, Ice Cube, Jadakiss, Lil Wayne, Freeway &mdash; guest vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, Pete Rock, Just Blaze, MF DOOM, MoSS, Mathematics, Anthony Acid, Xtreme, Sean C &amp; LV, others
+      </div>
+      <div class="tags">
+        <span class="tag">compilation</span>
+        <span class="tag">greatest hits</span>
+        <span class="tag">remixes</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Kilo Remix (feat. Raekwon &amp; No Malice)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Champ Remix</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Tony Sigel a.k.a. Barrel Bros. (feat. Styles P &amp; Beanie Sigel)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Slept on Tony</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Run Remix (feat. Raekwon, Jadakiss, Freeway &amp; Lil Wayne)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Be Easy Remix (feat. Ice Cube)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Mighty Healthy</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">It's Over</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Apollo Kids (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">9 Milli Bros. (feat. Wu-Tang Clan)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Walk Around</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Street Opera (feat. Sun God)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">All I Got Is You (feat. Mary J. Blige &amp; Popa Wu)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Back Like That Remix (feat. Kanye West &amp; Ne-Yo)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Cherchez LaGhost (feat. U-God)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Ghostface X-mas</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

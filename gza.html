@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GZA/Genius — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #5a8a7a;
+    --accent-dim: #3d6658;
+    --cold-chillin: #7a6a9a;
+    --geffen: #6a8a7a;
+    --mca: #8a7a5a;
+    --babygrande: #6a7a8a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-cold-chillin { background: rgba(122, 106, 154, 0.2); color: #a090c8; border: 1px solid rgba(122, 106, 154, 0.3); }
+  .label-geffen { background: rgba(106, 138, 122, 0.2); color: #90c0a8; border: 1px solid rgba(106, 138, 122, 0.3); }
+  .label-mca { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-babygrande { background: rgba(106, 122, 138, 0.2); color: #90a8c0; border: 1px solid rgba(106, 122, 138, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Hip-Hop &middot; Hardcore Rap &middot; East Coast &nbsp;&middot;&nbsp; 1991&ndash;present &middot; Brooklyn, NY</div>
+    <h1 class="artist-name">GZA/Genius</h1>
+    <p class="artist-bio">
+      The Wu-Tang Clan's most cerebral sword &mdash; Gary Grice built a solo
+      catalog on dense, interlocking wordplay, chess metaphors, and razor-precise
+      delivery over RZA's stark, cinematic production. From the genre-defining
+      Liquid Swords to his explorations of science and language, GZA treats
+      every verse as a logic puzzle solved in real time.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">5</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1991&ndash;2008</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">3/5</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1 vinyl &middot; 3 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">1991&ndash;2008 &middot; Five releases on Cold Chillin' / Geffen / MCA / Babygrande</p>
+  <div class="album-grid">
+
+    <!-- Words from the Genius -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Words from the Genius</h3>
+        <span class="album-year">1991</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="GZA/Genius" data-album="Words from the Genius" onchange="toggleWant(this, 'GZA/Genius', 'Words from the Genius', '1991', 'Cold Chillin\' / Reprise')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-cold-chillin">Cold Chillin'</span>
+      </div>
+      <div class="album-summary">
+        The debut, released under the name The Genius before Wu-Tang Clan existed, on Cold Chillin' Records alongside Big Daddy Kane and Biz Markie. Produced primarily by Easy Mo Bee, the album showcases a young Gary Grice navigating late-golden-era production with an already distinctive verbal precision. It sank commercially due to poor label promotion, but tracks like the title cut and "Those Were the Days" hint at the lyrical rigor that would fully emerge once RZA rebuilt the sonic architecture around his cousin's voice.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        The Genius (GZA) &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Easy Mo Bee &middot; Patrick Harvey &middot; Jesse West
+      </div>
+      <div class="tags">
+        <span class="tag">golden age hip-hop</span>
+        <span class="tag">east coast</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Come Do Me</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Phony As Ya Wanna Be</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">True Fresh M.C.</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">The Genius Is Slammin'</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Words from a Genius</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Who's Your Rhymin' Hero</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Feel the Pain</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Those Were the Days</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Life of a Drug Dealer</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Stop the Nonsense</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Living Foul</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Drama</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Stay Out of Bars</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">What Are Silly Girls Made of</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Superfreak</span></div>
+      </div>
+    </div>
+
+    <!-- Liquid Swords -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Liquid Swords</h3>
+        <span class="album-year">1995</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-geffen">Geffen</span>
+      </div>
+      <div class="album-summary">
+        The masterpiece. RZA's production reaches its iciest, most cinematic peak &mdash; stark piano loops, Shogun Assassin dialogue interludes, and cavernous drums frame GZA's most disciplined writing. Every verse on "4th Chamber," "Duel of the Iron Mic," and the title track operates with surgical precision, layering chess metaphors, street narratives, and martial-arts philosophy into a seamless whole. It cracked the Billboard Top Ten and remains one of the most acclaimed hip-hop albums ever recorded, the crown jewel of the Wu-Tang solo era.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        GZA/Genius &mdash; vocals &middot; Inspectah Deck &middot; Masta Killa &middot; Ol' Dirty Bastard &middot; Ghostface Killah &middot; Killah Priest &middot; RZA &middot; Method Man &middot; Raekwon &middot; U-God &middot; Life
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA &middot; 4th Disciple
+      </div>
+      <div class="tags">
+        <span class="tag">hardcore hip-hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Liquid Swords</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Duel of the Iron Mic</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Living in the World Today</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Gold</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Cold World</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Labels</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">4th Chamber</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Shadowboxin'</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Hell's Wind Staff / Killah Hills 10304</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Investigative Reports</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Swordsman</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">I Gotcha Back</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">B.I.B.L.E. (Basic Instructions Before Leaving Earth)</span></div>
+      </div>
+    </div>
+
+    <!-- Beneath the Surface -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Beneath the Surface</h3>
+        <span class="album-year">1999</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-mca">MCA</span>
+      </div>
+      <div class="album-summary">
+        The difficult follow-up to a classic. GZA diversified his production roster beyond RZA, enlisting Mathematics, Arabian Knight, and Inspectah Deck behind the boards, while executive-producing alongside the Abbott. The sound is warmer and more varied than Liquid Swords' permafrost, and tracks like "Amplified Sample" and "Breaker, Breaker" prove his pen remained sharp. It debuted at number one on the Hip-Hop/R&amp;B chart, though critical consensus placed it a tier below its predecessor.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        GZA/Genius &mdash; vocals &middot; Killah Priest &middot; Res &middot; Ol' Dirty Bastard &middot; Masta Killa &middot; RZA &middot; Method Man &middot; Hell Razah &middot; Dreddy Kruger &middot; Timbo King
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Mathematics &middot; Arabian Knight &middot; GZA &middot; Inspectah Deck &middot; RZA &middot; John the Baptist
+      </div>
+      <div class="tags">
+        <span class="tag">hardcore hip-hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Amplified Sample</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Beneath the Surface</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Skit #1</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Skit #2</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Crash Your Crew</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Breaker, Breaker</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">High Price, Small Reward</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Hip Hop Fury</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Skit #3</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">1112</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Skit #4</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Victim</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Publicity</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Feel Like an Enemy</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Stringplay (Like This, Like That)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Mic Trippin'</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Outro</span></div>
+      </div>
+    </div>
+
+    <!-- Legend of the Liquid Sword -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Legend of the Liquid Sword</h3>
+        <span class="album-year">2002</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-mca">MCA</span>
+      </div>
+      <div class="album-summary">
+        A spiritual sequel to his sophomore classic, drawing its title back into the Liquid Swords mythology. The production palette widens further &mdash; Bink!, DJ Muggs, Jaz-O, and Arabian Knight join RZA and Mathematics &mdash; and GZA sounds energized, particularly on "Auto Bio" (a vivid origin story tracing his path from Staten Island to Wu-Tang) and the Ghostface-featuring "Silent." Santi White (later Santigold) appears on "Stay in Line" years before her own debut, making this a quiet landmark of cross-genre collaboration.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        GZA/Genius &mdash; vocals &middot; Ghostface Killah &middot; Streetlife &middot; Santi White &middot; RZA &middot; Masta Killa &middot; Inspectah Deck &middot; Anthony Allen &middot; Prodigal Sunn &middot; 12 O'Clock &middot; Young Justice
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Jay &ldquo;Waxx&rdquo; Garfield &middot; Boola &middot; Bink! &middot; Arabian Knight &middot; Mathematics &middot; Jaz-O &middot; DJ Muggs &middot; RZA &middot; GZA &middot; Tyquan Walker
+      </div>
+      <div class="tags">
+        <span class="tag">hardcore hip-hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Auto Bio</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Did Ya Say That?</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Silent</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Knock, Knock</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Stay in Line</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Animal Planet</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Fam (Members Only)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Legend of the Liquid Sword</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Fame</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Highway Robbery</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Luminal</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Sparring Minds</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Rough Cut</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Uncut Material</span></div>
+      </div>
+    </div>
+
+    <!-- Pro Tools -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Pro Tools</h3>
+        <span class="album-year">2008</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="GZA/Genius" data-album="Pro Tools" onchange="toggleWant(this, 'GZA/Genius', 'Pro Tools', '2008', 'Babygrande')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-babygrande">Babygrande</span>
+      </div>
+      <div class="album-summary">
+        The fifth and most recent studio album, released independently on Babygrande after a six-year gap. A. &amp; R.'d by Dreddy Kruger, it reunites GZA with Wu-affiliated producers Bronze Nazareth, True Master, and Mathematics alongside newcomers Black Milk and Roc Marciano (who also raps on "Short Race"). The beats are leaner and more understated than the classic RZA sound, foregrounding GZA's pen above all else. "Pencil" and "Paper Plate" became underground favorites, and Ka's guest verse on "Firehouse" is a quiet landmark.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        GZA/Genius &mdash; vocals &middot; RZA &middot; Masta Killa &middot; Justice Kareem &middot; True Master &middot; Roc Marciano &middot; Ka &middot; Irfane Khan-Acito
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Mathematics &middot; True Master &middot; Bronze Nazareth &middot; Black Milk &middot; Arabian Knight &middot; Roc Marciano &middot; RZA &middot; Dreddy Kruger &middot; Jay &ldquo;Waxx&rdquo; Garfield &middot; Jose &ldquo;Choco&rdquo; Reynoso
+      </div>
+      <div class="tags">
+        <span class="tag">hardcore hip-hop</span>
+        <span class="tag">underground hip-hop</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intromental</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Pencil</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Alphabets</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Groundbreaking</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">7 Pounds</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">0% Finance</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Short Race</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Interlude</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Paper Plate</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Columbian Ties</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Firehouse</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Path of Destruction</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Cinema</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Intermission (Drive In Movie)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Life Is a Movie</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Elastic Audio (Live)</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

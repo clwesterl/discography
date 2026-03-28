@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raekwon — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #c45a3c;
+    --accent-dim: #8a3e2a;
+    --loud: #7a6a5a;
+    --iceh2o: #5a7a8a;
+    --caroline: #6a8a6a;
+    --empire: #8a6a7a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+  .album-card:nth-child(6) { animation-delay: 0.3s; }
+  .album-card:nth-child(7) { animation-delay: 0.35s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-loud { background: rgba(122, 106, 90, 0.2); color: #c0a878; border: 1px solid rgba(122, 106, 90, 0.3); }
+  .label-iceh2o { background: rgba(90, 122, 138, 0.2); color: #90b0c8; border: 1px solid rgba(90, 122, 138, 0.3); }
+  .label-caroline { background: rgba(106, 138, 106, 0.2); color: #90c090; border: 1px solid rgba(106, 138, 106, 0.3); }
+  .label-empire { background: rgba(138, 106, 122, 0.2); color: #c090a8; border: 1px solid rgba(138, 106, 122, 0.3); }
+  .label-universal { background: rgba(106, 122, 138, 0.2); color: #90a8c0; border: 1px solid rgba(106, 122, 138, 0.3); }
+  .label-emi { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">East Coast Hip Hop &middot; Hardcore Rap &middot; Mafioso Rap &nbsp;&middot;&nbsp; Solo: 1995&ndash;present &middot; Brooklyn, NY</div>
+    <h1 class="artist-name">Raekwon</h1>
+    <p class="artist-bio">
+      Corey Woods, the Chef &mdash; Wu-Tang Clan's master storyteller whose
+      cinematic mafioso narratives, layered slang, and intricate rhyme patterns
+      defined the sound of mid-nineties East Coast hip hop. From the
+      purple-tape blueprint of Cuban Linx through two decades of solo work,
+      he built one of rap's most vivid and sustained creative visions.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">7</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1995&ndash;2017</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">5/7</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1 vinyl + digital &middot; 4 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">1995&ndash;2017 &middot; Seven releases across two decades on Loud / Ice H2O / Universal / Caroline / Empire</p>
+  <div class="album-grid">
+
+    <!-- Only Built 4 Cuban Linx... -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Only Built 4 Cuban Linx&hellip;</h3>
+        <span class="album-year">1995</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-loud">Loud</span>
+      </div>
+      <div class="album-summary">
+        The purple tape &mdash; a mafioso-rap landmark structured as a crime film, with Raekwon starring as Lex Diamond and Ghostface Killah co-starring as Tony Starks. RZA's production wove kung-fu samples, soul loops, and gritty textures into a claustrophobic street-opera sound that became the template for narrative hip hop. The album introduced the Wu-Gambino aliases and elevated the storytelling ambitions of the entire Wu-Tang collective.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Raekwon &mdash; vocals &middot; Ghostface Killah &mdash; vocals (co-star) &middot; Nas, Method Man, Inspectah Deck, GZA, Masta Killa, Cappadonna, U-God &mdash; featured vocals &middot; Blue Raspberry &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">mafioso rap</span>
+        <span class="tag">hardcore rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Striving for Perfection</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Knuckleheadz (feat. Ghostface Killah, U-God)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Knowledge God</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Criminology (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Incarcerated Scarfaces</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Rainy Dayz (feat. Ghostface Killah, Blue Raspberry)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Guillotine (Swordz) (feat. Ghostface Killah, Inspectah Deck, GZA)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Can It Be All So Simple (Remix) (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Shark Niggas (Biters)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Ice Water (feat. Ghostface Killah, Cappadonna)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Glaciers of Ice (feat. Ghostface Killah, Masta Killa)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Verbal Intercourse (feat. Ghostface Killah, Nas)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Wisdom Body (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Spot Rusherz</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Ice Cream (feat. Ghostface Killah, Method Man, Cappadonna)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Wu-Gambinos (feat. Ghostface Killah, Method Man, RZA, Masta Killa)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Heaven &amp; Hell (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">North Star (Jewels)</span></div>
+      </div>
+    </div>
+
+    <!-- Immobilarity -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Immobilarity</h3>
+        <span class="album-year">1999</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Raekwon" data-album="Immobilarity" onchange="toggleWant(this, 'Raekwon', 'Immobilarity', '1999', 'Loud / Columbia')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-loud">Loud</span>
+      </div>
+      <div class="album-summary">
+        A deliberate shift away from the Cuban Linx formula, trading RZA's grimy minimalism for a broader palette of producers and a more reflective tone. The album found Raekwon navigating post-fame disillusionment and street politics without Ghostface as constant foil. Critics were divided, but tracks like "Yae Yo" and the Pete Rock&ndash;produced "All I Got Is You Pt. 2" demonstrated that the Chef's narrative instincts remained sharp even in new sonic territory.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Raekwon &mdash; vocals &middot; Method Man, Masta Killa &mdash; featured vocals &middot; American Cream Team, Big Bub, Kim Stephens &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        The Infinite Arkatechz, Pete Rock, Triflyn, Carlos &ldquo;Six July&rdquo; Broady, and others
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">hardcore rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Yae Yo</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Casablanca</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">100 Rounds</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Real Life</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Power (feat. American Cream Team)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Skit 1</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">All I Got Is You Pt. 2 (feat. Big Bub)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Jury (feat. Kim Stephens)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Fuck Them (feat. Method Man)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Skit 2</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Live From New York</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">My Favorite Dred</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Friday</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">The Table (feat. Masta Killa)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Sneakers</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Raw (feat. American Cream Team)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Pop Shit</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">Heart to Heart</span></div>
+        <div class="track"><span class="track-num">20</span><span class="track-name">Forecast</span></div>
+        <div class="track"><span class="track-num">21</span><span class="track-name">Outro</span></div>
+      </div>
+    </div>
+
+    <!-- The Lex Diamond Story -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Lex Diamond Story</h3>
+        <span class="album-year">2003</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-iceh2o">Ice H2O</span>
+        <span class="label-badge label-universal">Universal</span>
+      </div>
+      <div class="album-summary">
+        A return to the crime-narrative concept under Raekwon's Lex Diamond alias, now on his own Ice H2O imprint. RZA returned alongside new producers Emile Haynie and DJ Khalil, and the Wu-Tang family showed up in force &mdash; Ghostface, Method Man, Masta Killa, Inspectah Deck, and Cappadonna all contributed. Guest turns from Fat Joe and Havoc broadened the album's reach beyond the Wu universe.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Raekwon &mdash; vocals &middot; Ghostface Killah, Method Man, Masta Killa, Inspectah Deck, Cappadonna &mdash; featured vocals &middot; Fat Joe, Havoc, Polite, Tekitha &mdash; guest vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, Emile Haynie, DJ Khalil, Mizza, and others
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">mafioso rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Lex Diamond Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Pit Bull Fights (feat. Polite)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Hitman Salary (Skit)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">King of Kings (feat. Havoc)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Missing Watch (feat. Ghostface Killah, Polite)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">All Over Again</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Clientele Kidd (feat. Fat Joe, Ghostface Killah, Polite)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Smith Bros</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Restaurant (Skit)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Robbery (feat. Ice Water Inc.)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Fuck You (Skit)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Pa-Blow Escablow (feat. Polite)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Musketeers of Pig Alley (feat. Masta Killa, Inspectah Deck)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Ice Cream Pt. 2 (feat. Method Man, Cappadonna)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">The Hood (feat. Tiffany Villarreal)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Wild Chimpanzees (Skit)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Planet of the Apes (feat. Capone, Sheek Louch, Polite)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Wild in da Club (feat. MC Ultra, Ice Water Inc.)</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">Once Upon a Time (feat. Tekitha)</span></div>
+        <div class="track"><span class="track-num">20</span><span class="track-name">Lex Diamond Story Outro</span></div>
+      </div>
+    </div>
+
+    <!-- Only Built 4 Cuban Linx... Pt. II -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Only Built 4 Cuban Linx&hellip; Pt. II</h3>
+        <span class="album-year">2009</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-iceh2o">Ice H2O</span>
+        <span class="label-badge label-emi">EMI</span>
+      </div>
+      <div class="album-summary">
+        The long-awaited sequel, a decade in the making, that reunited Raekwon with RZA while recruiting an all-star production roster &mdash; J Dilla, Dr. Dre, Pete Rock, The Alchemist, Erick Sermon, and Marley Marl all contributed beats. Ghostface returned as co-star, and the album's sprawling 22 tracks delivered the cinematic street narratives fans had been waiting for. Widely regarded as one of the finest hip-hop sequels ever recorded.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Raekwon &mdash; vocals &middot; Ghostface Killah, Method Man, Inspectah Deck, GZA, Masta Killa, Cappadonna &mdash; featured vocals &middot; Jadakiss, Styles P, Beanie Sigel, Busta Rhymes, Slick Rick &mdash; guest vocals &middot; Blue Raspberry, Lyfe Jennings &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, J Dilla, Dr. Dre, Pete Rock, The Alchemist, Erick Sermon, Marley Marl, Scram Jones, Mathematics, and others
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">mafioso rap</span>
+        <span class="tag">hardcore rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Return of the North Star (feat. Popa Wu)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">House of Flying Daggers (feat. Inspectah Deck, Ghostface Killah, Method Man)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Sonny's Missing</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Pyrex Vision</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Cold Outside (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Black Mozart (feat. Inspectah Deck, RZA)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Gihad (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">New Wu (feat. Ghostface Killah, Method Man)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Penitentiary (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Baggin Crack</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Surgical Gloves</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Broken Safety (feat. Jadakiss, Styles P)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Canal Street</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Ason Jones</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Have Mercy (feat. Beanie Sigel, Blue Raspberry)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">10 Bricks (feat. Cappadonna, Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Fat Lady Sings</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Catalina (feat. Lyfe Jennings)</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">We Will Rob You (feat. GZA, Masta Killa, Slick Rick)</span></div>
+        <div class="track"><span class="track-num">20</span><span class="track-name">About Me (feat. Busta Rhymes)</span></div>
+        <div class="track"><span class="track-num">21</span><span class="track-name">Mean Streets (feat. Inspectah Deck, Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">22</span><span class="track-name">Kiss the Ring (feat. Inspectah Deck, Masta Killa)</span></div>
+      </div>
+    </div>
+
+    <!-- Shaolin vs. Wu-Tang -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Shaolin vs. Wu-Tang</h3>
+        <span class="album-year">2011</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-iceh2o">Ice H2O</span>
+        <span class="label-badge label-emi">EMI</span>
+      </div>
+      <div class="album-summary">
+        Named after the 1983 Shaw Brothers kung-fu film, this fifth solo album channeled the martial-arts mythology that had always infused Wu-Tang's aesthetic. A deep bench of producers &mdash; Scram Jones, The Alchemist, Erick Sermon, Bronze Nazareth, DJ Khalil, Mathematics &mdash; delivered beats that balanced boom-bap grit with cinematic sweep. Guest spots from Nas, Black Thought, Busta Rhymes, and the Wu faithful gave it a summit-meeting quality.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Raekwon &mdash; vocals &middot; Ghostface Killah, Method Man, Inspectah Deck, GZA &mdash; featured vocals &middot; Nas, Black Thought, Busta Rhymes, Rick Ross, Lloyd Banks, Jim Jones &mdash; guest vocals &middot; Estelle, Raheem DeVaughn &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Scram Jones, Erick Sermon, The Alchemist, DJ Khalil, Mathematics, Bronze Nazareth, Sean C &amp; LV, Kenny Dope, and others
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">boom bap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Shaolin vs. Wu-Tang</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Every Soldier in the Hood (feat. Method Man)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Silver Rings (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Chop Chop Ninja (feat. Inspectah Deck, Estelle)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Butter Knives</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Snake Pond</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Crane Style (feat. Busta Rhymes)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Rock N Roll (feat. Ghostface Killah, Jim Jones, Kobe)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Rich &amp; Black (feat. Nas)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">From the Hills (feat. Method Man, Raheem DeVaughn)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Last Trip to Scotland (feat. Lloyd Banks)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Ferryboat Killaz</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Dart School</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Molasses (feat. Ghostface Killah, Rick Ross)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">The Scroll</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Masters of Our Fate (feat. Black Thought)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Wu Chant (Outro)</span></div>
+      </div>
+    </div>
+
+    <!-- Fly International Luxurious Art -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Fly International Luxurious Art</h3>
+        <span class="album-year">2015</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Raekwon" data-album="Fly International Luxurious Art" onchange="toggleWant(this, 'Raekwon', 'Fly International Luxurious Art', '2015', 'Ice H2O / Caroline')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-iceh2o">Ice H2O</span>
+        <span class="label-badge label-caroline">Caroline</span>
+      </div>
+      <div class="album-summary">
+        Raekwon's most outward-looking record, enlisting mainstream collaborators &mdash; A$AP Rocky, French Montana, 2 Chainz, Snoop Dogg, Rick Ross &mdash; alongside Ghostface and a globe-trotting production palette from Jerry Wonda, Swizz Beatz, and S1. The acronym F.I.L.A. signaled an ambition to move beyond the Wu-Tang orbit, blending luxury-rap polish with the Chef's street storytelling DNA.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Raekwon &mdash; vocals &middot; Ghostface Killah, A$AP Rocky, French Montana, Busta Rhymes, 2 Chainz, Snoop Dogg, Rick Ross &mdash; featured vocals &middot; Estelle, Melanie Fiona, Assassin &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Jerry Wonda, Swizz Beatz, Scram Jones, S1, Scoop DeVille, and others
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">pop-rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">4 in the Morning (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">I Got Money (feat. A$AP Rocky)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Wall to Wall (feat. French Montana, Busta Rhymes)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Heated Nights</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">F.I.L.A. World (feat. 2 Chainz)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">1,2, 1,2 (feat. Snoop Dogg)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Live to Die</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Soundboy Kill It (feat. Melanie Fiona, Assassin)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Revory (Wraith) (feat. Rick Ross, Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">All About You (feat. Estelle)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Nautilus</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Worst Enemy (feat. Liz Rodrigues)</span></div>
+      </div>
+    </div>
+
+    <!-- The Wild -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Wild</h3>
+        <span class="album-year">2017</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-iceh2o">Ice H2O</span>
+        <span class="label-badge label-empire">Empire</span>
+      </div>
+      <div class="album-summary">
+        Raekwon's seventh studio album cast a wider net than ever, featuring Lil Wayne, CeeLo Green, G-Eazy, and Andra Day alongside an eclectic production team including Dame Grease, J.U.S.T.I.C.E. League, and RoadsArt. The record moved between introspective street narratives and contemporary trap-inflected production, reflecting two decades of evolution from the purple-tape era while maintaining the Chef's unmistakable storytelling voice.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Raekwon &mdash; vocals &middot; Lil Wayne, G-Eazy &mdash; featured vocals &middot; CeeLo Green, Andra Day, P.U.R.E. &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RoadsArt, Frank G., Dame Grease, J.U.S.T.I.C.E. League, G Sparkz, Mally the Martian, and others
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">trap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Wild (Intro)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">This Is What It Comes Too</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Nothing</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Skit (Bang Head Right)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Marvin (feat. CeeLo Green)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Can't You See</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">My Corner (feat. Lil Wayne)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Skit (Fuck You Up Card)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">M&amp;N (feat. P.U.R.E.)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Visiting Hour (feat. Andra Day)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Skit (Bang Fall Down)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">The Reign</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Crown of Thorns</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Purple Brick Road (feat. G-Eazy)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">You Hear Me</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Bang Outro</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>Discography data compiled from public sources. Collection status reflects personal library.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ol' Dirty Bastard — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #c45a3c;
+    --accent-dim: #8a3e2a;
+    --elektra: #6a8a7a;
+    --dame-dash: #8a6a9a;
+    --sure-shot: #8a7a5a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-elektra { background: rgba(106, 138, 122, 0.2); color: #90c0a8; border: 1px solid rgba(106, 138, 122, 0.3); }
+  .label-dame-dash { background: rgba(138, 106, 154, 0.2); color: #a090c8; border: 1px solid rgba(138, 106, 154, 0.3); }
+  .label-sure-shot { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Hip-Hop &middot; East Coast Rap &middot; Hardcore Hip-Hop &nbsp;&middot;&nbsp; 1968&ndash;2004 &middot; Brooklyn, NY</div>
+    <h1 class="artist-name">Ol&rsquo; Dirty Bastard</h1>
+    <p class="artist-bio">
+      Russell Tyrone Jones &mdash; the Wu-Tang Clan&rsquo;s unhinged, magnetic wild card,
+      whose off-kilter vocal delivery, raw humor, and fearless disregard for convention
+      made him one of hip-hop&rsquo;s most singular voices. His solo work channeled
+      the same chaotic energy that electrified the Clan, filtering RZA&rsquo;s gritty
+      production through a personality that defied every expectation.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">2</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2</span>
+        <span class="stat-label">Posthumous Releases</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1995&ndash;2005</span>
+        <span class="stat-label">Solo Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2/4</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2 vinyl + 2 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">1995&ndash;1999 &middot; Two releases on Elektra Records</p>
+  <div class="album-grid">
+
+    <!-- Return to the 36 Chambers -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Return to the 36 Chambers: The Dirty Version</h3>
+        <span class="album-year">1995</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-elektra">Elektra</span>
+      </div>
+      <div class="album-summary">
+        ODB&rsquo;s solo debut and one of the most unhinged records in hip-hop history. Built almost entirely on RZA&rsquo;s murky, lo-fi production, the album showcased a delivery style unlike anything else in rap &mdash; half-sung, half-shouted, veering between menace and absurdist comedy. Certified platinum on the strength of singles that became street anthems in Brooklyn and beyond.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ol&rsquo; Dirty Bastard &mdash; vocals &middot; RZA &mdash; primary producer &middot; Method Man, Raekwon, GZA, Ghostface Killah, Killah Priest, Masta Killa, Buddha Monk &mdash; guest vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, True Master, 4th Disciple, Ol&rsquo; Dirty Bastard, Ethan Ryman, Big Dore
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Shimmy Shimmy Ya</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Baby C&rsquo;mon</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Brooklyn Zoo</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Hippa to da Hoppa</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Raw Hide (feat. Method Man &amp; Raekwon)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Damage (feat. GZA)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Don&rsquo;t U Know (feat. Killah Priest)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Stomp</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Goin&rsquo; Down</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Drunk Game (Sweet Sugar Pie)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Snakes (feat. Killah Priest, RZA, Masta Killa &amp; Buddha Monk)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Brooklyn Zoo II (Tiger Crane) (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Proteck Ya Neck II the Zoo</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Cuttin&rsquo; Headz (feat. RZA)</span></div>
+      </div>
+    </div>
+
+    <!-- Nigga Please -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Nigga Please</h3>
+        <span class="album-year">1999</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-elektra">Elektra</span>
+      </div>
+      <div class="album-summary">
+        The sophomore album arrived amid escalating legal troubles and found ODB working with an expanded roster of producers including The Neptunes and Irv Gotti alongside the familiar RZA and True Master. The result was slicker but no less unhinged, anchored by the massive Kelis-featuring single that became his biggest commercial hit and a defining track of late-&rsquo;90s hip-hop.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ol&rsquo; Dirty Bastard &mdash; vocals &middot; Kelis, Chris Rock, Pharrell Williams, Lil&rsquo; Mo, 12 O&rsquo;Clock, Shorty Shit Stain &mdash; guest appearances
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, The Neptunes, Irv Gotti, True Master, Buddha Monk, Dat Nigga Reb, Mr. Fingers
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Recognize (feat. Chris Rock &amp; Pharrell Williams)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">I Can&rsquo;t Wait</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Cold Blooded</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Got Your Money (feat. Kelis)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Rollin&rsquo; Wit You</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Gettin&rsquo; High (feat. 12 O&rsquo;Clock, La the Darkman &amp; Shorty Shit Stain)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">You Don&rsquo;t Want to Fuck with Me</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Nigga Please</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Dirt Dog</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">I Want Pussy</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Good Morning Heartache (feat. Lil&rsquo; Mo)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">All in Together Now</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Cracker Jack</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="posthumous">
+  <h2 class="section-title">Posthumous Releases</h2>
+  <p class="section-subtitle">2005 &middot; Two releases following ODB&rsquo;s death on November 13, 2004</p>
+  <div class="album-grid">
+
+    <!-- Osirus -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Osirus</h3>
+        <span class="album-year">2005</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Ol' Dirty Bastard" data-album="Osirus" onchange="toggleWant(this, 'Ol\' Dirty Bastard', 'Osirus', '2005', 'Sure Shot')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-sure-shot">Sure Shot</span>
+      </div>
+      <div class="album-summary">
+        A posthumous mixtape compiled from sessions recorded between January 2002 and December 2004, released barely two months after ODB&rsquo;s death. Rougher and more raw than his official studio work, it captures a restless artist cycling through collaborators and styles, with DJ Premier&rsquo;s production on several tracks lending structure to the chaos.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ol&rsquo; Dirty Bastard &mdash; vocals &middot; Cappadonna, Ghostface Killah, Black Rob, Rhymefest, Blahzay Blahzay, Royal Flush, Baby Sham, Jae Millz, Drag-On &mdash; guest vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        DJ Premier, CHOPS, Mark Ronson, Ill Will Fulton, Ol&rsquo; Dirty Bastard
+      </div>
+      <div class="tags">
+        <span class="tag">hip-hop</span>
+        <span class="tag">mixtape</span>
+        <span class="tag">posthumous</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Pop Shots</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Dirty Dirty (feat. Rhymefest)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Go Go Go (feat. Blahzay Blahzay)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Who Can Make It Happen Like Dirt?</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">High in the Clouds (feat. Black Rob)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Rahzel Skit 1</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Dirty Run</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Stand Up (feat. Cappadonna &amp; Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Don&rsquo;t Stop Ma (Out of Control)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">If Ya&rsquo;ll Want War (feat. Royal Flush)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Pussy Keep Calling</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Down South</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Rahzel Skit 2</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Caked Up (feat. Baby Sham)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Fuck Y&rsquo;all</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Move Back (feat. Jae Millz, Drag-On &amp; others)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Fire (Dirty Dirty Alt. Version)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Pop Shots (Clinton Sparks Remix)</span></div>
+      </div>
+    </div>
+
+    <!-- A Son Unique -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">A Son Unique</h3>
+        <span class="album-year">2005</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Ol' Dirty Bastard" data-album="A Son Unique" onchange="toggleWant(this, 'Ol\' Dirty Bastard', 'A Son Unique', '2005', 'Dame Dash / Def Jam')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-dame-dash">Dame Dash / Def Jam</span>
+      </div>
+      <div class="album-summary">
+        Originally planned as ODB&rsquo;s third studio album under Damon Dash&rsquo;s label, it was shelved after his death and eventually released as a digital-only download. The production roster reads like a who&rsquo;s-who of early-2000s hip-hop &mdash; Mark Ronson, DJ Premier, The Neptunes, RZA, and Rockwilder all contributed beats. Never physically released, it remains a tantalizing glimpse of where ODB&rsquo;s career might have gone.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        Ol&rsquo; Dirty Bastard &mdash; vocals &middot; Missy Elliott, Ghostface Killah, Raekwon, Method Man, Macy Gray, The Clipse, N.O.R.E., Joe Budden, Lil&rsquo; Fame, Rhymefest, RZA &mdash; guest vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Mark Ronson, DJ Premier, The Neptunes, RZA, Rockwilder, Damon Elliott, Dame Grease, Soul Diggaz
+      </div>
+      <div class="tags">
+        <span class="tag">hip-hop</span>
+        <span class="tag">posthumous</span>
+        <span class="tag">digital only</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Lift Your Skirt (feat. Missy Elliott)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Pop Shots (feat. Lil&rsquo; Fame)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Operator (feat. The Clipse)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Back in the Air (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Work for Me (feat. Young Chris)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">ODB, Don&rsquo;t Go Breaking My Heart (feat. Macy Gray)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Stomp (feat. RZA)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">How Ya Feelin&rsquo; Dirty</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Intoxicated (feat. Raekwon, Method Man &amp; Macy Gray)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Dirty and Grimey (feat. N.O.R.E.)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Danger Zone (feat. Joe Budden)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Skrilla (feat. RZA)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Don&rsquo;t Hurt Me (feat. Rhymefest)</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

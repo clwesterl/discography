@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cappadonna — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #c45a3c;
+    --accent-dim: #8a3e2a;
+    --razor-sharp: #8a7a5a;
+    --epic: #6a8a7a;
+    --codered: #8a5a5a;
+    --chambermusik: #7a6a9a;
+    --cappadonna-label: #6a7a8a;
+    --rbc: #5a7a6a;
+    --godlove: #8a6a4a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+  .album-card:nth-child(6) { animation-delay: 0.3s; }
+  .album-card:nth-child(7) { animation-delay: 0.35s; }
+  .album-card:nth-child(8) { animation-delay: 0.4s; }
+  .album-card:nth-child(9) { animation-delay: 0.45s; }
+  .album-card:nth-child(10) { animation-delay: 0.5s; }
+  .album-card:nth-child(11) { animation-delay: 0.55s; }
+  .album-card:nth-child(12) { animation-delay: 0.6s; }
+  .album-card:nth-child(13) { animation-delay: 0.65s; }
+  .album-card:nth-child(14) { animation-delay: 0.7s; }
+  .album-card:nth-child(15) { animation-delay: 0.75s; }
+  .album-card:nth-child(16) { animation-delay: 0.8s; }
+  .album-card:nth-child(17) { animation-delay: 0.85s; }
+  .album-card:nth-child(18) { animation-delay: 0.9s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-razor-sharp { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-epic { background: rgba(106, 138, 122, 0.2); color: #90c0a8; border: 1px solid rgba(106, 138, 122, 0.3); }
+  .label-codered { background: rgba(138, 90, 90, 0.2); color: #c09090; border: 1px solid rgba(138, 90, 90, 0.3); }
+  .label-chambermusik { background: rgba(122, 106, 154, 0.2); color: #a090c8; border: 1px solid rgba(122, 106, 154, 0.3); }
+  .label-cappadonna { background: rgba(106, 122, 138, 0.2); color: #90a8c0; border: 1px solid rgba(106, 122, 138, 0.3); }
+  .label-rbc { background: rgba(90, 122, 106, 0.2); color: #90c0a0; border: 1px solid rgba(90, 122, 106, 0.3); }
+  .label-godlove { background: rgba(138, 106, 74, 0.2); color: #c0a070; border: 1px solid rgba(138, 106, 74, 0.3); }
+  .label-fatbeats { background: rgba(138, 130, 90, 0.2); color: #c0b878; border: 1px solid rgba(138, 130, 90, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">East Coast Hip Hop &middot; Hardcore Rap &middot; Wu-Tang Affiliate &nbsp;&middot;&nbsp; 1995&ndash;present &middot; Staten Island, NY</div>
+    <h1 class="artist-name">Cappadonna</h1>
+    <p class="artist-bio">
+      Born Darryl Hill, Wu-Tang Clan's unofficial tenth member &mdash; later made official
+      on 8 Diagrams &mdash; whose dense, slang-heavy rhyme style and
+      flamboyant delivery became a signature element of the Clan's late-nineties
+      peak, from his scene-stealing verse on Raekwon's "Ice Cream" through
+      the Wu-Tang Forever sessions and a prolific solo career spanning
+      nearly two decades.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">18</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1998&ndash;2025</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1/18</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">1998&ndash;2025 &middot; Eighteen releases across twenty-seven years on Razor Sharp / Epic / Code:Red / Chambermusik / God Love Family</p>
+  <div class="album-grid">
+
+    <!-- The Pillage -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Pillage</h3>
+        <span class="album-year">1998</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-razor-sharp">Razor Sharp</span>
+        <span class="label-badge label-epic">Epic</span>
+      </div>
+      <div class="album-summary">
+        Cappadonna's solo debut arrived at the absolute zenith of the Wu-Tang empire, debuting at number three on the Billboard 200 and topping the R&amp;B chart with 132,000 first-week copies. Executive produced by the RZA with Ghostface Killah, the album channels the grimy, sample-heavy Wu production aesthetic through True Master, Goldfinghaz, Mathematics, and 4th Disciple. Dense with Clan cameos and the baroque street lyricism that defined the era, it earned Gold certification and remains his most celebrated work.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Method Man &middot; Ghostface Killah &middot; Raekwon &middot; U-God &middot; Blue Raspberry &middot; Tekitha &middot; Killa Bamz &middot; Rhyme Recca
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA &middot; True Master &middot; Goldfinghaz &middot; Mathematics &middot; 4th Disciple
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Slang Editorial</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Pillage (feat. Killa Bamz)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Run</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Blood on Blood War (feat. Killa Bamz)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Supa Ninjaz (feat. U-God &amp; Method Man)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">MCF</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Splish Splash</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Oh-Donna (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Milk the Cow (feat. Method Man)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">South of the Border</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Check for a Nigga</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Dart Throwing (feat. Raekwon &amp; Method Man)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Young Hearts (feat. Blue Raspberry)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Everything Is Everything (feat. Rhyme Recca)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Pump Your Fist (feat. Tekitha &amp; Killa Bamz)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Black Boy (feat. Tekitha)</span></div>
+      </div>
+    </div>
+
+    <!-- The Yin and the Yang -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Yin and the Yang</h3>
+        <span class="album-year">2001</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="The Yin and the Yang" onchange="toggleWant(this, 'Cappadonna', 'The Yin and the Yang', '2001', 'Razor Sharp / Epic')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-razor-sharp">Razor Sharp</span>
+        <span class="label-badge label-epic">Epic</span>
+      </div>
+      <div class="album-summary">
+        The sophomore release retains the Razor Sharp/Epic infrastructure but shifts toward a more commercial sound, enlisting Jermaine Dupri alongside Wu-affiliated producers True Master, Goldfinghaz, and Inspectah Deck behind the boards. Debuting at number 51, it marked a commercial decline from The Pillage but showcased Cap's versatility across boom-bap grit and R&amp;B-inflected hooks. Ghostface, Raekwon, Killah Priest, and Da Brat all make appearances.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Ghostface Killah &middot; Raekwon &middot; Killah Priest &middot; Da Brat &middot; Jermaine Dupri &middot; Timbo King &middot; Shyheim &middot; 8-Off
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        True Master &middot; Goldfinghaz &middot; Neonek &middot; Inspectah Deck &middot; Jermaine Dupri &middot; 8-Off
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">The Grits (feat. 8-Off)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Super Model (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">War Rats</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Bread of Life (feat. Killah Priest &amp; Neonek)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Love Is the Message (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">We Know (feat. Jermaine Dupri &amp; Da Brat)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Shake Dat (feat. Jamie Sommers)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Big Business (feat. Shyheim &amp; Crunch)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Revenge (feat. Timbo King)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">One Way 2 Zion (feat. Culture)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Save the Children (feat. Culture)</span></div>
+      </div>
+    </div>
+
+    <!-- The Struggle -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Struggle</h3>
+        <span class="album-year">2003</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="The Struggle" onchange="toggleWant(this, 'Cappadonna', 'The Struggle', '2003', 'Code:Red Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-codered">Code:Red</span>
+      </div>
+      <div class="album-summary">
+        Released independently on Code:Red Entertainment after parting ways with Epic, The Struggle is a sprawling 21-track affair that documents Cap's post-major-label hustle. With production from Calogero, Remedy, 4th Disciple, and Soulfingaz, the sound returns to a rawer, less polished aesthetic. Raekwon and Inspectah Deck contribute guest verses, while the extended runtime reflects an artist with something to prove on his own terms.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Raekwon &middot; Inspectah Deck &middot; Solomon Childs &middot; Remedy &middot; King Just &middot; Lounge Mode &middot; Crunch Lo &middot; Pike &middot; Wiggs
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Calogero &middot; 4th Disciple &middot; Remedy &middot; Soulfingaz &middot; Mizza &middot; Quasi &middot; D.A. &middot; Charlie Marotta
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">independent</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Cap Is Back</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Role of a Lifetime (feat. Solomon Childs)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Blood Brothers (feat. Lounge Mode)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Mamma (Skit)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Mamma</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Do It - Push</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Get Away from the Door (feat. Inspectah Deck)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Money, Cash, Flows (feat. Remedy, Lounge Mode &amp; Crunch Lo)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">I Don't Even Know You</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Make Money Money (Skit)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Season of da' Vick (feat. Lounge Mode)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Killa Killa Hill (feat. Raekwon)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Broken Glass</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Power to the Peso (feat. Lounge Mode, Wiggs &amp; Solomon Childs)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Life of a Lesbo</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Pain Is Love (feat. Lounge Mode &amp; Solomon Childs)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Show (Skit)</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">My Kinda Bitch</span></div>
+        <div class="track"><span class="track-num">20</span><span class="track-name">We Got This (feat. Pike, Lounge Mode &amp; Remedy)</span></div>
+        <div class="track"><span class="track-num">21</span><span class="track-name">Struggle With This (feat. King Just)</span></div>
+      </div>
+    </div>
+
+    <!-- The Cappatilize Project -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Cappatilize Project</h3>
+        <span class="album-year">2008</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="The Cappatilize Project" onchange="toggleWant(this, 'Cappadonna', 'The Cappatilize Project', '2008', 'Park Hill Projects')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-cappadonna">Park Hill</span>
+      </div>
+      <div class="album-summary">
+        Self-released on his own Park Hill Projects imprint, The Cappatilize Project marks Cappadonna's full embrace of independent distribution. Produced by Big Zick, Spinzilla, Solo, Q-Dini, and others, the fifteen tracks lean into motivational and spiritual themes alongside the street narratives. Born Divine appears on several cuts as Cap's primary collaborator for the era, replacing the major-label Clan roster with a tighter circle of Staten Island loyalists.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Born Divine &middot; Lounge Lo &middot; Q-Dini &middot; Hugh Hef &middot; KMC &middot; MPM &middot; Lahluga &middot; The Better Lifers
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Big Zick &middot; Spinzilla &middot; Solo &middot; Sosa &middot; Q-Dini &middot; Fontane &middot; Danjah Mentals &middot; Sparx &middot; B-Rock
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">independent</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Cap's Back Again</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Anointing</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Don't Turn Around (feat. Q-Dini)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Peace God (feat. Born Divine)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Get Paper (feat. Lounge Lo)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">If You Don't Stop (feat. Born Divine)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">One Night Love Affair</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Growth and Development (feat. Hugh Hef &amp; Lahluga)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Dream</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Gotta Find a Way (feat. Born Divine &amp; MPM)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Wanted (feat. KMC)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Goon Skwad</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Tug That Rope</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">My Gang (feat. Born Divine &amp; The Better Lifers)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Stay Focused</span></div>
+      </div>
+    </div>
+
+    <!-- Slang Prostitution -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Slang Prostitution</h3>
+        <span class="album-year">2009</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="Slang Prostitution" onchange="toggleWant(this, 'Cappadonna', 'Slang Prostitution', '2009', 'Chambermusik / RED')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-chambermusik">Chambermusik</span>
+      </div>
+      <div class="album-summary">
+        Signed to the new Chambermusik imprint distributed through RED, Slang Prostitution finds Cappadonna reconnecting with the Wu family on wax &mdash; Masta Killa and Raekwon both appear &mdash; while building a new stable of collaborators including Lounge Lo, 3rd Digala, and JoJo Pellegrino. The nineteen tracks are produced by a wide bench of beatmakers including Soul Professor, Digem Tracks, and Blastah Beats, delivering a street-level New York sound that nods to the Clan's legacy without leaning on it.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Masta Killa &middot; Raekwon &middot; Lounge Lo &middot; 3rd Digala &middot; JoJo Pellegrino &middot; King Just &middot; Mega Don &middot; Precise &middot; Joey Lee
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Todd Baker &middot; Soul Professor &middot; Digem Tracks &middot; Rush &middot; Q-Dini &middot; Blastah Beats &middot; Chicargo &middot; N.E.S.
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">You Can't Keep a Good Man Down (Part One)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Savage Life</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Three Knives (feat. 3rd Digala &amp; Lounge Lo)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Walk with Me (feat. Joey Lee)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Do You Remember?</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">That Staten Island Shit (feat. Lounge Lo)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Stories (feat. JoJo Pellegrino &amp; 3rd Digala)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Life's a Gamble (feat. Raekwon &amp; Rachet)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Hustle &amp; Flow</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">You Can't Keep a Good Man Down (Part Two)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Pistachio (feat. Lounge Lo, King Just &amp; Mega Don)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Grungy (feat. G-Clef Da Mad Komposa)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">What's Really Up?</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Da Vorzon (feat. Lounge Lo &amp; 3rd Digala)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Somebody Got to Go (feat. Lounge Lo &amp; Ghetto Philharmonic)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Fire (feat. Masta Killa)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Speed Knots (feat. Precise)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Stay Shining (feat. 3rd Digala)</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">You Can't Keep a Good Man Down (Part Three)</span></div>
+      </div>
+    </div>
+
+    <!-- The Pilgrimage -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Pilgrimage</h3>
+        <span class="album-year">2011</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="The Pilgrimage" onchange="toggleWant(this, 'Cappadonna', 'The Pilgrimage', '2011', 'Chamber Musik / Fat Beats')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-chambermusik">Chamber Musik</span>
+        <span class="label-badge label-fatbeats">Fat Beats</span>
+      </div>
+      <div class="album-summary">
+        Released through Chamber Musik, Fat Beats, and Soulspazm, The Pilgrimage strips back to a lean thirteen tracks and finds Cappadonna in a reflective, spiritually grounded mode. Inspectah Deck returns for two features, while newer collaborators Chedda Bang, Killa Black, and Matlock fill out the roster. At forty-five minutes, it's among his most focused post-Pillage efforts, balancing street narratives with Five Percenter wisdom.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Inspectah Deck &middot; Solomon Childs &middot; Chedda Bang &middot; Killa Black &middot; Matlock &middot; Elite
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Snipes &middot; Blaze
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">conscious rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">A-Alike B-Alike C-Alike</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Dart Imports</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Energy Guard</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Hoody Hoodpecker (feat. Matlock &amp; Killa Black)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Good Wine (feat. Chedda Bang)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Put God First (feat. Solomon Childs &amp; Inspectah Deck)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Hold On</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Honey's Look Good (feat. Inspectah Deck)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">For You (feat. Killa Black)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Friendemies (feat. Chedda Bang)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Can't Believe It's Him</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Cuban Link Kings</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Trials &amp; Tribulations (feat. Killa Black &amp; Elite)</span></div>
+      </div>
+    </div>
+
+    <!-- Eyrth, Wynd & Fyre -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Eyrth, Wynd &amp; Fyre</h3>
+        <span class="album-year">2013</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="Eyrth, Wynd & Fyre" onchange="toggleWant(this, 'Cappadonna', 'Eyrth, Wynd & Fyre', '2013', 'RBC / E1 Music')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-rbc">RBC</span>
+      </div>
+      <div class="album-summary">
+        An ambitious double album released on RBC Records and E1 Music. Disc one, produced entirely by J. Glaze, delivers a cohesive, introspective fourteen-track suite where Cappadonna raps largely solo. Disc two &mdash; subtitled Love, Anger &amp; Emotion &mdash; draws on Stu Bangas, Kevlaar 7, Keelay &amp; Zaire, and DJ Snips for a more varied, collaborative sound with Lounge Mode and Sav Killz featuring throughout. At twenty-eight tracks, it's his most expansive statement.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Lounge Mode &middot; Show Stopper &middot; Solomon Childs &middot; Sav Killz
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        J. Glaze &middot; Stu Bangas &middot; Kevlaar 7 &middot; Keelay &amp; Zaire &middot; DJ Snips &middot; Cosmos Shines &middot; Chris Bay &middot; Whaul &middot; G-Force
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">double album</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Real Life</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Body Rock</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Boogah Hill</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Hustle Game Tight</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">The Better Life Movement</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Pull Ya Life Together</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Puffed On Pride</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Creature Feature</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">In The Dungeon (feat. Show Stopper)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Rap Is Like Crack (feat. Solomon Childs)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">God Forgive Me For My Sins</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Back To School</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Children of Israel (feat. Show Stopper)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Net Surfin' (feat. Show Stopper)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Free Lunch (feat. Lounge Mode)</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Real Talk (feat. Lounge Mode)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Welfare (feat. Sav Killz)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Bar B Que (feat. Lounge Mode)</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">Actual Facts (feat. Sav Killz)</span></div>
+        <div class="track"><span class="track-num">20</span><span class="track-name">Rep Ya Borough (feat. Lounge Mode)</span></div>
+        <div class="track"><span class="track-num">21</span><span class="track-name">Live Ya Life (feat. Lounge Mode)</span></div>
+        <div class="track"><span class="track-num">22</span><span class="track-name">Chains</span></div>
+        <div class="track"><span class="track-num">23</span><span class="track-name">Socializing (feat. Lounge Mode)</span></div>
+        <div class="track"><span class="track-num">24</span><span class="track-name">It's A Man's World</span></div>
+        <div class="track"><span class="track-num">25</span><span class="track-name">Baby Mommas</span></div>
+        <div class="track"><span class="track-num">26</span><span class="track-name">Ease On Down The Road</span></div>
+        <div class="track"><span class="track-num">27</span><span class="track-name">We Hood Rich Now</span></div>
+        <div class="track"><span class="track-num">28</span><span class="track-name">Uncle Gem's Rice</span></div>
+      </div>
+    </div>
+
+    <!-- Hook Off -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Hook Off</h3>
+        <span class="album-year">2014</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="Hook Off" onchange="toggleWant(this, 'Cappadonna', 'Hook Off', '2014', 'God Love Family Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-godlove">God Love</span>
+      </div>
+      <div class="album-summary">
+        The first release on Cap's God Love Family Entertainment imprint, Hook Off is a seventeen-track project built around a revolving cast of collaborators including Amar Divine, Don Shae, Turnpike Ike, and Wonda Woman. PMD of EPMD and Spliff Star of Flipmode Squad make notable guest appearances, broadening the record beyond the usual Wu orbit. The title references Cap's ability to hold a track without melodic hooks &mdash; pure bars from start to finish.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        PMD &middot; Spliff Star &middot; Solomon Childs &middot; King Magnetic &middot; Amar Divine &middot; Don Shae &middot; Turnpike Ike &middot; Wonda Woman &middot; Desert Eagle &middot; Nakeeba Amaniyea
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Various
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">independent</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Soul Food (feat. Turnpike Ike)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Raw (feat. Amar Divine, Lounge Lo &amp; Don Shae)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Vegan (feat. Turnpike Ike &amp; Amar Divine)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Natural Disaster (feat. Amar Divine, Wonda Woman &amp; Lounge Lo)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Adams &amp; Eve (feat. Wonda Woman, Amar Divine &amp; Solomon Childs)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Vibes Cartel (feat. Wonda Woman, Desert Eagle &amp; King Magnetic)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Famous Aimers (feat. Amar Divine, Don Shae &amp; PMD)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Help the Brovas (feat. Amar Divine &amp; Spliff Star)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Alumni (feat. Amar Divine &amp; Don Shae)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Spiritual (feat. Amar Divine &amp; Nakeeba Amaniyea)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Genoside (feat. Don Shae)</span></div>
+      </div>
+    </div>
+
+    <!-- The Pillage 2 -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Pillage 2</h3>
+        <span class="album-year">2015</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="The Pillage 2" onchange="toggleWant(this, 'Cappadonna', 'The Pillage 2', '2015', 'God Love Family Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-godlove">God Love</span>
+      </div>
+      <div class="album-summary">
+        The long-awaited sequel to his Gold-certified debut, released seventeen years later through his own God Love Family Entertainment. The fourteen-track album reaches beyond the Wu-Tang universe to feature Layzie Bone of Bone Thugs-N-Harmony, Mr. Cheeks of Lost Boyz, Rampage of Flipmode Squad, and Spliff Star. Hashous Clay and Jay Rush appear on multiple tracks as primary collaborators, bringing a cross-generational energy to the project.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Layzie Bone &middot; Mr. Cheeks &middot; Rampage &middot; Spliff Star &middot; Lounge Lo &middot; Skillz &middot; Hashous Clay &middot; Jay Rush
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Various
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">sequel</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Let's Get Free (feat. Hashous Clay)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">4 Leaf Clover</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">52 Blocks</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Black Woman (feat. Jay Rush)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Clap If You Hustle</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Get Money</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">The Have Nots</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Hiphop Never Died (feat. Lounge Lo, Mr. Cheeks &amp; Skillz)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Poppi Wardrobe King (feat. Hashous Clay)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Raven Hair</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">The Truth (feat. Layzie Bone &amp; Jay Rush)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Story Of My Chance</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">We Forever (feat. Spliff Star &amp; Rampage)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">That Gallo Flow</span></div>
+      </div>
+    </div>
+
+    <!-- Ear Candy -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Ear Candy</h3>
+        <span class="album-year">2018</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="Ear Candy" onchange="toggleWant(this, 'Cappadonna', 'Ear Candy', '2018', 'God Love Family Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-godlove">God Love</span>
+      </div>
+      <div class="album-summary">
+        Fifteen tracks released on God Love Family Entertainment that find Cappadonna in an introspective, eclectic mode. His son D Hill Jr. appears on two tracks, adding a family dimension to the project. The album ranges from boom-bap fundamentalism on cuts like "Licorice" to the contemplative "Soul Searching" and "Heaven," with Mike Noble and Killa Black contributing verses. The title signals Cap's intent to deliver pure lyrical pleasure &mdash; ear candy for the hip-hop purist.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        D Hill Jr. &middot; Mike Noble &middot; Killa Black &middot; Rollo &middot; SugarShane &middot; Kelso &middot; Ratchet
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Various
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">independent</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Ear Candy (feat. D Hill Jr.)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Listen to Cappadonna</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Licorice (feat. Mike Noble &amp; Killa Black)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">I'm a Weed Head</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Finesse</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Kids Playing</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Don't Give Up (feat. D Hill Jr.)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Soul Searching</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Soul Train</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Young Hustler</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Five on the Black Hand Side (feat. Rollo, SugarShane, Kelso &amp; Ratchet)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Up North</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Don Gar Gon</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Baby Baby</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Heaven</span></div>
+      </div>
+    </div>
+
+    <!-- Black Is Beautiful -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Black Is Beautiful</h3>
+        <span class="album-year">2020</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="Black Is Beautiful" onchange="toggleWant(this, 'Cappadonna', 'Black Is Beautiful', '2020', 'God Love Family Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-godlove">God Love</span>
+      </div>
+      <div class="album-summary">
+        Released amid the racial justice movements of 2020, Black Is Beautiful is a twelve-track statement of Black pride and positivity. Big Nate All Star and PBS Skinz serve as near-constant collaborators across the project, with Desert Eagle, Carlton Fisk, Kennedy Price, and JoJo Pellegrino filling out the guest roster. The sound is smoother and more soulful than much of Cap's catalog, leaning into uplifting themes on tracks like "Sunshine" and "Issa Good Day."
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Featured artists</div>
+        Big Nate All Star &middot; PBS Skinz &middot; Desert Eagle &middot; Carlton Fisk &middot; Kennedy Price &middot; JoJo Pellegrino &middot; Zeph Mcfly &middot; Fusha &middot; Lounge Mode
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Various
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">conscious rap</span>
+        <span class="tag">soulful</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Going Up (feat. Big Nate All Star &amp; PBS Skinz)</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Get Down (feat. Big Nate All Star &amp; PBS Skinz)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Sunshine (feat. Big Nate All Star &amp; PBS Skinz)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Mood for Love (feat. Big Nate All Star)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Money Bags (feat. PBS Skinz &amp; Big Nate All Star)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Jeta (feat. Big Nate All Star &amp; PBS Skinz)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">How I Feel (feat. Big Nate All Star &amp; Fusha)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Trouble (feat. Desert Eagle, Lounge Mode, Carlton Fisk, Kennedy Price &amp; JoJo Pellegrino)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Somebody (feat. Desert Eagle)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Give You Up (feat. Kennedy Price)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Issa Good Day (feat. Carlton Fisk &amp; Zeph Mcfly)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Tryna Change (feat. Micah &amp; Reallidoe)</span></div>
+      </div>
+    </div>
+
+    <!-- Show Me the Money -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Show Me the Money</h3>
+        <span class="album-year">2020</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="Show Me the Money" onchange="toggleWant(this, 'Cappadonna', 'Show Me the Money', '2020', 'God Love Family Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-godlove">God Love</span>
+      </div>
+      <div class="album-summary">
+        The second of two albums Cappadonna released in 2020, Show Me the Money continues his prolific independent output on God Love Family Entertainment. The project maintains the self-released, direct-to-digital approach that has characterized his post-2014 catalog, delivering raw, unfiltered bars over stripped-down production.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Produced by</div>
+        Various
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">independent</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+      </div>
+    </div>
+
+    <!-- Black Tarrzann -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Black Tarrzann</h3>
+        <span class="album-year">2021</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="Black Tarrzann" onchange="toggleWant(this, 'Cappadonna', 'Black Tarrzann', '2021', 'God Love Family Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-godlove">God Love</span>
+      </div>
+      <div class="album-summary">
+        Cappadonna embraces a larger-than-life persona on Black Tarrzann, self-released through God Love Family Entertainment. The album continues his independent streak with a project that channels the raw energy and bravado of classic Wu-Tang solo records through a modern lens, keeping the boom-bap foundation intact while exploring new thematic territory.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Produced by</div>
+        Various
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">independent</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+      </div>
+    </div>
+
+    <!-- Slow Motion -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Slow Motion</h3>
+        <span class="album-year">2022</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="Slow Motion" onchange="toggleWant(this, 'Cappadonna', 'Slow Motion', '2022', 'God Love Family Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-godlove">God Love</span>
+      </div>
+      <div class="album-summary">
+        The first of two 2022 releases, Slow Motion finds Cappadonna in a more measured, deliberate mode &mdash; as the title suggests. Released independently through God Love Family Entertainment, the project maintains Cap's commitment to consistent output while allowing for a more contemplative pace and atmosphere.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Produced by</div>
+        Various
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">independent</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+      </div>
+    </div>
+
+    <!-- Da Illage -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Da Illage</h3>
+        <span class="album-year">2022</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="Da Illage" onchange="toggleWant(this, 'Cappadonna', 'Da Illage', '2022', 'God Love Family Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-godlove">God Love</span>
+      </div>
+      <div class="album-summary">
+        The second 2022 release and a spiritual callback to his debut &mdash; the title riffs on The Pillage, suggesting a return to foundational themes. Released through God Love Family Entertainment, Da Illage pairs the street-level narratives of his earliest work with the independence and creative control he's built over two decades of self-released material.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Produced by</div>
+        Various
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">independent</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+      </div>
+    </div>
+
+    <!-- The Man with the Iron Darts -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The Man with the Iron Darts</h3>
+        <span class="album-year">2024</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="The Man with the Iron Darts" onchange="toggleWant(this, 'Cappadonna', 'The Man with the Iron Darts', '2024', 'God Love Family Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-godlove">God Love</span>
+      </div>
+      <div class="album-summary">
+        A title steeped in Wu-Tang's martial-arts mythology &mdash; "darts" being Clan slang for lyrical projectiles. Released in 2024 through God Love Family Entertainment, The Man with the Iron Darts positions Cappadonna as an elder statesman of the Wu-Tang universe, still firing bars with the same density and slang-heavy style that defined his 1990s peak, nearly three decades into his solo career.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Produced by</div>
+        Various
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">wu-tang</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+      </div>
+    </div>
+
+    <!-- Godly, Wealthy & Beautiful -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Godly, Wealthy &amp; Beautiful</h3>
+        <span class="album-year">2025</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="Godly, Wealthy & Beautiful" onchange="toggleWant(this, 'Cappadonna', 'Godly, Wealthy & Beautiful', '2025', 'God Love Family Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-godlove">God Love</span>
+      </div>
+      <div class="album-summary">
+        The first of two 2025 releases, Godly, Wealthy &amp; Beautiful continues Cappadonna's remarkable late-career output. The title reflects the aspirational, Five Percenter-inflected worldview that has increasingly defined his music, blending spiritual themes with material ambition in a way that echoes the Clan's original fusion of street wisdom and esoteric knowledge.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Produced by</div>
+        Various
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">independent</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+      </div>
+    </div>
+
+    <!-- Solar Eclipse -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Solar Eclipse</h3>
+        <span class="album-year">2025</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Cappadonna" data-album="Solar Eclipse" onchange="toggleWant(this, 'Cappadonna', 'Solar Eclipse', '2025', 'God Love Family Entertainment')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-godlove">God Love</span>
+      </div>
+      <div class="album-summary">
+        The most recent entry in Cappadonna's discography, Solar Eclipse is his eighteenth solo studio album and second release of 2025. Continuing through God Love Family Entertainment, it represents the latest chapter in one of hip hop's most prolific independent careers &mdash; a testament to Cap's endurance and commitment to the craft well into his fifth decade.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Produced by</div>
+        Various
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip hop</span>
+        <span class="tag">boom bap</span>
+        <span class="tag">independent</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

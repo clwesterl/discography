@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wu-Tang Clan — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #d4a04a;
+    --accent-dim: #8a6a2f;
+    --loud: #c47a2a;
+    --columbia: #6a8a7a;
+    --wu-music: #8a7a5a;
+    --warner: #7a6a9a;
+    --self: #8a6a5a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+  .album-card:nth-child(6) { animation-delay: 0.3s; }
+  .album-card:nth-child(7) { animation-delay: 0.35s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-loud { background: rgba(196, 122, 42, 0.2); color: #d49a50; border: 1px solid rgba(196, 122, 42, 0.3); }
+  .label-columbia { background: rgba(106, 138, 122, 0.2); color: #90c0a8; border: 1px solid rgba(106, 138, 122, 0.3); }
+  .label-wu-music { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-warner { background: rgba(122, 106, 154, 0.2); color: #a090c8; border: 1px solid rgba(122, 106, 154, 0.3); }
+  .label-self { background: rgba(138, 106, 90, 0.2); color: #c09a80; border: 1px solid rgba(138, 106, 90, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+  .disc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0.5rem 0 0.25rem;
+  }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Hip-Hop &middot; East Coast Rap &middot; Hardcore Hip-Hop &nbsp;&middot;&nbsp; 1992&ndash;present &middot; Staten Island, NY</div>
+    <h1 class="artist-name">Wu-Tang Clan</h1>
+    <p class="artist-bio">
+      The nine-man Staten Island collective that rewrote the rules of hip-hop &mdash;
+      fusing gritty street narratives with kung-fu mythology, soul samples chopped
+      through RZA's lo-fi production aesthetic, and an unprecedented business model
+      that launched a dynasty of solo careers and redefined what a rap group could be.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">7</span>
+        <span class="stat-label">Studio Albums</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1993&ndash;2015</span>
+        <span class="stat-label">Studio Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">5/7</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">3 vinyl &middot; 5 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="studio">
+  <h2 class="section-title">Studio Albums</h2>
+  <p class="section-subtitle">1993&ndash;2015 &middot; Seven releases across two decades on Loud / Columbia / Universal / Warner</p>
+  <div class="album-grid">
+
+    <!-- Enter The Wu-Tang (36 Chambers) -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Enter the Wu-Tang (36 Chambers)</h3>
+        <span class="album-year">1993</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-loud">Loud / RCA</span>
+      </div>
+      <div class="album-summary">
+        The debut that detonated like a bomb across the hip-hop landscape. RZA's production &mdash; built from dusty soul loops, kung-fu film dialogue, and deliberately grimy, lo-fi textures &mdash; created a sonic world unlike anything else in 1993. Nine MCs traded verses with ferocious competitive energy, each voice instantly distinguishable: Method Man's melodic swagger, GZA's cerebral precision, ODB's unhinged spontaneity, Raekwon's street-corner narratives. The album introduced the Wu-Tang business model, with each member free to sign solo deals with different labels, a revolutionary structure that spawned an empire.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals, production &middot; GZA &mdash; vocals &middot; Ol' Dirty Bastard &mdash; vocals &middot; Method Man &mdash; vocals &middot; Raekwon &mdash; vocals &middot; Ghostface Killah &mdash; vocals &middot; Inspectah Deck &mdash; vocals &middot; U-God &mdash; vocals &middot; Masta Killa &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA (co-production: Ol' Dirty Bastard, Method Man)
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">lo-fi</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Bring da Ruckus</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Shame on a Nigga</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Clan in da Front</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Wu-Tang: 7th Chamber</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Can It Be All So Simple / Intermission</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Da Mystery of Chessboxin'</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Wu-Tang Clan Ain't Nuthing ta F' Wit</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">C.R.E.A.M.</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Method Man</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Protect Ya Neck</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Tearz</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Wu-Tang: 7th Chamber &mdash; Part II / Conclusion</span></div>
+      </div>
+    </div>
+
+    <!-- Wu-Tang Forever -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Wu-Tang Forever</h3>
+        <span class="album-year">1997</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-loud">Loud / RCA</span>
+      </div>
+      <div class="album-summary">
+        The sprawling, ambitious double album that arrived after the solo flood &mdash; Raekwon's Only Built 4 Cuban Linx, GZA's Liquid Swords, ODB's Return to the 36 Chambers, and Ghostface's Ironman had all landed between debut and sequel. RZA expanded his palette here with strings, pianos, and airier arrangements while maintaining the core aesthetic. At 27 tracks across two discs, it rewards patience: the posse cuts hit with full force, and the production marks RZA's transition from raw minimalism toward cinematic grandeur. Debuted at number one with over 600,000 copies sold in its first week.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals, production &middot; GZA &mdash; vocals &middot; Ol' Dirty Bastard &mdash; vocals &middot; Method Man &mdash; vocals &middot; Raekwon &mdash; vocals &middot; Ghostface Killah &mdash; vocals &middot; Inspectah Deck &mdash; vocals &middot; U-God &mdash; vocals &middot; Masta Killa &mdash; vocals &middot; Cappadonna &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, 4th Disciple, True Master, Inspectah Deck
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">double album</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="disc-label">Disc One</div>
+        <div class="track"><span class="track-num">1</span><span class="track-name">Wu-Revolution</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Reunited</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">For Heaven's Sake</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Cash Still Rules/Scary Hours (Still Don't Nothing Move but the Money)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Visionz</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">As High as Wu-Tang Get</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Severe Punishment</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Older Gods</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Maria</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">A Better Tomorrow</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">It's Yourz</span></div>
+        <div class="disc-label">Disc Two</div>
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Triumph</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Impossible</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Little Ghetto Boys</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Deadly Melody</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">The City</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">The Projects</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Bells of War</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The M.G.M.</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Dog Shit</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Duck Seazon</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Hellz Wind Staff</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Heaterz</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Black Shampoo</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Second Coming</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">The Closing</span></div>
+      </div>
+    </div>
+
+    <!-- The W -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">The W</h3>
+        <span class="album-year">2000</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-columbia">Loud / Columbia</span>
+      </div>
+      <div class="album-summary">
+        A leaner, more focused record after the sprawl of Forever, featuring an array of high-profile guest appearances &mdash; Nas, Redman, Busta Rhymes, Snoop Dogg, and Isaac Hayes all contribute. RZA's production had evolved toward cleaner, more layered arrangements, though the core grit remained. The album was shadowed by ODB's legal troubles (he was incarcerated during much of the recording), but tracks like the anthemic "Gravel Pit" and the reflective "I Can't Go to Sleep" showed a group still capable of both visceral energy and genuine depth. Mathematics contributed production for the first time.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals, production &middot; GZA &mdash; vocals &middot; Ol' Dirty Bastard &mdash; vocals &middot; Method Man &mdash; vocals &middot; Raekwon &mdash; vocals &middot; Ghostface Killah &mdash; vocals &middot; Inspectah Deck &mdash; vocals &middot; U-God &mdash; vocals &middot; Masta Killa &mdash; vocals &middot; Cappadonna &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, Mathematics
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro (Shaolin Finger Jab) / Chamber Music</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Careful (Click, Click)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Hollow Bones</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Redbull (feat. Redman)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">One Blood Under W (feat. Junior Reid)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Conditioner (feat. Snoop Dogg)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Protect Ya Neck (The Jump Off)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Let My Niggas Live (feat. Nas)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">I Can't Go to Sleep (feat. Isaac Hayes)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Do You Really (Thang, Thang)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">The Monument (feat. Busta Rhymes)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Gravel Pit</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Jah World (feat. Junior Reid)</span></div>
+      </div>
+    </div>
+
+    <!-- Iron Flag -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Iron Flag</h3>
+        <span class="album-year">2001</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-columbia">Loud / Columbia</span>
+      </div>
+      <div class="album-summary">
+        Released just a year after The W, Iron Flag marked a deliberate pivot toward radio accessibility. The Trackmasters contributed production alongside RZA, True Master, Mathematics, and Nick Fury, yielding a more polished sound that divided fans. Flavor Flav and Ronald Isley guested, and the album's compact twelve-track structure made it the group's tightest release. Internal tensions were escalating &mdash; this would be the last Clan album before a six-year hiatus, and ODB's continued legal difficulties meant his contributions were limited.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals, production &middot; GZA &mdash; vocals &middot; Ol' Dirty Bastard &mdash; vocals &middot; Method Man &mdash; vocals &middot; Raekwon &mdash; vocals &middot; Ghostface Killah &mdash; vocals &middot; Inspectah Deck &mdash; vocals &middot; U-God &mdash; vocals &middot; Masta Killa &mdash; vocals &middot; Cappadonna &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, True Master, Mathematics, Nick Fury, Trackmasters
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">In the Hood</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Rules</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Chrome Wheels</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Soul Power (Black Jungle) (feat. Flavor Flav)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Uzi (Pinky Ring)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">One of These Days</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Ya'll Been Warned</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Babies</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Radioactive (Four Assassins)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Back in the Game (feat. Ronald Isley)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Iron Flag / Da Glock</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Dashing (Reasons)</span></div>
+      </div>
+    </div>
+
+    <!-- 8 Diagrams -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">8 Diagrams</h3>
+        <span class="album-year">2007</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-wu-music">Wu Music Group / Universal</span>
+      </div>
+      <div class="album-summary">
+        The first Wu-Tang album made in the absence of Ol' Dirty Bastard, who died in 2004, and the record is haunted by that loss. RZA pushed into experimental territory &mdash; live instrumentation, psychedelic textures, and contributions from John Frusciante, Erykah Badu, Dhani Harrison, and George Clinton. The result was the most sonically adventurous Wu-Tang album, and the most divisive: Raekwon and Ghostface publicly criticized the production as too far from the group's roots. Despite the tensions, tracks like the George Harrison-sampling "The Heart Gently Weeps" and the elegiac "Life Changes" stand among the Clan's most ambitious work.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals, production &middot; GZA &mdash; vocals &middot; Method Man &mdash; vocals &middot; Raekwon &mdash; vocals &middot; Ghostface Killah &mdash; vocals &middot; Inspectah Deck &mdash; vocals &middot; U-God &mdash; vocals &middot; Masta Killa &mdash; vocals &middot; Cappadonna &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, Easy Mo Bee, George Drakoulias, Mathematics
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">experimental hip-hop</span>
+        <span class="tag">psychedelic</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Campfire</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Take It Back</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Get Them Out Ya Way Pa</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Rushing Elephants</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Unpredictable (feat. Dexter Wiggle)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">The Heart Gently Weeps (feat. Erykah Badu, Dhani Harrison, John Frusciante)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Wolves (feat. George Clinton)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Gun Will Go (feat. Sunny Valentine)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Sunlight</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Stick Me for My Riches (feat. Gerald Alston)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Starter (feat. Sunny Valentine &amp; Tash Mahogany)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Windmill</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Weak Spot</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Life Changes</span></div>
+      </div>
+    </div>
+
+    <!-- A Better Tomorrow -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">A Better Tomorrow</h3>
+        <span class="album-year">2014</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Wu-Tang Clan" data-album="A Better Tomorrow" onchange="toggleWant(this, 'Wu-Tang Clan', 'A Better Tomorrow', '2014', 'Warner Bros.')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-warner">Warner Bros.</span>
+      </div>
+      <div class="album-summary">
+        Seven years after 8 Diagrams, the Clan regrouped for what RZA framed as a return to unity. The road was rocky &mdash; Raekwon initially boycotted sessions, and negotiations dragged publicly &mdash; but all surviving members eventually contributed. The production draws from RZA, Mathematics, 4th Disciple, Adrian Younge, and Rick Rubin, yielding a sound that balances the group's classic roughness with polished, soulful arrangements. The title track is an earnest call for peace, and "Ruckus in B Minor" channels the ferocity of 36 Chambers. The album debuted at number 29 on the Billboard 200.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals, production &middot; GZA &mdash; vocals &middot; Method Man &mdash; vocals &middot; Raekwon &mdash; vocals &middot; Ghostface Killah &mdash; vocals &middot; Inspectah Deck &mdash; vocals &middot; U-God &mdash; vocals &middot; Masta Killa &mdash; vocals &middot; Cappadonna &mdash; vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, Mathematics, 4th Disciple, Adrian Younge, Rick Rubin
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">hardcore rap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Ruckus in B Minor</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Felt</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">40th Street Black / We Will Fight</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Mistaken Identity (feat. Street Life)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Hold the Heater</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Crushed Egos</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Keep Watch (feat. Nathaniel)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Miracle</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Preacher's Daughter</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Pioneer the Frontier</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Necklace</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Ron O'Neal (feat. Nathaniel)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">A Better Tomorrow (feat. Tekitha)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Never Let Go</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Wu-Tang Reunion</span></div>
+      </div>
+    </div>
+
+    <!-- Once Upon a Time in Shaolin -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Once Upon a Time in Shaolin</h3>
+        <span class="album-year">2015</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="Wu-Tang Clan" data-album="Once Upon a Time in Shaolin" onchange="toggleWant(this, 'Wu-Tang Clan', 'Once Upon a Time in Shaolin', '2015', 'Self-released')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-self">Self-released</span>
+      </div>
+      <div class="album-summary">
+        The most audacious release in recorded music history: a double album pressed as a single physical copy, housed in a silver-and-nickel jewel-encrusted case handcrafted by British-Moroccan artist Yahya. Only one copy exists &mdash; the master files were destroyed. Produced by Cilvaringz and RZA over six years (2007&ndash;2013), the 31-track album features all Clan members plus guests. It sold to Martin Shkreli for $2 million in 2015, was seized by the federal government, then resold to the PleasrDAO collective for $4 million in 2021. It cannot be commercially released until 2103. The first public listening event was held in Tasmania in 2024.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals &middot; GZA &mdash; vocals &middot; Method Man &mdash; vocals &middot; Raekwon &mdash; vocals &middot; Ghostface Killah &mdash; vocals &middot; Inspectah Deck &mdash; vocals &middot; U-God &mdash; vocals &middot; Masta Killa &mdash; vocals &middot; Cappadonna &mdash; vocals &middot; Redman &mdash; guest vocals &middot; Cher &mdash; guest vocals
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        Cilvaringz, RZA
+      </div>
+      <div class="tags">
+        <span class="tag">east coast hip-hop</span>
+        <span class="tag">one-of-one</span>
+        <span class="tag">art object</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="disc-label">Disc One &mdash; Shaolin School (partial; full listing restricted)</div>
+        <div class="track"><span class="track-num">1</span><span class="track-name">Enter</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Magnificent Butchers</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Staple Town &mdash; Part I (Interlude)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Stone Him!</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Kareem</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Staple Town &mdash; Part II (Interlude)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">99 Cycling Swords (99 Supreme)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Stone Finger (feat. Redman &amp; Cher)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Weeping Tiger</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Brother Jozef</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">The Ninja</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Swine (Interlude)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Dirt Bomb</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Staple Town &mdash; Part III (Interlude)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Hail, Snow &amp; Earthquakes (Rainy Dayz II)</span></div>
+        <div class="disc-label">Disc Two &mdash; Allah School (15 additional tracks; titles restricted)</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>

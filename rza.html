@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RZA — Discography</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --bg-card: #1a1815;
+    --bg-card-hover: #211f1a;
+    --cream: #f0e6d3;
+    --cream-muted: #b8a98e;
+    --amber: #d4a04a;
+    --amber-dim: #8a6a2f;
+    --accent: #c45a3c;
+    --accent-dim: #8a3e2a;
+    --gee-street: #7a6a9a;
+    --koch: #6a8a7a;
+    --sanctuary: #8a7a5a;
+    --razor-sharp: #6a7a8a;
+    --wu-music: #8a5a6a;
+    --text: #e8dcc8;
+    --text-secondary: #9a8e7a;
+    --border: #2a2620;
+    --radius: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .back-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 1.5rem 0 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+
+  header {
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .artist-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .artist-bio {
+    font-size: 1.15rem;
+    color: var(--cream-muted);
+    max-width: 700px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .section { margin-bottom: 4rem; scroll-margin-top: 4rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .section-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .album-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .album-card:nth-child(1) { animation-delay: 0.05s; }
+  .album-card:nth-child(2) { animation-delay: 0.1s; }
+  .album-card:nth-child(3) { animation-delay: 0.15s; }
+  .album-card:nth-child(4) { animation-delay: 0.2s; }
+  .album-card:nth-child(5) { animation-delay: 0.25s; }
+  .album-card:nth-child(6) { animation-delay: 0.3s; }
+
+  .album-header { padding: 1.25rem 1.25rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .album-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--cream); line-height: 1.3; }
+  .album-year { font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 0.8rem; color: var(--amber); white-space: nowrap; padding-top: 0.15rem; }
+
+  .album-meta { padding: 0.5rem 1.25rem 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .label-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+  .label-gee-street { background: rgba(122, 106, 154, 0.2); color: #a090c8; border: 1px solid rgba(122, 106, 154, 0.3); }
+  .label-koch { background: rgba(106, 138, 122, 0.2); color: #90c0a8; border: 1px solid rgba(106, 138, 122, 0.3); }
+  .label-sanctuary { background: rgba(138, 122, 90, 0.2); color: #c0aa78; border: 1px solid rgba(138, 122, 90, 0.3); }
+  .label-razor-sharp { background: rgba(106, 122, 138, 0.2); color: #90a8c0; border: 1px solid rgba(106, 122, 138, 0.3); }
+  .label-wu-music { background: rgba(138, 90, 106, 0.2); color: #c090a8; border: 1px solid rgba(138, 90, 106, 0.3); }
+
+  .album-summary { padding: 0.75rem 1.25rem; font-size: 0.92rem; color: var(--cream-muted); line-height: 1.65; }
+  .album-personnel { padding: 0 1.25rem 0.75rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+  .personnel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 0.2rem; }
+
+  .tags { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  .tracklist-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 1.25rem;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tracklist-toggle:hover { color: var(--accent); }
+  .tracklist-toggle .arrow { transition: transform 0.2s; display: inline-block; font-size: 0.6rem; }
+  .tracklist-toggle.open .arrow { transform: rotate(90deg); }
+  .tracklist { display: none; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+  .tracklist.open { display: block; }
+  .track { display: flex; gap: 0.75rem; align-items: baseline; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-dim); min-width: 1.4rem; text-align: right; }
+  .track-name { color: var(--cream-muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem; }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+  @media (max-width: 700px) {
+    .container { padding: 0 1.25rem; }
+    header { padding: 1.5rem 0 2rem; }
+    .album-grid { grid-template-columns: 1fr; }
+    .stats { gap: 1.5rem; }
+  }
+
+  /* Collection badges */
+  .collection-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background: rgba(200, 170, 80, 0.15);
+    color: #c8aa50;
+    border: 1px solid rgba(200, 170, 80, 0.2);
+  }
+  .want-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .want-label:hover { color: var(--cream-muted); }
+  .want-label input { display: none; }
+  .want-check {
+    width: 12px; height: 12px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.5rem;
+  }
+  .want-label input:checked ~ .want-check {
+    border-color: var(--amber);
+    background: rgba(212, 160, 74, 0.15);
+    color: var(--amber);
+  }
+  .want-label input:checked ~ .want-check::after { content: '\2713'; }
+  .want-label input:checked ~ .want-text { color: var(--amber); }
+  .want-text { transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="index.html" class="back-link">&larr; Collection</a>
+</div>
+
+<header>
+  <div class="container">
+    <div class="artist-dates">Hip-Hop &middot; East Coast Rap &middot; Experimental Hip-Hop &nbsp;&middot;&nbsp; b. 1969 &middot; Brownsville, Brooklyn, NY</div>
+    <h1 class="artist-name">RZA</h1>
+    <p class="artist-bio">
+      Robert Fitzgerald Diggs &mdash; the Abbot of Wu-Tang Clan, architect
+      of the 36 Chambers sound, film composer, and sonic visionary whose solo work
+      splits between the hedonistic sci-fi alter ego Bobby Digital and more
+      introspective, martial-arts-steeped productions under his own name.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">6</span>
+        <span class="stat-label">Solo Releases</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1998&ndash;2022</span>
+        <span class="stat-label">Solo Discography</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2/6</span>
+        <span class="stat-label">In Your Collection</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1 vinyl+digital &middot; 1 digital</span>
+        <span class="stat-label">Formats Owned</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section" id="bobby-digital">
+  <h2 class="section-title">Bobby Digital Albums</h2>
+  <p class="section-subtitle">1998&ndash;2022 &middot; Four releases as alter ego Bobby Digital on Gee Street / Koch / Wu Music Group</p>
+  <div class="album-grid">
+
+    <!-- Bobby Digital in Stereo -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">RZA as Bobby Digital in Stereo</h3>
+        <span class="album-year">1998</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F508;&#x1F4BB; Owned</span>
+        <span class="label-badge label-gee-street">Gee Street / V2</span>
+      </div>
+      <div class="album-summary">
+        RZA's debut solo album and the introduction of his hedonistic alter ego Bobby Digital, a cybernetic ladies' man navigating a dystopian New York. Abandoning the gritty sample-based aesthetic of Wu-Tang's first wave, RZA built an entirely keyboard-driven sonic world he called the "digital orchestra" &mdash; layered synthesizers, drum machines, and cinematic textures that split opinions on release but now stand as a prescient left turn. The album debuted at No. 16 on the Billboard 200 and was certified gold.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals, production, keyboards &middot; Method Man &middot; Ghostface Killah &middot; Ol' Dirty Bastard &middot; Masta Killa &middot; Killarmy &middot; Black Knights &middot; Ms. Roxy &middot; Tekitha
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, Inspectah Deck, King Tech
+      </div>
+      <div class="tags">
+        <span class="tag">hip-hop</span>
+        <span class="tag">experimental</span>
+        <span class="tag">east coast</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">B.O.B.B.Y.</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Unspoken Word</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Slow Grind African</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Airwaves</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Love Jones</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">N.Y.C. Everything (feat. Method Man)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Mantis (feat. Masta Killa, Tekitha)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Slow Grind French</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Holocaust (Silkworm) (feat. Ghostface Killah, Holocaust)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Terrorist (feat. Killarmy, Black Knights)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Bobby Did It (Spanish Fly) (feat. Ghostface Killah)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Handwriting on the Wall (feat. Ms. Roxy, Ras Kass)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Kiss of a Black Widow (feat. Ol' Dirty Bastard)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Slow Grind Italian</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">My Lovin' Is Digi (feat. Ms. Roxy)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Domestic Violence</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Project Talk (feat. Beretta 9)</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">Lab Drunk</span></div>
+        <div class="track"><span class="track-num">20</span><span class="track-name">Fuck What You Think (feat. 9th Prince)</span></div>
+        <div class="track"><span class="track-num">21</span><span class="track-name">Daily Routine (feat. Beretta 9)</span></div>
+      </div>
+    </div>
+
+    <!-- Digital Bullet -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Digital Bullet</h3>
+        <span class="album-year">2001</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="RZA" data-album="Digital Bullet" onchange="toggleWant(this, 'RZA', 'Digital Bullet', '2001', 'Koch Records')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-koch">Koch Records</span>
+      </div>
+      <div class="album-summary">
+        The second Bobby Digital album, darker and more aggressive than its predecessor. Released through Koch after RZA departed Gee Street, the album pushed the digital orchestra concept further with heavier production and a more confrontational Bobby Digital persona. It peaked at No. 24 on the Billboard 200, featuring guest appearances from Method Man, ODB, Masta Killa, GZA, and Big Gipp of Goodie Mob. Production was handled primarily by RZA alongside Mathematics, True Master, and Tony Touch.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals, production &middot; Method Man &middot; Ol' Dirty Bastard &middot; GZA &middot; Masta Killa &middot; Streetlife &middot; Big Gipp &middot; Killa Sin &middot; Beretta 9 &middot; Black Knights
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, Mathematics, True Master, Tony Touch
+      </div>
+      <div class="tags">
+        <span class="tag">hip-hop</span>
+        <span class="tag">hardcore rap</span>
+        <span class="tag">east coast</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Show U Love</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Can't Lose (feat. Beretta 9)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Glocko Pop (feat. Method Man, Streetlife, Masta Killa)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Must Be Bobby</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Brooklyn Babies (feat. Masta Killa)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Domestic Violence Pt. 2 (feat. Big Gipp)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Do U (feat. GZA, Prodigal Sunn)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Fools (feat. Killa Sin)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">La Rhumba (feat. Method Man, Killa Sin, Beretta 9)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Black Widow Pt. 2 (feat. Ol' Dirty Bastard)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Shady (feat. Intrigue)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Break Bread (feat. Jamie Sommers)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Bong Bong (feat. Beretta 9, Mad Cez)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Throw Your Flag Up (feat. Black Knights)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Be a Man</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Righteous Way (feat. Jr. Reid)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Build Strong (feat. Tekitha)</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Sickness</span></div>
+      </div>
+    </div>
+
+    <!-- Digi Snacks -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Digi Snacks</h3>
+        <span class="album-year">2008</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="RZA" data-album="Digi Snacks" onchange="toggleWant(this, 'RZA', 'Digi Snacks', '2008', 'Wu Music Group / Koch')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-wu-music">Wu Music / Koch</span>
+      </div>
+      <div class="album-summary">
+        The third Bobby Digital album, arriving seven years after Digital Bullet and showcasing a mellower, more reflective side of the alter ego. Co-produced extensively with Panauh Kalayeh, the album features an eclectic guest roster including John Frusciante of Red Hot Chili Peppers, George Clinton, El DeBarge, and David Banner. Inspectah Deck contributes a standout verse on "You Can't Stop Me Now," while the Frusciante-assisted "Up Again" marked an unexpected rock-rap fusion.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals, production &middot; Inspectah Deck &middot; John Frusciante &middot; George Clinton &middot; El DeBarge &middot; David Banner &middot; Beretta 9 &middot; Black Knights &middot; Thea Van Seijen &middot; Monk
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, Panauh Kalayeh, David Banner, King Tech, Che Vicious, John Frusciante
+      </div>
+      <div class="tags">
+        <span class="tag">hip-hop</span>
+        <span class="tag">experimental</span>
+        <span class="tag">east coast</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Digi Snacks Intro</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Long Time Coming (feat. Danny Keyz)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">You Can't Stop Me Now (feat. Inspectah Deck)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Straight Up the Block</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Booby Trap (feat. Dexter Wiggles)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Try Ya Ya Ya (feat. Monk, Thea Van Seijen)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Good Night (feat. Rev William Burk, Crisis, Thea Van Seijen)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">No Regrets</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Money Don't Own Me (feat. Monk, Stone Mecca)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">Creep (feat. Black Knights, Northstar, Thea Van Seijen)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Drama (feat. Monk, Thea Van Seijen)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Up Again (feat. John Frusciante, Beretta 9, George Clinton, El DeBarge)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Put Your Guns Down (feat. Star)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Love Is Digi / Part II (feat. Beretta 9, Crisis, Thea Van Seijen)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">O Day</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Don't Be Afraid</span></div>
+      </div>
+    </div>
+
+    <!-- Bobby Digital and the Pit of Snakes -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Bobby Digital and the Pit of Snakes</h3>
+        <span class="album-year">2022</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="RZA" data-album="Bobby Digital and the Pit of Snakes" onchange="toggleWant(this, 'RZA', 'Bobby Digital and the Pit of Snakes', '2022', 'MNRK Music')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-koch">MNRK Music</span>
+      </div>
+      <div class="album-summary">
+        The fourth Bobby Digital installment and the first in fourteen years, presented as a multimedia concept tying into RZA's Bobby Digital NFT and graphic novel projects. A lean eight-track affair that revisits the alter ego with a modern production palette, blending trap-adjacent textures with RZA's signature cinematic atmospherics. The album was released alongside an animated companion series and represents Bobby Digital's evolution into the digital age he originally prophesied.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals, production
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, DJ Scratch
+      </div>
+      <div class="tags">
+        <span class="tag">hip-hop</span>
+        <span class="tag">experimental</span>
+        <span class="tag">concept album</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Under the Sun</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Trouble Shooting</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">Something Going On</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">We Push</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Cowards</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Fight to Win</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Celebrate Life</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Live Your Own Rhythm (Outro)</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="solo">
+  <h2 class="section-title">Solo Albums</h2>
+  <p class="section-subtitle">2003 &middot; One release under the RZA name on Sanctuary Records</p>
+  <div class="album-grid">
+
+    <!-- Birth of a Prince -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Birth of a Prince</h3>
+        <span class="album-year">2003</span>
+      </div>
+      <div class="album-meta">
+        <label class="want-label"><input type="checkbox" data-artist="RZA" data-album="Birth of a Prince" onchange="toggleWant(this, 'RZA', 'Birth of a Prince', '2003', 'Sanctuary Records')"><span class="want-check"></span><span class="want-text">Want</span></label>
+        <span class="label-badge label-sanctuary">Sanctuary</span>
+      </div>
+      <div class="album-summary">
+        RZA's sole album under his own name rather than the Bobby Digital persona, and a conscious return to grittier, more boom-bap-oriented production after the digital experiments. Heavy with Wu-Tang family features &mdash; Masta Killa, Ghostface Killah, and a posthumous Ol' Dirty Bastard appearance on "We Pop" &mdash; the album was conceived as a spiritual counterpart to the Bobby Digital series. Bronze Nazareth emerged as a notable production contributor, while the Cilvaringz collaboration "You'll Never Know" showcased RZA's mentorship of European Wu affiliates.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; vocals, production &middot; Ghostface Killah &middot; Ol' Dirty Bastard &middot; Masta Killa &middot; Beretta 9 &middot; Cilvaringz &middot; Prodigal Sunn &middot; Xavier Naidoo &middot; CCF Division
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA, Bronze Nazareth, True Master, Megahertz, Barracuda, Jose "Choco" Reynoso
+      </div>
+      <div class="tags">
+        <span class="tag">hip-hop</span>
+        <span class="tag">east coast</span>
+        <span class="tag">boom bap</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Bob N' I</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">The Grunge</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">We Pop (feat. Ol' Dirty Bastard, CCF Division)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Grits (feat. Masta Killa, Allah Real)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Fast Cars (feat. Ghostface Killah, Erica Bryant)</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Chi Kung (feat. Beretta 9, Cilvaringz)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">You'll Never Know (feat. Cilvaringz)</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Drink, Smoke + Fuck</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">The Whistle (feat. Masta Killa, Prodigal Sunn)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Drop Off (feat. Daddy-O, CCF Division)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Wherever I Go (feat. Allah Real, CCF Division)</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Koto Chotan (feat. Masta Killa, Tash Mahogany)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">A Day to God Is 1,000 Years</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">Cherry Range (feat. Xavier Naidoo)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">The Birth</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">See the Joy (feat. CCF Division)</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="soundtracks">
+  <h2 class="section-title">Notable Soundtracks</h2>
+  <p class="section-subtitle">2000 &middot; Film scoring work on Razor Sharp / Epic</p>
+  <div class="album-grid">
+
+    <!-- Ghost Dog -->
+    <div class="album-card">
+      <div class="album-header">
+        <h3 class="album-title">Ghost Dog: The Way of the Samurai</h3>
+        <span class="album-year">2000</span>
+      </div>
+      <div class="album-meta">
+        <span class="collection-badge">&nbsp;&#x1F4BB; In library</span>
+        <span class="label-badge label-razor-sharp">Razor Sharp / Epic</span>
+      </div>
+      <div class="album-summary">
+        RZA's first full film score, composed for Jim Jarmusch's existential hitman meditation starring Forest Whitaker. A landmark in hip-hop cinema scoring, the soundtrack weaves together atmospheric instrumentals, Wu-Tang posse cuts, and spoken Hagakure passages by Whitaker into a seamless blend of Eastern philosophy and street-level grit. The score established RZA as a serious film composer, leading to subsequent work on Kill Bill, The Man with the Iron Fists, and beyond. Received wide critical acclaim and later a deluxe vinyl reissue through Sacred Bones.
+      </div>
+      <div class="album-personnel">
+        <div class="personnel-label">Personnel</div>
+        RZA &mdash; production, score &middot; Wu-Tang Clan &middot; Masta Killa &middot; Sunz of Man &middot; North Star &middot; Black Knights &middot; Kool G Rap &middot; Jeru the Damaja &middot; Tekitha &middot; Forest Whitaker (narration)
+        <div class="personnel-label" style="margin-top: 0.4rem;">Produced by</div>
+        RZA
+      </div>
+      <div class="tags">
+        <span class="tag">soundtrack</span>
+        <span class="tag">hip-hop</span>
+        <span class="tag">film score</span>
+        <span class="tag">instrumental</span>
+      </div>
+      <button class="tracklist-toggle" onclick="toggleTracklist(this)"><span class="arrow">&#9654;</span> Track listing</button>
+      <div class="tracklist">
+        <div class="track"><span class="track-num">1</span><span class="track-name">Samurai Code Quotation</span></div>
+        <div class="track"><span class="track-num">2</span><span class="track-name">Strange Eyes (Sunz of Man, 12 O'Clock &amp; Blue Raspberry)</span></div>
+        <div class="track"><span class="track-num">3</span><span class="track-name">4 Sho Sho (North Star feat. RZA)</span></div>
+        <div class="track"><span class="track-num">4</span><span class="track-name">Zip Code (Black Knights)</span></div>
+        <div class="track"><span class="track-num">5</span><span class="track-name">Samurai Code Quotation</span></div>
+        <div class="track"><span class="track-num">6</span><span class="track-name">Cakes (Kool G Rap feat. RZA)</span></div>
+        <div class="track"><span class="track-num">7</span><span class="track-name">Samurai Code Quotation</span></div>
+        <div class="track"><span class="track-num">8</span><span class="track-name">Don't Test / Wu Stallion (Suga Bang Bang)</span></div>
+        <div class="track"><span class="track-num">9</span><span class="track-name">Walking Through the Darkness (Tekitha)</span></div>
+        <div class="track"><span class="track-num">10</span><span class="track-name">The Man (Masta Killa &amp; Superb)</span></div>
+        <div class="track"><span class="track-num">11</span><span class="track-name">Samurai Code Quotation</span></div>
+        <div class="track"><span class="track-num">12</span><span class="track-name">Walk the Dogs (Royal Fam &amp; La the Darkman)</span></div>
+        <div class="track"><span class="track-num">13</span><span class="track-name">Stay With Me (Melodie &amp; 12 O'Clock)</span></div>
+        <div class="track"><span class="track-num">14</span><span class="track-name">East New York Stamp (Jeru the Damaja &amp; Afu-Ra)</span></div>
+        <div class="track"><span class="track-num">15</span><span class="track-name">Samurai Code Quotation</span></div>
+        <div class="track"><span class="track-num">16</span><span class="track-name">Fast Shadow (Wu-Tang Clan)</span></div>
+        <div class="track"><span class="track-num">17</span><span class="track-name">Samurai Code Quotation</span></div>
+        <div class="track"><span class="track-num">18</span><span class="track-name">Samurai Showdown (RZA)</span></div>
+        <div class="track"><span class="track-num">19</span><span class="track-name">Samurai Code Final Quotation</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>A personal discography collection. Built with care.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTracklist(btn) {
+    const tracklist = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    tracklist.classList.toggle('open');
+  }
+</script>
+
+<script>
+const TO_BUY_KEY = 'discography-to-buy';
+function getToBuyList() {
+  try { return JSON.parse(localStorage.getItem(TO_BUY_KEY)) || []; } catch { return []; }
+}
+function toggleWant(cb, artist, album, year, label) {
+  let list = getToBuyList();
+  if (cb.checked) {
+    if (!list.some(i => i.artist === artist && i.album === album)) {
+      list.push({ artist, album, year, label, addedFrom: location.pathname.split('/').pop() });
+    }
+  } else {
+    list = list.filter(i => !(i.artist === artist && i.album === album));
+  }
+  localStorage.setItem(TO_BUY_KEY, JSON.stringify(list));
+  const txt = cb.closest('.want-label').querySelector('.want-text');
+  txt.textContent = cb.checked ? 'Want \u2713' : 'Want';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const list = getToBuyList();
+  document.querySelectorAll('.want-label input').forEach(cb => {
+    if (list.some(i => i.artist === cb.dataset.artist && i.album === cb.dataset.album)) {
+      cb.checked = true;
+      cb.closest('.want-label').querySelector('.want-text').textContent = 'Want \u2713';
+    }
+  });
+});
+</script>
+</body>
+</html>
